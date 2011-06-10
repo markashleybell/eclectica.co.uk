@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using eclectica.co.uk.Web.Infrastructure;
+using eclectica.co.uk.Service.Configuration;
 
 namespace eclectica.co.uk.Web
 {
@@ -24,7 +26,7 @@ namespace eclectica.co.uk.Web
             routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
+                new { controller = "Entry", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
 
         }
@@ -35,6 +37,11 @@ namespace eclectica.co.uk.Web
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+
+            ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory());
+
+            Initialization.InitializeDb();
+
         }
     }
 }

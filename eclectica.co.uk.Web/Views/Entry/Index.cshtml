@@ -1,0 +1,26 @@
+﻿@model eclectica.co.uk.Web.Models.IndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+    ViewBag.Description = "";
+    ViewBag.Keywords = "";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+@section head {
+    
+    
+
+}
+
+@section content {
+    
+    @foreach(var entry in Model.Entries) {
+        
+        <h1>@entry.Title</h1>
+        
+        @Html.Raw(entry.Body)
+        
+    }
+
+}
