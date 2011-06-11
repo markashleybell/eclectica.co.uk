@@ -91,6 +91,8 @@ namespace eclectica.co.uk.Service.Configuration
 
             context.Entries.Add(entry);
             context.Entries.Add(entry2);
+
+            context.Images.Add(new Image { Filename = "test.jpg" });
         }
     }
 }

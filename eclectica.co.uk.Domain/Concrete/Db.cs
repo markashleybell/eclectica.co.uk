@@ -11,6 +11,10 @@ namespace eclectica.co.uk.Domain.Concrete
     {
         private IDbSet<Entry> _entries;
         private IDbSet<Comment> _comments;
+        private IDbSet<Tag> _tags;
+        private IDbSet<Image> _images;
+        private IDbSet<Author> _authors;
+        private IDbSet<Link> _links;
 
         public IDbSet<Entry> Entries
         {
@@ -20,6 +24,26 @@ namespace eclectica.co.uk.Domain.Concrete
         public IDbSet<Comment> Comments
         {
             get { return _comments ?? (_comments = DbSet<Comment>()); }
+        }
+
+        public IDbSet<Tag> Tags
+        {
+            get { return _tags ?? (_tags = DbSet<Tag>()); }
+        }
+
+        public IDbSet<Image> Images
+        {
+            get { return _images ?? (_images = DbSet<Image>()); }
+        }
+
+        public IDbSet<Author> Authors
+        {
+            get { return _authors ?? (_authors = DbSet<Author>()); }
+        }
+
+        public IDbSet<Link> Links
+        {
+            get { return _links ?? (_links = DbSet<Link>()); }
         }
 
         public virtual IDbSet<T> DbSet<T>() where T : class
@@ -32,13 +56,10 @@ namespace eclectica.co.uk.Domain.Concrete
             base.SaveChanges();
         }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.Edm.Db.ColumnTypeCasingConvention>();
-
-        //    modelBuilder.Entity<Article>()
-        //                .Property(p => p.Body)
-        //                .HasColumnType("varchar(max)");
-        //}
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Entry>().HasMany(m => m.Related).WithMany();
+            modelBuilder.Entity<Entry>().HasMany(m => m.Tags).WithMany();
+        }
     }
 }

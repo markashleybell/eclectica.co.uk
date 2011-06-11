@@ -53,11 +53,12 @@
     <Compile Include="Concrete\CommentServices.cs" />
     <Compile Include="Concrete\EntryServices.cs" />
     <Compile Include="Concrete\FormsAuthenticationProvider.cs" />
-    <Compile Include="Concrete\IOrderServices.cs" />
     <Compile Include="Configuration\DbInitializer.cs" />
     <Compile Include="Entities\AuthorModel.cs" />
     <Compile Include="Entities\CommentModel.cs" />
     <Compile Include="Entities\EntryModel.cs" />
+    <Compile Include="Entities\ImageModel.cs" />
+    <Compile Include="Entities\LinkModel.cs" />
     <Compile Include="Entities\TagModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
