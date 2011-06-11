@@ -37,5 +37,22 @@ namespace eclectica.co.uk.Service.Concrete
         {
             return Mapper.Map<Entry, EntryModel>(_entryRepository.GetByUrl(url));
         }
+
+        public IEnumerable<EntryModel> Last(int count)
+        {
+            var entries = _entryRepository.All().OrderByDescending(x => x.Published).Take(count);
+            
+            var entryModels = new List<EntryModel>();
+
+            foreach(var entry in entries)
+            {
+                var entryModel = Mapper.Map<Entry, EntryModel>(entry);
+                entryModel.Tags = Mapper.MapList<Tag, TagModel>(entry.Tags.ToList());
+
+                entryModels.Add(entryModel);
+            }
+
+            return entryModels;
+        }
     }
 }

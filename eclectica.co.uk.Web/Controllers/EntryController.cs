@@ -14,8 +14,8 @@ namespace eclectica.co.uk.Web.Controllers
 
         public ActionResult Index()
         {
-            return View(new IndexViewModel { 
-                Entries = _entryServices.All().ToList()
+            return View(new IndexViewModel {
+                Entries = _entryServices.Last(5).ToList()
             });
         }
 

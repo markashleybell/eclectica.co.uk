@@ -10,8 +10,8 @@ namespace eclectica.co.uk.Domain.Abstract
     {
         IEnumerable<T> All();
         IEnumerable<T> Query(Expression<Func<T, bool>> filter);
-        T Get(int id);
+        T Get(long id);
         void Add(T entity);
-        void Remove(int id);
+        void Remove(long id);
     }
 }

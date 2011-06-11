@@ -21,12 +21,12 @@ namespace eclectica.co.uk.Domain.Abstract
 
         public virtual IEnumerable<T> All()
         {
-            return _dbset.ToList();
+            return _dbset;
         }
 
         public virtual IEnumerable<T> Query(Expression<Func<T, bool>> filter)
         {
-            return _dbset.Where(filter).ToList();
+            return _dbset.Where(filter);
         }
 
         public virtual T Get(long id)
@@ -39,9 +39,8 @@ namespace eclectica.co.uk.Domain.Abstract
             _dbset.Add(entity);
         }
 
-        public virtual void Remove(int id)
+        public virtual void Remove(long id)
         {
-
             _dbset.Remove(_dbset.Find(id));
         }
 

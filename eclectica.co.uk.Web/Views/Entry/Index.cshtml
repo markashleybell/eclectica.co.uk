@@ -20,6 +20,12 @@
         <h1>@entry.Title</h1>
         
         @Html.Raw(entry.Body)
+
+        foreach(var tag in entry.Tags) {
+            
+            <span>@tag.TagName</span>
+            
+        }
         
     }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using eclectica.co.uk.Domain.Abstract;
 using eclectica.co.uk.Domain.Entities;
+using System.Data.Entity;
 
 namespace eclectica.co.uk.Domain.Concrete
 {
@@ -11,9 +12,14 @@ namespace eclectica.co.uk.Domain.Concrete
     {
         public EntryRepository(IUnitOfWork unitOfWork) : base(unitOfWork) { }
 
-        public Entry Get(int id)
+        public override IEnumerable<Entry> All()
         {
-            return base.Get(id);
+            return base.All().AsQueryable().Include("Tags");
+        }
+
+        public override Entry Get(long id)
+        {
+            return base.Query(x => x.EntryID == id).FirstOrDefault();
         }
 
         public Entry GetByUrl(string url)
