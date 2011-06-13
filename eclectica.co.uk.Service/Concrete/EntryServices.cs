@@ -48,7 +48,7 @@ namespace eclectica.co.uk.Service.Concrete
             {
                 var entryModel = Mapper.Map<Entry, EntryModel>(entry);
                 entryModel.Tags = Mapper.MapList<Tag, TagModel>(entry.Tags.ToList());
-
+                entryModel.Author = Mapper.Map<Author, AuthorModel>(entry.Author);
                 entryModels.Add(entryModel);
             }
 

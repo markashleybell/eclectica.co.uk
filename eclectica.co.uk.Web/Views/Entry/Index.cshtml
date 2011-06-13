@@ -2,9 +2,11 @@
 
 @{
     ViewBag.Title = "Index";
-    ViewBag.Description = "";
-    ViewBag.Keywords = "";
+    ViewBag.Description = "A daily blog about art, design, photography, architecture, technology, writing, music, electronics, and all things web.";
+    ViewBag.Keywords = "web, design, photography, architecture, art, technology, writing, music, electronics";
     Layout = "~/Views/Shared/MainLayout.cshtml";
+
+    ViewBag.HeaderH1 = true;
 }
 
 @section head {
@@ -16,17 +18,42 @@
 @section content {
     
     @foreach(var entry in Model.Entries) {
-        
-        <h1>@entry.Title</h1>
-        
-        @Html.Raw(entry.Body)
+     
+        <p class="postdate">@entry.Published.ToString("dddd dd MMMM yyyy")</p>
+				        
+	    <div class="post" id="post@entry.EntryID">
+					        
+		    <div class="postcontent">
+			    @if(entry.Title != "") {
+                    <h2><a href="/@entry.Url">@entry.Title</a></h2>
+                }
+                
+                @Html.Raw(entry.Body)
+                
+		    </div>
+		    <div class="postcontrols">
+			    <p>By @entry.Author.Name @@ @entry.Published.ToString("HH:mm")</p>
+			    <p class="cl"><a title="Comment on this" href="/@entry.Url/#commentform">Comment on this</a> <span>(COMMENTS)</span></p>
+						        
+                <div class="sharing">
+                    <span>Share: &nbsp;</span>
+    
+                    <a class="sharing-stumbleupon" title="Share this on StumbleUpon" href="http://www.stumbleupon.com/submit?url=http://eclectica.co.uk/@entry.Url/"><img src="@ConfigurationManager.AppSettings["CDN2"]/content/img/site/icon_stumbleupon.gif" width="16" height="16" alt="Share this on StumbleUpon" /></a>
+                    
+    
+                </div>
 
-        foreach(var tag in entry.Tags) {
-            
-            <span>@tag.TagName</span>
-            
-        }
+				    <p>Filed under:</p>
+				    <ul>
+				    @foreach(var tag in entry.Tags) {
+
+					    <li><a href="/tags/@tag.TagName/">@tag.TagName.Capitalise()</a></li>
+
+					}
+				    </ul>
+		    </div>
+		    <div class="pclr">&nbsp;</div>
+	    </div>
         
     }
-
 }

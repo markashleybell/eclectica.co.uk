@@ -1,19 +1,128 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html lang="en">
+﻿@using System.Configuration;
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
-		<title>@ViewBag.Title</title>
-        <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+		<title>Eclectica: design, photography, art, architecture and technology</title>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 		<meta http-equiv="content-language" content="en-gb" />
-        <meta http-equiv="description" content="@ViewBag.Description" />
-        <meta http-equiv="keywords" content="@ViewBag.Keywords" />
 		<link rel="shortcut icon" href="/content/img/site/favicon.ico" />
+
+		<meta name="description" content="@ViewBag.Description" />
+        <meta name="keywords" content="@ViewBag.Keywords" />
+		
+		<!-- BlogCatalog Meta Tag -->
+		<meta name="blogcatalog" content="9BC9221040" />
+		<!-- BlogLines Claim Code -->
+		<!-- ukey="2556BE5B" -->
+		
         <!--[if gt IE 6]><!-->
-        <link rel="stylesheet" type="text/css" href="/content/css/screen.css" />
+        <link rel="stylesheet" type="text/css" href="@ConfigurationManager.AppSettings["CDN1"]/content/css/screen.css" />
         <!--<![endif]-->
 
-        @RenderSection("head", false)
+		<link rel="alternate" type="application/rss+xml" title="Latest 10 Items" href="http://eclectica.co.uk/feed/main/" />
+
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+
+         @RenderSection("head", false)
 	</head>
-	<body>
-        @RenderSection("content", false)
+	<body id="index">
+		<div id="header">
+	        <a id="logo" href="/" title="Eclectica Home Page" ><img src="@ConfigurationManager.AppSettings["CDN1"]/content/img/site/logo.gif" alt="Eclectica Home Page" width="74" height="74" /></a>
+	        @if (ViewBag.HeaderH1 != null)
+         {
+	        <h1>This is a blog about the things I enjoy: <a href="/tags/art/">art</a>, <a href="/tags/design/">design</a>, 
+	        <a href="/tags/architecture/">architecture</a>, <a href="/tags/photography/">photography</a>, <a href="/tags/writing/">writing</a>, 
+	        <a href="/tags/music/">music</a>, <a href="/tags/electronics/">electronics</a>, <a href="/tags/technology/">technology</a>, 
+	        and all things <a href="/tags/web/">web</a>.</h1>
+	        }else{
+	        <p>This is a blog about the things I enjoy: <a href="/tags/art/">art</a>, <a href="/tags/design/">design</a>, 
+	        <a href="/tags/architecture/">architecture</a>, <a href="/tags/photography/">photography</a>, <a href="/tags/writing/">writing</a>, 
+	        <a href="/tags/music/">music</a>, <a href="/tags/electronics/">electronics</a>, <a href="/tags/technology/">technology</a>, 
+	        and all things <a href="/tags/web/">web</a>.</p>
+             }
+        </div>
+		<div id="content">
+
+		    @RenderSection("content", false)
+
+		</div>
+		<div id="navigation">
+		<h3>Navigate</h3>
+		<div>
+		<ul id="mainnav">
+		<li><a href="/random/">View A Random Post</a></li>
+        <li><a href="/2011/@DateTime.Now.ToString("MM")/">Posts from 2011</a></li>
+		<li><a href="/2010/12/">Posts from 2010</a></li>
+		<li><a href="/2009/12/">Posts from 2009</a></li>
+		<li><a href="/tags/">Categories</a></li>
+        <li><a href="/links/">Art &amp; Design Links</a></li>
+        <li><a href="/about/">About Eclectica</a></li>
+        
+	</ul>
+	
+	<form id="search" action="">
+	    <p><input type="text" name="q" id="q" value="Search the site..." /></p>
+	</form></div>
+	<h3>Keep Up To Date</h3>
+	<div>
+	<ul id="social">	
+		<li id="rss"><a href="/feed/main/">Subscribe via RSS</a></li>
+		<li id="twitter"><a href="http://twitter.com/eclecticablog" class="twitter-follow-button">Follow @@eclecticablog</a>
+        <script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script></li>
+		<li id="facebook"><iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Feclecticablog&amp;width=292&amp;colorscheme=light&amp;show_faces=false&amp;border_color&amp;stream=false&amp;header=false&amp;height=62" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:292px; height:62px;" allowTransparency="true"></iframe></li>
+	</ul>
+	</div>
+	<h3 id="recent-header">Recent Posts</h3>
+	<div>
+	<ul id="recentposts">
+	    <li>Test</li>
+	</ul>
+	</div>
+	
+	
+	<h3 id="tweetheader">Latest from <a href="http://twitter.com/eclecticablog">@@eclecticablog</a></h3>
+	<div id="tweets">
+	    <p>Fetching tweets...</p>
+	</div>
+	<div class="nclr">&nbsp;</div>
+		</div>
+		<div class="clr">&nbsp;</div>
+		<div id="footer">
+	        <p id="copyright">&copy; 2009 <a href="http://markashleybell.com/">Mark Ashley Bell</a></p>
+        </div>
+		<script type="text/javascript" src="@ConfigurationManager.AppSettings["CDN1"]/scripts/load.js"></script>
+		<script type="text/javascript" src="@ConfigurationManager.AppSettings["CDN1"]/scripts/search.js"></script>
+		@if (!Convert.ToBoolean(ConfigurationManager.AppSettings["LocalTestMode"]))
+  {
+      
+            <script type="text/javascript">
+
+                var _gaq = _gaq || [];
+                _gaq.push(['_setAccount', 'UA-7512787-2']);
+                _gaq.push(['_trackPageview']);
+
+                (function () {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+                })();
+
+        </script>
+        <!-- Start of Woopra Code -->
+        <script type="text/javascript">
+            var woo_settings = { idle_timeout: '60000', domain: 'eclectica.co.uk' };
+            (function () {
+                var wsc = document.createElement('script');
+                wsc.src = document.location.protocol + '//static.woopra.com/js/woopra.js';
+                wsc.type = 'text/javascript';
+                wsc.async = true;
+                var ssc = document.getElementsByTagName('script')[0];
+                ssc.parentNode.insertBefore(wsc, ssc);
+            })();
+        </script>
+        <!-- End of Woopra Code -->
+        
+      }
 	</body>
 </html>

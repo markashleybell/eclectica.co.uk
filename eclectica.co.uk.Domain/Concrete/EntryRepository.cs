@@ -14,7 +14,7 @@ namespace eclectica.co.uk.Domain.Concrete
 
         public override IEnumerable<Entry> All()
         {
-            return base.All().AsQueryable().Include("Tags");
+            return base.All().AsQueryable().Include("Tags").Include("Author");
         }
 
         public override Entry Get(long id)

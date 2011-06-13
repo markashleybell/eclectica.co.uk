@@ -12,7 +12,7 @@ namespace eclectica.co.uk.Web.Controllers
     {
         public EntryController(IEntryServices entryServices, ICommentServices commentServices) : base(entryServices, commentServices) { }
 
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             return View(new IndexViewModel {
                 Entries = _entryServices.Last(5).ToList()

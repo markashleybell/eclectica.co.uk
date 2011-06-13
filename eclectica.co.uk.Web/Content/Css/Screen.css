@@ -1,2 +1,157 @@
-﻿body {
-}
+﻿body, h1, h2, h3, p, ul, ol, li, form, blockquote { margin: 0; padding: 0; }
+body { font-family: Arial, Helvetica, sans-serif; color: #000000; background: url(http://s2.eclectica.co.uk/content/img/site/bg_hatch.gif) 990px 0 repeat-y; }
+
+#content { width: 640px; margin: 0 20px 0 35px; float: left; }
+#navigation { width: 260px; float: left; }
+
+h1 { font-weight: normal; font-size: 36px; padding: 20px 0 0 0; }
+h2 { font-weight: normal; font-size: 36px; padding: 20px 0 0 0; } 
+h3 { font-weight: normal; line-height: 20px; font-size: 20px; padding: 20px 0 0 0; } 
+p { font-size: 14px; line-height: 20px; padding: 20px 20px 0 0; } 
+.videoembed { padding: 20px 0 0 1px;  }
+ul, ol { padding: 20px 0 0 0; }
+.post ul, .post ol { padding: 20px 20px 0 40px; }
+.post ul { list-style: square; }
+.post ol.footnotes { padding: 20px 20px 0 20px; }
+li { font-size: 14px; line-height: 20px; } 
+.post ol.footnotes li { font-size: 11px; line-height: 20px; } 
+form { padding: 0 0 0 0; }
+cite { font-size: 11px; font-style: italic; }
+
+#commentform {padding: 10px 0 0 0; }
+#commentform p { padding: 10px 25px 0 0; }
+#commentform label { font-size: 11px; font-weight: bold; }
+
+.postdate, #navigation h3 { font-weight: bold; font-size: 14px; line-height: 15px; background: url(http://s2.eclectica.co.uk/content/img/site/item_border.gif) 0 0 repeat-x; padding: 10px 0 0 0; margin-top: 20px; } 
+
+blockquote { padding: 0 10px 0 20px; text-indent: -0.25em; }
+blockquote p { font-size: 16px; line-height: 24px;}
+blockquote.quote { padding: 0 0 0 0; text-indent: -0.4em; }
+blockquote.quote p { font-size: 18px; line-height: 26px; }
+
+a { text-decoration: none; color: #5e0000; border-bottom: dotted 1px #5e0000; }
+a:hover { background-color: #fbecec;  }
+
+h1 a, h2 a { border: none; color: #000000; }
+
+acronym { text-decoration: none; border-bottom: dotted 1px #000000; }
+
+#header { width: 920px; height: 115px; position: relative; margin: 0 0 0 35px;  background: url(http://s2.eclectica.co.uk/content/img/site/bg_block.gif) 0 -10px no-repeat;}
+#header a#logo { position: absolute; width: 74px; height: 74px; top: 41px; left: 0; border: none; text-decoration: none; display: block; }
+#header a#logo img { margin: 0; border: none; display: block; }
+
+#header p, #index #header h1 { width: 240px; line-height: 15px; position: absolute; top: 70px; left: 660px; margin: 0; background: none; font-size: 11px; padding: 0; color: #555555;}
+#header p a, #index #header h1 a { color: #555555; border: none; }
+
+#footer { width: 920px; background: url(http://s2.eclectica.co.uk/content/img/site/item_border_footer.gif) 0 0 repeat-x;  clear: both; margin: 20px 0 0 35px; height: 90px; position: relative; }
+#footer p#copyright { z-index: 0; font-size: 11px; color: #555555; padding: 0; text-align: left; position: absolute; width: 200px; top: 20px; left: 0; text-align: left; }
+#footer a { color: #555555; border-color: #555555; }
+
+.comment { background: url(http://s2.eclectica.co.uk/content/img/site/item_border.gif) 0 0 repeat-x; margin-top: 10px; }
+
+.clr { overflow: hidden; height: 1px; clear: both; }
+.pclr { overflow: hidden; height: 20px; clear: both; }
+
+img { border: solid 1px #999999; margin: 20px 0 0 0; }
+.l-img { float: left; margin: 20px 20px 17px 0; }
+.r-img { float: right; margin: 17px 0 17px 20px; }
+.link-img { float: left; margin: 20px 20px 50px 0; }
+
+.l-img-double { float: left; margin: 17px 0 17px 0; }
+.r-img-double { float: right; margin: 17px 0 17px 0; }
+
+#navigation ul, .postcontrols ul { list-style: none; }
+#navigation ul { padding-bottom: 3px; }
+.post, #navigation div, #commentform { background: url(http://s2.eclectica.co.uk/content/img/site/item_border.gif) 0 0 repeat-x; margin-top: 10px; }
+
+#navigation div.nclr { background: none; overflow: hidden; height: 20px; clear: both; }
+
+.postcontent { width: 450px; float: left; }
+.postcontrols { width: 170px; float: right; }
+
+.postcontrols .cl { padding: 0; }
+.postcontrols ul { padding: 0; }
+
+#tagindex { margin: 0 0 20px 0; }
+
+#tagindex h2 { width: 50px; float: left; padding: 0 0 0 20px; display: none; }
+#tagindex a { color: #336B43; }
+#tagindex ul { padding: 20px 20px 0 0; }
+
+#tagindex li { display: inline; font-size: 0.8em; }
+#tagindex li span { display: inline; font-size: 0.7em; }
+
+#tagindex .xxs { font-size: 0.9em; color: #9f3434; }
+#tagindex .xs { font-size: 1em; color: #872121; }
+#tagindex .s { font-size: 1.2em; color: #731717; }
+#tagindex .m { font-size: 1.4em; color: #591010; }
+#tagindex .l { font-size: 1.8em; color: #3c0909; }
+#tagindex .xl { font-size: 2em; color: #270606; }
+#tagindex .xxl { font-size: 2.4em; color: #000000; }
+
+#fbfanbox { padding: 20px 0 0 0; }
+#cclink { padding: 20px 0 0 0; font-size: 14px; line-height: 20px; }
+
+img.captionb, img.captionw, img.captionn, img.captionnb { display: block; }
+img.captionnb { border: solid 1px #ffffff; }
+img.captionb { border: solid 1px #000000; }
+img.captionw { border: solid 1px #999999; }
+div.captionb { background-color: #000000; }
+div.captionw { background-color: #999999; }
+div.captionb, div.captionw { margin-bottom: 3px; }
+div.captionb p, div.captionw p { padding: 3px 10px; font-size: 11px; } 
+div.captionn p { padding: 3px 0; font-size: 11px; }
+div.captionnb p { padding: 3px 0; font-size: 11px; }
+div.captionb p { color: #ffffff; }
+div.captionw p { color: #000000; }
+
+div#captioninfo { position: absolute; top: 10px; left: 10px; background-color: #000000; color: #ffffff; width: 260px; }
+div#captioninfo p { font-size: 14px; font-weight: bold; padding: 8px 18px; margin: 0; }
+
+#navigation ul#social { padding-bottom: 0; }
+
+#navigation h3#recent-header { margin-top: 8px; }
+
+#rss { padding-left: 22px; margin-bottom: 10px; background: url(http://s2.eclectica.co.uk/content/img/site/icon_rss.gif) left center no-repeat; }
+#twitter { padding: 6px 0 0 0; }
+#facebook { padding: 6px 0 0 0; margin: 0 0 0 -11px; }
+
+.sharing { vertical-align: middle; line-height: 16px; }
+.sharing span { font-weight: bold; font-size: 14px; line-height: 16px; vertical-align: middle; }
+.sharing a { line-height: 16px; text-decoration: none; border: none; vertical-align: middle;}
+.sharing img { border: none; margin: 21px 4px 0 0;  }
+
+h2.archiveyear { width: 74px; height: 60px; margin: 2px 20px 0 0; float: left; line-height: 22px; font-size: 22px; }
+
+#monthpicker { padding: 2px 0 0 0; }
+#monthpicker div { width: 72px; height:20px; margin: 20px 20px 0 0; float: left;   border: solid 1px #999999; }
+#monthpicker div.r { margin: 20px 0 0 0; }
+#monthpicker div#currentmonth { background-color: #000000; border: solid 1px #000000; }
+
+#monthpicker div a, #monthpicker div span { color: #000000; line-height: 20px; text-align: center; display: block; width: 72px; height: 20px; text-decoration: none; border: none;  font-weight: bold;font-family: Arial, Helvetica, sans-serif; font-size: 11px; }
+
+#monthpicker div span { color: #999999; }
+#monthpicker div#currentmonth a { color: #ffffff; } 
+#monthpicker div a:hover { background-color: #e0e0e0; }
+
+#relatedposts { background: url(http://s2.eclectica.co.uk/content/img/site/item_border.gif) 0 0 repeat-x; margin-top: 10px; }
+
+#monththumbnails { padding-top: 20px; }
+#relatedposts div, #monththumbnails div { width: 74px; height: 74px; float: left; background-color: #e0e0e0; margin: 0 20px 20px 0; }
+#relatedposts div { margin: 20px 20px 0 0;  }
+#monththumbnails div.r { margin: 0 0 20px 0; }
+#relatedposts div.r { margin: 20px 0 0 0; }
+#relatedposts div#relatedinfo { font-size: 14px; width: 168px; background: none; border: none; margin-right: 0; }
+#relatedposts div.clr { margin: 0; border: none; width: auto; height: 1px; float: none; clear: both; background: none; }
+#relatedposts div a, #monththumbnails div a { border: solid 1px #999999; text-indent: -1000em; text-decoration: none; display: block; width: 72px; height: 72px;  }
+#relatedposts div a:hover, #monththumbnails div a:hover { border: solid 1px #5e0000; background: none; }
+
+#recentposts a, #mainnav a { font-weight: bold; }
+
+#tweets p { font-size: 11px; }
+
+#searchresults .post h3 { font-size: 14px; font-weight: bold; line-height: 20px; margin-left: 94px; }
+#searchresults .post p { margin-left: 94px; }
+#searchresults .post .postcontrols p { margin-left: 0; }
+
+p.note { font-size: 11px; }
