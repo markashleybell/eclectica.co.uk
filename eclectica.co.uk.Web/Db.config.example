@@ -1,0 +1,3 @@
+﻿<connectionStrings>
+    <add name="Db" connectionString="PATHTODB.sdf" providerName="System.Data.SqlServerCe.4.0" />
+</connectionStrings>

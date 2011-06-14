@@ -1,0 +1,7 @@
+﻿<authentication mode="Forms">
+    <forms loginUrl="~/Account/LogOn" timeout="2880">
+        <credentials passwordFormat="Clear">
+            <user name="USERNAME" password="PASSWORD" />
+        </credentials>
+    </forms>
+</authentication>
