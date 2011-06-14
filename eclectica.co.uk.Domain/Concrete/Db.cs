@@ -17,6 +17,14 @@ namespace eclectica.co.uk.Domain.Concrete
         private IDbSet<Author> _authors;
         private IDbSet<Link> _links;
 
+        public Db() : base()
+        {
+        }
+
+        public Db(DbConnection connection) : base(connection, true)
+        {
+        }
+
         public IDbSet<Entry> Entries
         {
             get { return _entries ?? (_entries = DbSet<Entry>()); }

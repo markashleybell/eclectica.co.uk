@@ -40,11 +40,11 @@ namespace eclectica.co.uk.Service.Concrete
 
         public IEnumerable<EntryModel> Last(int count)
         {
-            var entries = _entryRepository.All().OrderByDescending(x => x.Published).Take(count).ToList();
+            //var entries = _entryRepository.All().OrderByDescending(x => x.Published).Take(count).ToList();
 
             var date = DateTime.Now.AddDays(-20);
 
-            //var entries = _entryRepository.Query(x => x.Published > date).ToList();
+            var entries = _entryRepository.Query(x => x.Published > date).ToList();
             
             var entryModels = new List<EntryModel>();
 
