@@ -24,7 +24,9 @@
 
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
 
-         @RenderSection("head", false)
+        @MvcMiniProfiler.MiniProfiler.RenderIncludes()
+
+        @RenderSection("head", false)
 	</head>
 	<body id="index">
 		<div id="header">

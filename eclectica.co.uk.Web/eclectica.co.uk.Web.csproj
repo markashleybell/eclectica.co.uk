@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MvcMiniProfiler">
+      <HintPath>..\lib\MvcMiniProfiler\MvcMiniProfiler.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject, Version=2.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Ninject\Ninject.dll</HintPath>
@@ -77,6 +80,10 @@
     <Content Include="Content\Css\Screen.css" />
     <Content Include="Global.asax" />
     <Content Include="robots.txt" />
+    <Content Include="Scripts\load.js" />
+    <Content Include="Scripts\post.aspx.js" />
+    <Content Include="Scripts\search.js" />
+    <Content Include="Scripts\thumbtips.js" />
     <Content Include="Web.config" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\Error.cshtml" />
@@ -85,7 +92,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Img\" />
-    <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Auth.config" />

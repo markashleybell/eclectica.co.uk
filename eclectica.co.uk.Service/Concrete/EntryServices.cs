@@ -40,15 +40,19 @@ namespace eclectica.co.uk.Service.Concrete
 
         public IEnumerable<EntryModel> Last(int count)
         {
-            var entries = _entryRepository.All().OrderByDescending(x => x.Published).Take(count);
+            var entries = _entryRepository.All().OrderByDescending(x => x.Published).Take(count).ToList();
+
+            var date = DateTime.Now.AddDays(-20);
+
+            //var entries = _entryRepository.Query(x => x.Published > date).ToList();
             
             var entryModels = new List<EntryModel>();
 
             foreach(var entry in entries)
             {
                 var entryModel = Mapper.Map<Entry, EntryModel>(entry);
-                entryModel.Tags = Mapper.MapList<Tag, TagModel>(entry.Tags.ToList());
-                entryModel.Author = Mapper.Map<Author, AuthorModel>(entry.Author);
+                entryModel.Tags = new List<TagModel>(); // Mapper.MapList<Tag, TagModel>(entry.Tags.ToList());
+                entryModel.Author = new AuthorModel { Name = "TEST" }; //  Mapper.Map<Author, AuthorModel>(entry.Author);
                 entryModels.Add(entryModel);
             }
 

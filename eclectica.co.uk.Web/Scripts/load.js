@@ -6,6 +6,7 @@
 
 $(document).ready(function() {
 
+    /*
     $.getJSON('/ajax_twitter.aspx', function(data) {
 
         var output = new Array();
@@ -18,7 +19,7 @@ $(document).ready(function() {
 
         $('#tweets').html(output.join(''));
 
-    });
+    });*/
 
     $('div.post img.captionb, div.post img.captionw, div.post img.captionn').each(function(i, item) {
         var img = $(item);

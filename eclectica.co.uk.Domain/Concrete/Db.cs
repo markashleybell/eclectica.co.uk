@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data.Entity;
 using eclectica.co.uk.Domain.Entities;
+using System.Data.Common;
 
 namespace eclectica.co.uk.Domain.Concrete
 {

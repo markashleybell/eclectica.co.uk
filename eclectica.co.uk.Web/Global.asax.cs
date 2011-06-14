@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using eclectica.co.uk.Web.Infrastructure;
 using eclectica.co.uk.Service.Configuration;
+using MvcMiniProfiler;
 
 namespace eclectica.co.uk.Web
 {
@@ -48,6 +49,19 @@ namespace eclectica.co.uk.Web
 
             Initialization.InitializeDb();
 
+        }
+
+        protected void Application_BeginRequest()
+        {
+            if (Request.IsLocal)
+            {
+                MiniProfiler.Start();
+            }
+        }
+
+        protected void Application_EndRequest()
+        {
+            MiniProfiler.Stop();
         }
     }
 }
