@@ -18,7 +18,7 @@ namespace eclectica.co.uk.Domain.Entities
         public string Tweet { get; set; }
         public bool Publish { get; set; }
 
-        public Author Author { get; set; }
+        public virtual Author Author { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }

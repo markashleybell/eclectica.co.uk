@@ -7,6 +7,7 @@ using eclectica.co.uk.Service.Abstract;
 using eclectica.co.uk.Web.Models;
 using MvcMiniProfiler;
 using eclectica.co.uk.Service.Entities;
+using System.Configuration;
 
 namespace eclectica.co.uk.Web.Controllers
 {
@@ -21,7 +22,7 @@ namespace eclectica.co.uk.Web.Controllers
             List<EntryModel> entries;
 
             var currentPage = (page.HasValue) ? page.Value : 0;
-            var pageSize = 5;
+            var pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["HomePagePostCount"]);
 
             using(profiler.Step("Loading last 5 entries"))
             {

@@ -57,19 +57,22 @@
         
     }
 
-    	<p><b>
+    <p><b>
 
-		&laquo; <a href="/p/@(Model.CurrentPage + 1)/">Older Posts</a> &nbsp;&nbsp;
+	<a href="/p/@(Model.CurrentPage + 1)">Older Posts</a> &nbsp;&nbsp;
 		
-        @if(Model.CurrentPage == 1) {
+    @if(Model.CurrentPage > 0) {
             
-		<a href="/">Newer Posts</a>
+        if(Model.CurrentPage == 1) {
+		        
+        <a href="/">Newer Posts</a>
                               
 		} else {
             
-		<a href="/p/@(Model.CurrentPage - 1)/">Newer Posts</a>
-                                                         
-		}
-		</b></p>
+		<a href="/p/@(Model.CurrentPage - 1)">Newer Posts</a>
+            
+        }                                             
+	}
+	</b></p>
 
 }

@@ -42,13 +42,7 @@ namespace eclectica.co.uk.Service.Concrete
 
         public IEnumerable<EntryModel> Page(int start, int count)
         {
-            //var entries = _entryRepository.All().OrderByDescending(x => x.Published).Take(count).ToList();
-
-            var date = DateTime.Now.AddDays(-20);
-
             var entryModels = (from e in _entryRepository.All()
-                               join a in _authorRepository.All()
-                               on e.Author.AuthorID equals a.AuthorID
                                orderby e.Published descending
                                select new EntryModel
                                {
@@ -63,17 +57,6 @@ namespace eclectica.co.uk.Service.Concrete
                                    Tags = Mapper.MapList<Tag, TagModel>(e.Tags.ToList()),
                                    CommentCount = (from c in _commentRepository.All() where c.Entry.EntryID == e.EntryID select c).Count()
                                });
-            /*
-            var entryModels = new List<EntryModel>();
-
-            foreach(var entry in entries)
-            {
-                var entryModel = Mapper.Map<Entry, EntryModel>(entry);
-                entryModel.Tags = Mapper.MapList<Tag, TagModel>(entry.Tags.ToList());
-                entryModel.Author = Mapper.Map<Author, AuthorModel>(entry.Author);
-                entryModels.Add(entryModel);
-            }
-             */
 
             return entryModels.Skip(start).Take(count);
         }
