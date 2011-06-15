@@ -18,6 +18,8 @@ namespace eclectica.co.uk.Service.Entities
         public string Tweet { get; set; }
         public bool Publish { get; set; }
 
+        public int CommentCount { get; set; }
+
         public AuthorModel Author { get; set; }
 
         public List<CommentModel> Comments { get; set; }

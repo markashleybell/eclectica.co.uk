@@ -111,6 +111,8 @@
   <ItemGroup>
     <None Include="Auth.config" />
     <None Include="Auth.config.example" />
+    <None Include="Settings.config" />
+    <None Include="Settings.config.example" />
     <None Include="Db.config.example" />
     <None Include="Db.config" />
     <Content Include="Views\Web.config" />

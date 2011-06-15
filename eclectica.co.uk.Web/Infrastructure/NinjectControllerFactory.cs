@@ -37,6 +37,12 @@ namespace eclectica.co.uk.Web.Infrastructure
                 Bind<IEntryRepository>()
                     .To<EntryRepository>();
 
+                Bind<IAuthorRepository>()
+                    .To<AuthorRepository>();
+
+                Bind<ITagRepository>()
+                    .To<TagRepository>();
+
                 Bind<ICommentRepository>()
                     .To<CommentRepository>();
 

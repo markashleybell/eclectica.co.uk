@@ -21,7 +21,7 @@
      
         <p class="postdate">@entry.Published.ToString("dddd dd MMMM yyyy")</p>
 				        
-	    <div class="post" id="post@entry.EntryID">
+	    <div class="post" id="post@(entry.EntryID)">
 					        
 		    <div class="postcontent">
 			    @if(entry.Title != "") {
@@ -33,7 +33,7 @@
 		    </div>
 		    <div class="postcontrols">
 			    <p>By @entry.Author.Name @@ @entry.Published.ToString("HH:mm")</p>
-			    <p class="cl"><a title="Comment on this" href="/@entry.Url/#commentform">Comment on this</a> <span>(COMMENTS)</span></p>
+			    <p class="cl"><a title="Comment on this" href="/@entry.Url/#commentform">Comment on this</a> <span>(@entry.CommentCount)</span></p>
 						        
                 <div class="sharing">
                     <span>Share: &nbsp;</span>
@@ -56,4 +56,20 @@
 	    </div>
         
     }
+
+    	<p><b>
+
+		&laquo; <a href="/p/@(Model.CurrentPage + 1)/">Older Posts</a> &nbsp;&nbsp;
+		
+        @if(Model.CurrentPage == 1) {
+            
+		<a href="/">Newer Posts</a>
+                              
+		} else {
+            
+		<a href="/p/@(Model.CurrentPage - 1)/">Newer Posts</a>
+                                                         
+		}
+		</b></p>
+
 }

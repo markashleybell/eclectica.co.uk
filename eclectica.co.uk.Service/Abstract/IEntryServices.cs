@@ -12,6 +12,6 @@ namespace eclectica.co.uk.Service.Abstract
         EntryModel GetEntry(int id);
         EntryModel GetEntryByUrl(string folder);
 
-        IEnumerable<EntryModel> Last(int count);
+        IEnumerable<EntryModel> Page(int start, int count);
     }
 }

@@ -20,13 +20,18 @@ namespace eclectica.co.uk.Web.Controllers
 
             List<EntryModel> entries;
 
+            var currentPage = (page.HasValue) ? page.Value : 0;
+            var pageSize = 5;
+
             using(profiler.Step("Loading last 5 entries"))
             {
-                 entries = _entryServices.Last(5).ToList();
+                entries = _entryServices.Page((pageSize * currentPage), pageSize).ToList();
             }
 
             return View(new IndexViewModel {
-                Entries = entries
+                Entries = entries,
+                PageSize = pageSize,
+                CurrentPage = currentPage
             });
         }
 

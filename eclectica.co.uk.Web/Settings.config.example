@@ -1,0 +1,13 @@
+﻿<appSettings>
+  <add key="LocalTestMode" value="true"/>
+  <add key="HomePagePostCount" value="5"/>
+  <add key="InstallationUrl" value="HOSTNAME"/>
+  <add key="CDN1" value="" />
+  <add key="CDN2" value="" />
+  <add key="TwitterConsumerKey" value="CONSUMERKEY"/>
+  <add key="TwitterConsumerSecret" value="CONSUMERKEY"/>
+  <add key="TwitterAccessToken" value="ACCESSTOKEN"/>
+  <add key="TwitterAccessTokenSecret" value="ACCESSTOKENSECRET"/>
+  <add key="TwitterAnywhereAPIKey" value="ANYWHEREAPIKEY"/>
+  <add key="GoogleApiKey" value="GOOGLEAPIKEY" />
+</appSettings>
