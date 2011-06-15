@@ -6,20 +6,32 @@
 
 $(document).ready(function() {
 
-    /*
-    $.getJSON('/ajax_twitter.aspx', function(data) {
+    $.ajax({
+        url: '/entry/recenttwitterstatuses',
+        dataType: 'json',
+        type: 'post',
+        data: {
+            count: 10
+        },
+        success: function (data, status, request) {
+            
+            var output = new Array();
 
-        var output = new Array();
+            $.each(data, function(i, item) {
 
-        $.each(data, function(i, item) {
+                output.push('<p>' + item.date + ': ' + activeUrls(item.status) + '</p>');
 
-            output.push('<p>' + item.date + ': ' + activeUrls(item.text) + '</p>');
+            });
 
-        });
+            $('#tweets').html(output.join(''));
 
-        $('#tweets').html(output.join(''));
+        },
+        error: function (request, status, error) { 
+        
+            $('#tweets').html('<p>Error loading tweets.</p>');
 
-    });*/
+        }
+    });
 
     $('div.post img.captionb, div.post img.captionw, div.post img.captionn').each(function(i, item) {
         var img = $(item);

@@ -75,13 +75,8 @@
 		<li id="facebook"><iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Feclecticablog&amp;width=292&amp;colorscheme=light&amp;show_faces=false&amp;border_color&amp;stream=false&amp;header=false&amp;height=62" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:292px; height:62px;" allowTransparency="true"></iframe></li>
 	</ul>
 	</div>
-	<h3 id="recent-header">Recent Posts</h3>
-	<div>
-	<ul id="recentposts">
-	    <li>Test</li>
-	</ul>
-	</div>
 	
+	@{ Html.RenderAction("RecentEntries", "Entry"); }
 	
 	<h3 id="tweetheader">Latest from <a href="http://twitter.com/eclecticablog">@@eclecticablog</a></h3>
 	<div id="tweets">

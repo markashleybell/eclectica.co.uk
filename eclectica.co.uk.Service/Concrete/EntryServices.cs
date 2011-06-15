@@ -42,23 +42,38 @@ namespace eclectica.co.uk.Service.Concrete
 
         public IEnumerable<EntryModel> Page(int start, int count)
         {
-            var entryModels = (from e in _entryRepository.All()
-                               orderby e.Published descending
-                               select new EntryModel
-                               {
-                                   EntryID = e.EntryID,
-                                   Published = e.Published,
-                                   Title = e.Title,
-                                   Body = e.Body,
-                                   Author = new AuthorModel
-                                   {
-                                       Name = e.Author.Name
-                                   },
-                                   Tags = Mapper.MapList<Tag, TagModel>(e.Tags.ToList()),
-                                   CommentCount = (from c in _commentRepository.All() where c.Entry.EntryID == e.EntryID select c).Count()
-                               });
+            var entryModels = from e in _entryRepository.All()
+                              orderby e.Published descending
+                              select new EntryModel
+                              {
+                                  EntryID = e.EntryID,
+                                  Published = e.Published,
+                                  Title = e.Title,
+                                  Body = e.Body,
+                                  Url = e.Url,
+                                  Author = new AuthorModel
+                                  {
+                                      Name = e.Author.Name
+                                  },
+                                  Tags = Mapper.MapList<Tag, TagModel>(e.Tags.ToList()),
+                                  CommentCount = (from c in _commentRepository.All() where c.Entry.EntryID == e.EntryID select c).Count()
+                              };
 
             return entryModels.Skip(start).Take(count);
+        }
+
+        public IEnumerable<EntryModel> GetRecentEntries(int count)
+        {
+            var entryModels = from e in _entryRepository.All()
+                              orderby e.Published descending
+                              select new EntryModel
+                              {
+                                  Url = e.Url,
+                                  Published = e.Published,
+                                  Title = e.Title
+                              };
+
+            return entryModels.Take(count);
         }
     }
 }

@@ -1,0 +1,15 @@
+﻿@model eclectica.co.uk.Web.Models.RecentEntriesViewModel
+
+<h3 id="recent-header">Recent Posts</h3>
+
+<div>
+	<ul id="recentposts">
+
+        @foreach (var entry in Model.Entries) {
+
+	        <li><a href="/@entry.Url">@((entry.Title != "") ? entry.Title : entry.Published.ToString("dddd dd MMMM yyyy hh:mm"))</a></li>
+            
+        }
+
+	</ul>
+</div>
