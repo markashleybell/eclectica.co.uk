@@ -17,12 +17,12 @@ namespace eclectica.co.uk.Web.Controllers
 {
     public class EntryController : BaseController
     {
-        public EntryController(IEntryServices entryServices, ICommentServices commentServices) : base(entryServices, commentServices) { }
+        public EntryController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices) : base(entryServices, commentServices, tagServices) { }
+
+        private MiniProfiler profiler = MiniProfiler.Current;
 
         public ActionResult Index(int? page)
         {
-            var profiler = MiniProfiler.Current; // it's ok if this is null
-
             List<EntryModel> entries;
 
             var currentPage = (page.HasValue) ? page.Value : 0;

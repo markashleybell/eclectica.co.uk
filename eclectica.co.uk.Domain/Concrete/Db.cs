@@ -68,7 +68,11 @@ namespace eclectica.co.uk.Domain.Concrete
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Entry>().HasMany(m => m.Related).WithMany();
-            modelBuilder.Entity<Entry>().HasMany(m => m.Tags).WithMany();
+            modelBuilder.Entity<Entry>().HasMany(m => m.Tags)
+                                        .WithMany(m => m.Entries)
+                                        .Map(m => m.MapLeftKey("Entry_EntryID")
+                                                   .MapRightKey("Tag_TagID")
+                                                   .ToTable("EntryTags"));
         }
     }
 }

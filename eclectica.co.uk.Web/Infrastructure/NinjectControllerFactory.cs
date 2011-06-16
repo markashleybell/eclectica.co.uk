@@ -52,6 +52,9 @@ namespace eclectica.co.uk.Web.Infrastructure
                 Bind<ICommentServices>()
                     .To<CommentServices>();
 
+                Bind<ITagServices>()
+                    .To<TagServices>();
+
                 Bind<IFormsAuthenticationProvider>()
                     .To<FormsAuthenticationProvider>();
             }

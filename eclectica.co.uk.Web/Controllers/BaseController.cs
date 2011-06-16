@@ -11,11 +11,13 @@ namespace eclectica.co.uk.Web.Controllers
     {
         protected IEntryServices _entryServices;
         protected ICommentServices _commentServices;
+        protected ITagServices _tagServices;
 
-        public BaseController(IEntryServices entryServices, ICommentServices commentServices)
+        public BaseController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices)
         {
             _entryServices = entryServices;
             _commentServices = commentServices;
+            _tagServices = tagServices;
         }
     }
 }

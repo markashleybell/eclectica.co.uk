@@ -21,10 +21,19 @@ namespace eclectica.co.uk.Service.Configuration
     {
         protected override void Seed(Db context)
         {
+            var tag1 = new Tag { TagName = "dogs" };
+            var tag2 = new Tag { TagName = "cats" };
+            var tag3 = new Tag { TagName = "chickens" };
+
+            context.Tags.Add(tag1);
+            context.Tags.Add(tag2);
+            context.Tags.Add(tag3);
+
             var entry = new Entry
             {
                 Title = "Test Article",
-                Author = new Author { 
+                Author = new Author
+                {
                     Name = "Mark Bell",
                     Email = "markb@eclectica.co.uk"
                 },
@@ -52,13 +61,18 @@ namespace eclectica.co.uk.Service.Configuration
                         RawBody = "<p>Jim says hello!</p>",
                         Date = DateTime.Now
                     }
+                },
+                Tags = new List<Tag> { 
+                    tag1,
+                    tag2
                 }
             };
 
             var entry2 = new Entry
             {
                 Title = "Test Article 2",
-                Author = new Author { 
+                Author = new Author
+                {
                     Name = "Mark Bell",
                     Email = "markb@eclectica.co.uk"
                 },
@@ -86,6 +100,10 @@ namespace eclectica.co.uk.Service.Configuration
                         RawBody = "<p>This is a test</p>",
                         Date = DateTime.Now
                     }
+                },
+                Tags = new List<Tag> { 
+                    tag1,
+                    tag3
                 }
             };
 

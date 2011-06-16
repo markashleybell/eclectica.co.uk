@@ -7,9 +7,8 @@ namespace eclectica.co.uk.Service.Entities
 {
     public class TagModel
     {
-        public int TagID { get; set; }
         public string TagName { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public int UseCount { get; set; }
+        public string Class { get; set; }
     }
 }

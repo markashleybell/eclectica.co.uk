@@ -27,6 +27,18 @@ namespace eclectica.co.uk.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                "About Page", // Route name
+                "about", // URL with parameters
+                new { controller = "Template", action = "About" } // Parameter defaults
+            );
+
+            routes.MapRoute(
+                "Tag Imdex and Entries By Tag", // Route name
+                "tags/{tag}", // URL with parameters
+                new { controller = "Template", action = "Tags", tag = UrlParameter.Optional } // Parameter defaults
+            );
+
+            routes.MapRoute(
                 "Home Page Paging", // Route name
                 "p/{page}", // URL with parameters
                 new { controller = "Entry", action = "Index", page = UrlParameter.Optional } // Parameter defaults

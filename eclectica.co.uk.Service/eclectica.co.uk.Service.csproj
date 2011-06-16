@@ -39,6 +39,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -47,10 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\ITagServices.cs" />
     <Compile Include="Abstract\ICommentServices.cs" />
     <Compile Include="Abstract\IEntryServices.cs" />
     <Compile Include="Abstract\IFormsAuthenticationProvider.cs" />
     <Compile Include="Concrete\CommentServices.cs" />
+    <Compile Include="Concrete\TagServices.cs" />
     <Compile Include="Concrete\EntryServices.cs" />
     <Compile Include="Concrete\FormsAuthenticationProvider.cs" />
     <Compile Include="Configuration\DbInitializer.cs" />
@@ -67,6 +70,9 @@
       <Project>{0F1FA8D3-3CA7-46AE-B428-0D3DD54C168F}</Project>
       <Name>eclectica.co.uk.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

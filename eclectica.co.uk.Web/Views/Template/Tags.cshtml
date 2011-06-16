@@ -1,0 +1,39 @@
+﻿@model eclectica.co.uk.Web.Models.TagsViewModel
+
+@{
+    ViewBag.Title = "Tags";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+@section head {
+}
+
+@section content {
+
+ <h1 class="postdate">Category Index</h1>
+<div class="post">
+
+
+<div id="tagindex">
+
+    @foreach (var entry in Model.TagDictionary)
+    {    
+        <h2>@entry.Key</h2>
+        
+        <ul>
+
+        @foreach(var t in entry.Value) {
+
+        <li><a href="/tags/@t.TagName" class="@t.Class">@t.TagName</a>&nbsp;<span>(@t.UseCount)</span>&nbsp; </li>
+
+        }
+
+        </ul>
+    }
+
+</div>
+
+
+</div>
+
+}
