@@ -26,11 +26,19 @@ namespace eclectica.co.uk.Web.Controllers
         {
             if (tagName != null) // Show list of entries for this tag
             {
+                Dictionary<string, List<EntryModel>> entryDictionary;
+
+                using (profiler.Step("Get entries for specific tag (" + tagName + ")"))
+                {
+                    entryDictionary = _tagServices.GetEntriesForTag(tagName);
+                    // This is approx 100x slower - why?
+                    // entryDictionary = _entryServices.GetEntriesForTag(tagName);
+                }
 
                 return View("TagEntries", new TagEntriesViewModel
                 { 
                     TagName = tagName.Capitalise(),
-                    EntryDictionary = _tagServices.GetEntriesForTag(tagName)
+                    EntryDictionary = entryDictionary
                 });
 
             }
