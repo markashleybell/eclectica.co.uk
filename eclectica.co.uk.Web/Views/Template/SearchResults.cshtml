@@ -1,0 +1,29 @@
+﻿@model eclectica.co.uk.Web.Models.SearchResultsViewModel
+
+@{
+    ViewBag.Title = "SearchResults";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+@section head {
+}
+
+@section content {
+
+    <h1 class="postdate">Search Results</h1>
+    <div class="post">
+
+        <form action="" method="post">
+            <p>@Html.TextBoxFor(x => x.Query) <input type="submit" value="search" /> @Html.CheckBoxFor(x => x.CreateIndex)</p>
+        </form>
+
+        <p>Results for <b>@Model.Query</b></p>
+
+        @foreach(var result in Model.SearchResults) {
+            
+            <p><a href="/@result.Url">@((result.Title == "") ? result.Published.ToString("dddd dd, HH:mm") : result.Title)</a></p>
+            
+        }
+
+    </div>
+}

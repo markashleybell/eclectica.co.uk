@@ -22,6 +22,18 @@ namespace eclectica.co.uk.Web.Controllers
             return View();
         }
 
+        public ActionResult Search(SearchResultsViewModel model)
+        {
+            if (model.CreateIndex)
+                _entryServices.CreateSearchIndex();
+
+            var results = _entryServices.SearchEntries(model.Query);
+
+            model.SearchResults = results.ToList();
+
+            return View("SearchResults", model);
+        }
+
         public ActionResult Tags(string tagName)
         {
             if (tagName != null) // Show list of entries for this tag

@@ -7,6 +7,15 @@ using eclectica.co.uk.Domain.Abstract;
 using eclectica.co.uk.Domain.Entities;
 using mab.lib.SimpleMapper;
 using eclectica.co.uk.Service.Entities;
+using Lucene.Net.Documents;
+using SimpleLucene;
+using Lucene.Net.Index;
+using System.IO;
+using SimpleLucene.Impl;
+using Lucene.Net.Search;
+using eclectica.co.uk.Service.Extensions;
+using Lucene.Net.Analysis.Standard;
+using Lucene.Net.QueryParsers;
 
 namespace eclectica.co.uk.Service.Concrete
 {
@@ -102,6 +111,74 @@ namespace eclectica.co.uk.Service.Concrete
             }
 
             return entryDictionary;
+        }
+
+        public void CreateSearchIndex()
+        {
+            var indexPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Index");
+
+            var writer = new DirectoryIndexWriter(new DirectoryInfo(indexPath), true);
+
+            using (var indexService = new IndexService(writer))
+            {
+                indexService.IndexEntities(_entryRepository.All().ToList(), e => {
+                    var document = new Document();
+                    document.Add(new Field("url", e.Url, Field.Store.YES, Field.Index.NOT_ANALYZED));
+                    document.Add(new Field("published", e.Published.Ticks.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+                    document.Add(new Field("title", e.Title, Field.Store.YES, Field.Index.ANALYZED));
+                    document.Add(new Field("body", e.Body.StripHtml(), Field.Store.YES, Field.Index.ANALYZED));
+                    return document;
+                });
+            }
+        }
+
+        public IEnumerable<EntryModel> SearchEntries(string query)
+        {
+            var indexPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Index");
+
+            var searcher = new DirectoryIndexSearcher(new DirectoryInfo(indexPath), true);
+
+            var q = new EntryQuery().WithKeywords(query);
+
+            var searchService = new SearchService(searcher);
+
+            IList<EntryModel> results = searchService.SearchIndex(q.Query, new EntryResultDefinition()).Results.ToList();
+
+            return results;
+        }
+
+        public class EntryResultDefinition : IResultDefinition<EntryModel>
+        {
+            public EntryModel Convert(Document document)
+            {
+                return new EntryModel
+                {
+                    Title = document.GetValue("title"),
+                    Url = document.GetValue("url"),
+                    Published = new DateTime(document.GetValue<long>("published"))
+                };
+            }
+        }
+
+        public class EntryQuery : QueryBase
+        {
+            public EntryQuery(Query query) : base(query) { }
+
+            public EntryQuery() { }
+
+            public EntryQuery WithKeywords(string keywords)
+            {
+                if (!string.IsNullOrEmpty(keywords))
+                {
+                    string[] fields = { "title", "body" };
+                    var parser = new MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_29,
+                        fields, new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_29));
+                    Query multiQuery = parser.Parse(keywords);
+
+                    this.AddQuery(multiQuery);
+                }
+                return this;
+            }
         }
     }
 }

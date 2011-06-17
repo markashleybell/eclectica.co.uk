@@ -16,5 +16,8 @@ namespace eclectica.co.uk.Service.Abstract
         IEnumerable<EntryModel> GetRecentEntries(int count);
 
         Dictionary<string, List<EntryModel>> GetEntriesForTag(string tag);
+
+        void CreateSearchIndex();
+        IEnumerable<EntryModel> SearchEntries(string query);
     }
 }

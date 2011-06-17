@@ -33,7 +33,13 @@ namespace eclectica.co.uk.Web
             );
 
             routes.MapRoute(
-                "Tag Imdex and Entries By Tag", // Route name
+                "Search Results", // Route name
+                "search", // URL with parameters
+                new { controller = "Template", action = "Search" } // Parameter defaults
+            );
+
+            routes.MapRoute(
+                "Tag Index and Entries By Tag", // Route name
                 "tags/{tagName}", // URL with parameters
                 new { controller = "Template", action = "Tags", tagName = UrlParameter.Optional } // Parameter defaults
             );
