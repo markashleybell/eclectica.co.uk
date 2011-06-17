@@ -75,5 +75,33 @@ namespace eclectica.co.uk.Service.Concrete
 
             return entryModels.Take(count);
         }
+
+        public Dictionary<string, List<EntryModel>> GetEntriesForTag(string tag)
+        {
+            var entryDictionary = new Dictionary<string, List<EntryModel>>();
+
+            var entryModels = from e in _entryRepository.All()
+                              where e.Tags.Any(t => t.TagName == tag)
+                              orderby e.Published descending
+                              select new EntryModel
+                              {
+                                  Url = e.Url,
+                                  Published = e.Published,
+                                  Title = e.Title,
+                                  Body = (e.Title == "") ? e.Body : ""
+                              };
+
+            foreach (var e in entryModels)
+            {
+                var date = e.Published.ToString("MMMM yyyy");
+
+                if (!entryDictionary.ContainsKey(date))
+                    entryDictionary.Add(date, new List<EntryModel>());
+
+                entryDictionary[date].Add(e);
+            }
+
+            return entryDictionary;
+        }
     }
 }

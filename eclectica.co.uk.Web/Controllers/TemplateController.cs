@@ -7,6 +7,7 @@ using eclectica.co.uk.Service.Abstract;
 using eclectica.co.uk.Web.Models;
 using eclectica.co.uk.Service.Entities;
 using MvcMiniProfiler;
+using eclectica.co.uk.Web.Extensions;
 
 namespace eclectica.co.uk.Web.Controllers
 {
@@ -21,33 +22,34 @@ namespace eclectica.co.uk.Web.Controllers
             return View();
         }
 
-        public ActionResult Tags(string tag)
+        public ActionResult Tags(string tagName)
         {
-            var tagDictionary = new Dictionary<string, List<TagModel>>();
-
-            List<TagModel> allTags;
-
-            using (profiler.Step("Loading all tags (+ use counts)"))
+            if (tagName != null) // Show list of entries for this tag
             {
-                allTags = _tagServices.All().ToList();
+
+                return View("TagEntries", new TagEntriesViewModel
+                { 
+                    TagName = tagName.Capitalise(),
+                    EntryDictionary = _tagServices.GetEntriesForTag(tagName)
+                });
+
             }
-
-            using (profiler.Step("Sorting tags"))
+            else // Show weighted tag cloud
             {
-                foreach (var t in allTags)
+
+                Dictionary<string, List<TagModel>> tagDictionary;
+
+                using (profiler.Step("Loading all tags (+ use counts)"))
                 {
-                    var first = t.TagName[0].ToString().ToUpper();
-
-                    if (!tagDictionary.ContainsKey(first))
-                        tagDictionary.Add(first, new List<TagModel>());
-
-                    tagDictionary[first].Add(t);
+                    tagDictionary = _tagServices.GetSortedTags();
                 }
-            }
 
-            return View(new TagsViewModel {
-                TagDictionary = tagDictionary
-            });
+                return View("TagIndex", new TagIndexViewModel
+                {
+                    TagDictionary = tagDictionary
+                });
+
+            }
         }
 
     }

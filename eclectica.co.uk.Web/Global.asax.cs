@@ -34,8 +34,8 @@ namespace eclectica.co.uk.Web
 
             routes.MapRoute(
                 "Tag Imdex and Entries By Tag", // Route name
-                "tags/{tag}", // URL with parameters
-                new { controller = "Template", action = "Tags", tag = UrlParameter.Optional } // Parameter defaults
+                "tags/{tagName}", // URL with parameters
+                new { controller = "Template", action = "Tags", tagName = UrlParameter.Optional } // Parameter defaults
             );
 
             routes.MapRoute(

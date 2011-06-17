@@ -1,0 +1,41 @@
+﻿@model eclectica.co.uk.Web.Models.TagEntriesViewModel
+
+@{
+    ViewBag.Title = "Documentary - Category Index - Eclectica";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+@section head {
+}
+
+@section content {
+
+    <h1 class="postdate">Articles filed under @Model.TagName</h1>
+
+    <div class="post">
+
+    @foreach (var entry in Model.EntryDictionary)
+    {    
+        <h2>@entry.Key</h2>
+        
+        <ul>
+
+        @foreach(var e in entry.Value) {
+
+            if(e.Title == "") {
+                
+                <li><a href="/@e.Url">@e.Published.ToString("dddd dd, HH:mm")</a>: @e.Body.StripHtml()</li>
+            
+            } else {
+                
+                <li>@e.Published.ToString("dddd dd, HH:mm"): <a href="/@e.Url"><b>@e.Title</b></a></li>
+            
+            }
+        }
+
+        </ul>
+    }
+
+    </div>
+
+}

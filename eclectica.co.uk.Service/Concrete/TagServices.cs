@@ -22,6 +22,11 @@ namespace eclectica.co.uk.Service.Concrete
             _unitOfWork = unitOfWork;
         }
 
+        public IEnumerable<TagModel> All()
+        {
+            return Mapper.MapList<Tag, TagModel>(_tagRepository.All().ToList());
+        }
+
         private string GetTagClass(int usecount)
         {
             if (usecount < 3)
@@ -40,9 +45,9 @@ namespace eclectica.co.uk.Service.Concrete
                 return "xxl";
         }
 
-        public IEnumerable<TagModel> All()
+        public Dictionary<string, List<TagModel>> GetSortedTags()
         {
-            var tmp = _tagRepository.All();
+            var tagDictionary = new Dictionary<string, List<TagModel>>();
 
             var tagModels = from t in _tagRepository.All()
                             where t.Entries.Count > 0
@@ -53,7 +58,46 @@ namespace eclectica.co.uk.Service.Concrete
                                 Class = GetTagClass(t.Entries.Count)
                             };
 
-            return tagModels;
+            foreach (var t in tagModels)
+            {
+                var first = t.TagName[0].ToString().ToUpper();
+
+                if (!tagDictionary.ContainsKey(first))
+                    tagDictionary.Add(first, new List<TagModel>());
+
+                tagDictionary[first].Add(t);
+            }
+
+            return tagDictionary;
+        }
+
+        public Dictionary<string, List<EntryModel>> GetEntriesForTag(string tagName)
+        {
+            var entryDictionary = new Dictionary<string, List<EntryModel>>();
+
+            var tag = _tagRepository.Query(x => x.TagName == tagName).FirstOrDefault();
+
+            if(tag != null)
+            {
+                foreach (var e in tag.Entries.OrderByDescending(x => x.Published))
+                {
+                    var date = e.Published.ToString("MMMM yyyy");
+
+                    if (!entryDictionary.ContainsKey(date))
+                        entryDictionary.Add(date, new List<EntryModel>());
+
+                    entryDictionary[date].Add(new EntryModel { 
+
+                        Title = e.Title,
+                        Published = e.Published,
+                        Url = e.Url,
+                        Body = (e.Title == "") ? e.Body : ""
+
+                    });
+                }
+            }
+
+            return entryDictionary;
         }
     }
 }

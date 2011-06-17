@@ -82,9 +82,10 @@
     </Compile>
     <Compile Include="Extensions\Twitter.cs" />
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
+    <Compile Include="Models\TagEntriesViewModel.cs" />
     <Compile Include="Models\IndexViewModel.cs" />
     <Compile Include="Models\RecentEntriesViewModel.cs" />
-    <Compile Include="Models\TagsViewModel.cs" />
+    <Compile Include="Models\TagIndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -127,7 +128,8 @@
     <Content Include="Web.config" />
     <Content Include="Views\Entry\RecentEntries.cshtml" />
     <Content Include="Views\Template\About.cshtml" />
-    <Content Include="Views\Template\Tags.cshtml" />
+    <Content Include="Views\Template\TagIndex.cshtml" />
+    <Content Include="Views\Template\TagEntries.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

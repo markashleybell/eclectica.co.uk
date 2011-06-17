@@ -14,5 +14,7 @@ namespace eclectica.co.uk.Service.Abstract
 
         IEnumerable<EntryModel> Page(int start, int count);
         IEnumerable<EntryModel> GetRecentEntries(int count);
+
+        Dictionary<string, List<EntryModel>> GetEntriesForTag(string tag);
     }
 }
