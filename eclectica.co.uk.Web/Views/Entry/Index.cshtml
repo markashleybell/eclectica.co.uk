@@ -17,16 +17,18 @@
 
 @section content {
     
-    @foreach(var entry in Model.Entries) {
+    @foreach (var entry in Model.Entries)
+    {
      
         <p class="postdate">@entry.Published.ToString("dddd dd MMMM yyyy")</p>
 				        
 	    <div class="post" id="post@(entry.EntryID)">
 					        
 		    <div class="postcontent">
-			    @if(entry.Title != "") {
+			    @if (entry.Title != "")
+       {
                     <h2><a href="/@entry.Url">@entry.Title</a></h2>
-                }
+       }
                 
                 @Html.Raw(entry.Body)
                 
@@ -36,10 +38,14 @@
 			    <p class="cl"><a title="Comment on this" href="/@entry.Url/#commentform">Comment on this</a> <span>(@entry.CommentCount)</span></p>
 						        
                 <div class="sharing">
-                    <span>Share: &nbsp;</span>
-    
-                    <a class="sharing-stumbleupon" title="Share this on StumbleUpon" href="http://www.stumbleupon.com/submit?url=http://eclectica.co.uk/@entry.Url/"><img src="@ConfigurationManager.AppSettings["CDN2"]/content/img/site/icon_stumbleupon.gif" width="16" height="16" alt="Share this on StumbleUpon" /></a>
-                    
+
+                    @{ var url = "http://eclectica.co.uk/" + entry.Url; }
+
+                    <div class="facebook-button"><iframe src="http://www.facebook.com/plugins/like.php?href=@url&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=arial&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100px; height:21px;" allowTransparency="true"></iframe></div>
+
+                    <div class="twitter-button"><a href="http://twitter.com/share" class="twitter-share-button" data-url="@url" data-text="@((entry.Title != "") ? entry.Title : entry.Published.ToString("dddd MM yyyy"))" data-count="horizontal" data-via="eclecticablog">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></div>
+
+                    <div class="stumbleupon-button"><script src="http://www.stumbleupon.com/hostedbadge.php?s=1&r=@url"></script></div>
     
                 </div>
 

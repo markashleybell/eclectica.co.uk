@@ -17,5 +17,25 @@ namespace eclectica.co.uk.Web.Extensions
         {
             return Regex.Replace(s, @"<(.|\n)+?>", @"");
         }
+
+        public static string FormatComment(this string s)
+        {
+            RegexOptions options = RegexOptions.IgnoreCase | RegexOptions.Singleline;
+            Regex _tags = new Regex("<[^>]*(>|$)", RegexOptions.Singleline | RegexOptions.ExplicitCapture | RegexOptions.Compiled);
+            // If there's no HTML in here, assume we're dealing with a plain text comment
+            if (_tags.Matches(s).Count == 0)
+            {
+                // Replace double line breaks with <p> tags and single breaks with <br />
+                s = Regex.Replace(s, @"(\r\n){2}", "</p><p>", options);
+                s = Regex.Replace(s, @"(\r\n){1}", "<br />", options);
+            }
+
+            s = (!s.StartsWith("<p>") && !s.EndsWith("</p>")) ? "<p>" + s + "</p>" : s;
+
+            s = Regex.Replace(s, "<p><p>", "<p>", options);
+            s = Regex.Replace(s, "</p></p>", "</p>", options);
+
+            return s;
+        }
     }
 }

@@ -116,10 +116,11 @@ div#captioninfo p { font-size: 14px; font-weight: bold; padding: 8px 18px; margi
 #twitter { padding: 6px 0 0 0; }
 #facebook { padding: 6px 0 0 0; margin: 0 0 0 -11px; }
 
-.sharing { vertical-align: middle; line-height: 16px; }
-.sharing span { font-weight: bold; font-size: 14px; line-height: 16px; vertical-align: middle; }
-.sharing a { line-height: 16px; text-decoration: none; border: none; vertical-align: middle;}
-.sharing img { border: none; margin: 21px 4px 0 0;  }
+.sharing { padding-top: 21px; }
+
+.facebook-button { }
+.twitter-button { margin-top: 3px; }
+.stumbleupon-button { margin-top: 5px; }
 
 h2.archiveyear { width: 74px; height: 60px; margin: 2px 20px 0 0; float: left; line-height: 22px; font-size: 22px; }
 

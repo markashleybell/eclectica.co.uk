@@ -59,14 +59,14 @@ function RenderResults(data)
 	}
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
 
     $('#content').wrapInner('<div id="contentbuffer"></div>')
-  
-    $('#search').bind('submit', function() { return false; });
 
-    $('#search #q').attr('autocomplete', 'off')
-    			   .bind('focus', function() { if (this.value == this.defaultValue) this.value = ''; })
-	               .bind('blur', function() { if (this.value == '') this.value = this.defaultValue; })
-	               .bind('keyup', function() { GetResults(this); });
+    //$('#search').bind('submit', function () { return false; });
+
+    $('#search #query').attr('autocomplete', 'off')
+    			       .bind('focus', function () { if (this.value == this.defaultValue) this.value = ''; })
+	                   .bind('blur', function () { if (this.value == '') this.value = this.defaultValue; });
+    //.bind('keyup', function() { GetResults(this); });
 });

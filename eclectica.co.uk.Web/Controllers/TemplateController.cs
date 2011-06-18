@@ -22,7 +22,7 @@ namespace eclectica.co.uk.Web.Controllers
             return View();
         }
 
-        public ActionResult Search(SearchResultsViewModel model)
+        public ActionResult Search(SearchResultsViewModel model, bool? ajax)
         {
             if (model.CreateIndex)
                 _entryServices.CreateSearchIndex();
@@ -31,7 +31,10 @@ namespace eclectica.co.uk.Web.Controllers
 
             model.SearchResults = results.ToList();
 
-            return View("SearchResults", model);
+            if (ajax.HasValue && ajax.Value == true)
+                return Json(model, JsonRequestBehavior.AllowGet);
+            else
+                return View("SearchResults", model);
         }
 
         public ActionResult Tags(string tagName)

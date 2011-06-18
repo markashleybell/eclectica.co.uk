@@ -40,6 +40,20 @@ namespace eclectica.co.uk.Web.Controllers
             });
         }
 
+        public ActionResult Entry(string url)
+        {
+            var entry = _entryServices.GetEntryByUrl(url);
+
+            if (entry == null)
+            {
+                return Content("404");
+            }
+
+            return View(new EntryViewModel { 
+                Entry = entry
+            });
+        }
+
         public ActionResult RecentEntries()
         {
             return View(new RecentEntriesViewModel { 

@@ -16,6 +16,7 @@ using Lucene.Net.Search;
 using eclectica.co.uk.Service.Extensions;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.QueryParsers;
+using System.Text.RegularExpressions;
 
 namespace eclectica.co.uk.Service.Concrete
 {
@@ -46,7 +47,25 @@ namespace eclectica.co.uk.Service.Concrete
 
         public EntryModel GetEntryByUrl(string url)
         {
-            return Mapper.Map<Entry, EntryModel>(_entryRepository.GetByUrl(url));
+            var entryModel = from e in _entryRepository.Query(x => x.Url == url)
+                             orderby e.Published descending
+                             select new EntryModel
+                             {
+                                 EntryID = e.EntryID,
+                                 Published = e.Published,
+                                 Title = e.Title,
+                                 Body = e.Body,
+                                 Url = e.Url,
+                                 Author = new AuthorModel
+                                 {
+                                     Name = e.Author.Name
+                                 },
+                                 Tags = Mapper.MapList<Tag, TagModel>(e.Tags.ToList()),
+                                 CommentCount = (from c in _commentRepository.All() where c.Entry.EntryID == e.EntryID select c).Count(),
+                                 Comments = Mapper.MapList<Comment, CommentModel>(e.Comments.ToList())
+                             };
+
+            return entryModel.FirstOrDefault();
         }
 
         public IEnumerable<EntryModel> Page(int start, int count)
@@ -122,11 +141,38 @@ namespace eclectica.co.uk.Service.Concrete
             using (var indexService = new IndexService(writer))
             {
                 indexService.IndexEntities(_entryRepository.All().ToList(), e => {
+
+                    string body = e.Body;
+                    RegexOptions options = RegexOptions.Singleline | RegexOptions.IgnoreCase;
+
+                    string summary = Regex.Replace(Regex.Matches(body, "<p>(.*?)</p>", options)[0].Groups[1].Value, @"<(.|\n)*?>", string.Empty, options);
+
+                    MatchCollection imgElements = Regex.Matches(body, "<img (?:.*?)?src=\"/img/lib/(.*?)/(.*?)\\.(jpg|gif)\" (?:.*?)?/>", options);
+
+                    string thumb = "";
+
+                    if (imgElements.Count > 0)
+                    {
+                        Match img = imgElements[0];
+
+                        // If it's a drop image it won't have a small image
+                        if (img.Groups[1].Value == "drop")
+                        {
+                            // Create one on the fly?
+                        }
+                        else
+                        {
+                            thumb = img.Groups[2].Value + "." + img.Groups[3].Value;
+                        }
+                    }
+
                     var document = new Document();
                     document.Add(new Field("url", e.Url, Field.Store.YES, Field.Index.NOT_ANALYZED));
                     document.Add(new Field("published", e.Published.Ticks.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
                     document.Add(new Field("title", e.Title, Field.Store.YES, Field.Index.ANALYZED));
                     document.Add(new Field("body", e.Body.StripHtml(), Field.Store.YES, Field.Index.ANALYZED));
+                    document.Add(new Field("thumbnail", thumb, Field.Store.YES, Field.Index.NOT_ANALYZED));
+                    document.Add(new Field("summary", summary, Field.Store.YES, Field.Index.NOT_ANALYZED));
                     return document;
                 });
             }
@@ -142,20 +188,29 @@ namespace eclectica.co.uk.Service.Concrete
 
             var searchService = new SearchService(searcher);
 
-            IList<EntryModel> results = searchService.SearchIndex(q.Query, new EntryResultDefinition()).Results.ToList();
+            IList<EntryModel> results = searchService.SearchIndex(q.Query, new EntryResultDefinition(query)).Results.ToList();
 
             return results;
         }
 
         public class EntryResultDefinition : IResultDefinition<EntryModel>
         {
+            private string _query;
+
+            public EntryResultDefinition(string query)
+            {
+                _query = query;
+            }
+
             public EntryModel Convert(Document document)
             {
                 return new EntryModel
                 {
                     Title = document.GetValue("title"),
                     Url = document.GetValue("url"),
-                    Published = new DateTime(document.GetValue<long>("published"))
+                    Published = new DateTime(document.GetValue<long>("published")),
+                    Body = Regex.Replace(document.GetValue("summary"), "(" + _query + ")", "<b>$1</b>", RegexOptions.Singleline | RegexOptions.IgnoreCase),
+                    Thumbnail = document.GetValue("thumbnail")
                 };
             }
         }
