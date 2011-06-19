@@ -12,5 +12,23 @@ namespace eclectica.co.uk.Service.Extensions
         {
             return Regex.Replace(s, @"<(.|\n)+?>", @"");
         }
+
+        public static string GetRelatedThumbnail(this string s, string title)
+        {
+            MatchCollection matches = Regex.Matches(s, @"\/img/lib/(.*?)/(.*?)\.(jpg|gif)", RegexOptions.Singleline | RegexOptions.IgnoreCase);
+
+            string thumb = (matches.Count > 0) ? matches[0].Groups[2].Value : "";
+            bool drop = (matches.Count > 0 && matches[0].Groups[1].Value == "drop") ? true : false;
+            string ext = (matches.Count > 0) ? matches[0].Groups[3].Value : "";
+            string bg = (matches.Count > 0) ? "lib/" + ((drop) ? "drop" : "crop") + "/" + thumb + "." + ext : "";
+
+            if (bg == "" && s.Contains("<object"))
+                bg = "site/thumb-video.gif";
+
+            if (bg == "")
+                bg = "site/" + ((title == "") ? "thumb-quote" : "thumb-article") + ".gif";
+
+            return bg;
+        }
     }
 }

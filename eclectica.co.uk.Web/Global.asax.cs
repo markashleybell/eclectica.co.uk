@@ -39,6 +39,12 @@ namespace eclectica.co.uk.Web
             );
 
             routes.MapRoute(
+                "Random Entry", // Route name
+                "random", // URL with parameters
+                new { controller = "Entry", action = "Random" } // Parameter defaults
+            );
+
+            routes.MapRoute(
                 "Search Results", // Route name
                 "search", // URL with parameters
                 new { controller = "Template", action = "Search" } // Parameter defaults

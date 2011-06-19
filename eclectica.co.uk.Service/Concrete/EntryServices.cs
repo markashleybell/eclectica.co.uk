@@ -45,9 +45,19 @@ namespace eclectica.co.uk.Service.Concrete
             return Mapper.Map<Entry, EntryModel>(_entryRepository.Get(id));
         }
 
+        public string GetRandomEntryUrl()
+        {
+            var entries = (from e in _entryRepository.Query(x => x.Publish == true)
+                           select e.Url).ToList();
+
+            int random = new Random().Next(0, entries.Count);
+
+            return entries[random];
+        }
+
         public EntryModel GetEntryByUrl(string url)
         {
-            var entryModel = from e in _entryRepository.Query(x => x.Url == url)
+            var entryModel = from e in _entryRepository.Query(x => x.Url == url && x.Publish == true)
                              orderby e.Published descending
                              select new EntryModel
                              {
@@ -62,7 +72,13 @@ namespace eclectica.co.uk.Service.Concrete
                                  },
                                  Tags = Mapper.MapList<Tag, TagModel>(e.Tags.ToList()),
                                  CommentCount = (from c in _commentRepository.All() where c.Entry.EntryID == e.EntryID select c).Count(),
-                                 Comments = Mapper.MapList<Comment, CommentModel>(e.Comments.ToList())
+                                 Comments = Mapper.MapList<Comment, CommentModel>(e.Comments.ToList()),
+                                 Related = (from r in e.Related
+                                            select new EntryModel {
+                                                Title = ((r.Title == "") ? Regex.Matches(r.Body, "<p>(.*?)</p>", RegexOptions.Singleline | RegexOptions.IgnoreCase)[0].Groups[1].Value.StripHtml() : r.Title),
+                                                Url = r.Url,
+                                                Thumbnail = r.Body.GetRelatedThumbnail(r.Title)
+                                            }).ToList()
                              };
 
             return entryModel.FirstOrDefault();
@@ -70,7 +86,7 @@ namespace eclectica.co.uk.Service.Concrete
 
         public IEnumerable<EntryModel> Page(int start, int count)
         {
-            var entryModels = from e in _entryRepository.All()
+            var entryModels = from e in _entryRepository.Query(x => x.Publish == true)
                               orderby e.Published descending
                               select new EntryModel
                               {
@@ -92,7 +108,7 @@ namespace eclectica.co.uk.Service.Concrete
 
         public IEnumerable<EntryModel> GetRecentEntries(int count)
         {
-            var entryModels = from e in _entryRepository.All()
+            var entryModels = from e in _entryRepository.Query(x => x.Publish == true)
                               orderby e.Published descending
                               select new EntryModel
                               {
@@ -108,7 +124,7 @@ namespace eclectica.co.uk.Service.Concrete
         {
             var entryDictionary = new Dictionary<string, List<EntryModel>>();
 
-            var entryModels = from e in _entryRepository.All()
+            var entryModels = from e in _entryRepository.Query(x => x.Publish == true)
                               where e.Tags.Any(t => t.TagName == tag)
                               orderby e.Published descending
                               select new EntryModel
@@ -140,14 +156,15 @@ namespace eclectica.co.uk.Service.Concrete
 
             using (var indexService = new IndexService(writer))
             {
-                indexService.IndexEntities(_entryRepository.All().ToList(), e => {
+                indexService.IndexEntities(_entryRepository.Query(x => x.Publish == true).ToList(), e =>
+                {
 
                     string body = e.Body;
                     RegexOptions options = RegexOptions.Singleline | RegexOptions.IgnoreCase;
 
                     string summary = Regex.Replace(Regex.Matches(body, "<p>(.*?)</p>", options)[0].Groups[1].Value, @"<(.|\n)*?>", string.Empty, options);
 
-                    MatchCollection imgElements = Regex.Matches(body, "<img (?:.*?)?src=\"/img/lib/(.*?)/(.*?)\\.(jpg|gif)\" (?:.*?)?/>", options);
+                    MatchCollection imgElements = Regex.Matches(body, "<img (?:.*?)?src=\"/content/img/lib/(.*?)/(.*?)\\.(jpg|gif)\" (?:.*?)?/>", options);
 
                     string thumb = "";
 
@@ -173,6 +190,7 @@ namespace eclectica.co.uk.Service.Concrete
                     document.Add(new Field("body", e.Body.StripHtml(), Field.Store.YES, Field.Index.ANALYZED));
                     document.Add(new Field("thumbnail", thumb, Field.Store.YES, Field.Index.NOT_ANALYZED));
                     document.Add(new Field("summary", summary, Field.Store.YES, Field.Index.NOT_ANALYZED));
+                    document.Add(new Field("commentcount", e.Comments.Count.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
                     return document;
                 });
             }
@@ -210,7 +228,8 @@ namespace eclectica.co.uk.Service.Concrete
                     Url = document.GetValue("url"),
                     Published = new DateTime(document.GetValue<long>("published")),
                     Body = Regex.Replace(document.GetValue("summary"), "(" + _query + ")", "<b>$1</b>", RegexOptions.Singleline | RegexOptions.IgnoreCase),
-                    Thumbnail = document.GetValue("thumbnail")
+                    Thumbnail = document.GetValue("thumbnail"),
+                    CommentCount = document.GetValue<int>("commentcount")
                 };
             }
         }

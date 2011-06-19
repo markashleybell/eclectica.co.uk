@@ -54,6 +54,13 @@ namespace eclectica.co.uk.Web.Controllers
             });
         }
 
+        public ActionResult Random()
+        {
+            var url = _entryServices.GetRandomEntryUrl();
+
+            return Redirect("/" + url);
+        }
+
         public ActionResult RecentEntries()
         {
             return View(new RecentEntriesViewModel { 

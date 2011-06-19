@@ -6,6 +6,9 @@
 }
 
 @section head {
+
+<script type="text/javascript" src="/scripts/thumbtips.js"></script>
+
 }
 
 @section content {
@@ -50,6 +53,23 @@
 		    </div>
 		    <div class="pclr">&nbsp;</div>
 	    </div>
+
+        @{ var count = 0; }
+
+        @if(Model.Entry.Related.Count > 0) {
+            
+        <h2 class="postdate">Some other articles you might be interested in</h2>
+		<div id="relatedposts">
+            
+            @foreach(var entry in Model.Entry.Related)
+            {
+                count++;
+                
+                <div@(((count % 7) == 0) ? " class=\"r\"" : "") style="background-image: url(@ConfigurationManager.AppSettings["CDN1"]/content/img/@entry.Thumbnail);"><a href="/@entry.Url">@entry.Title</a></div>
+            }
+            <div class="clr">&nbsp;</div>
+        </div>
+        }
 
         @if(Model.Entry.Comments.Count > 0) {
         <div id="comments">

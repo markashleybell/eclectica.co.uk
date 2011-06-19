@@ -30,14 +30,14 @@
             
             <div class="post">
                 <div class="postcontent">
-                    <img alt="" src="/content/img/lib/crop/2.jpg" class="link-img">
+                    <img alt="@((result.Title == "") ? result.Published.ToString("dddd dd MMMM yyyy, HH:mm") : result.Title)" src="/content/img/lib/crop/@(result.Thumbnail)" class="link-img">
                     <h3><a href="/@result.Url">@((result.Title == "") ? result.Published.ToString("dddd dd MMMM yyyy, HH:mm") : result.Title)</a></h3>
                     <p>@Html.Raw(result.Body)</p>
                     
                 </div>
                 <div class="postcontrols">
                     <p>By Mark</p>
-                    <p class="cl">0 comments</p>
+                    <p class="cl">@((result.CommentCount == 1) ? "1 comment" : result.CommentCount + " comments")</p>
                 </div>
                 <div class="pclr">&nbsp;</div>
             </div>
