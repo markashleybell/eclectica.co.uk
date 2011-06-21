@@ -17,6 +17,7 @@ using eclectica.co.uk.Service.Extensions;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.QueryParsers;
 using System.Text.RegularExpressions;
+using MvcMiniProfiler;
 
 namespace eclectica.co.uk.Service.Concrete
 {
@@ -26,6 +27,8 @@ namespace eclectica.co.uk.Service.Concrete
         private IAuthorRepository _authorRepository;
         private ICommentRepository _commentRepository;
         private IUnitOfWork _unitOfWork;
+
+        private MiniProfiler profiler = MiniProfiler.Current;
 
         public EntryServices(IEntryRepository entryRepository, IAuthorRepository authorRepository, ICommentRepository commentRepository, IUnitOfWork unitOfWork)
         {
@@ -57,7 +60,11 @@ namespace eclectica.co.uk.Service.Concrete
 
         public EntryModel GetEntryByUrl(string url)
         {
-            var entryModel = from e in _entryRepository.Query(x => x.Url == url && x.Publish == true)
+            IEnumerable<EntryModel> entryModel = null;
+
+            using(profiler.Step("Get Entry by Url"))
+            {
+                entryModel = from e in _entryRepository.Query(x => x.Url == url && x.Publish == true)
                              orderby e.Published descending
                              select new EntryModel
                              {
@@ -80,6 +87,8 @@ namespace eclectica.co.uk.Service.Concrete
                                                 Thumbnail = r.Body.GetRelatedThumbnail(r.Title)
                                             }).ToList()
                              };
+
+            }
 
             return entryModel.FirstOrDefault();
         }

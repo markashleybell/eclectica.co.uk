@@ -40,6 +40,10 @@
     <Reference Include="mab.lib.SimpleMapper">
       <HintPath>..\lib\SimpleMapper\mab.lib.SimpleMapper.dll</HintPath>
     </Reference>
+    <Reference Include="MvcMiniProfiler, Version=1.4.4189.22484, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\MvcMiniProfiler\MvcMiniProfiler.dll</HintPath>
+    </Reference>
     <Reference Include="SimpleLucene">
       <HintPath>..\lib\SimpleLucene\SimpleLucene.dll</HintPath>
     </Reference>
