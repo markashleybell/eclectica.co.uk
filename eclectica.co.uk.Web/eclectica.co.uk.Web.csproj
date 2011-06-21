@@ -82,6 +82,8 @@
     </Compile>
     <Compile Include="Extensions\Twitter.cs" />
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
+    <Compile Include="Infrastructure\ValidationAttributes.cs" />
+    <Compile Include="Models\CommentViewModel.cs" />
     <Compile Include="Models\EntryViewModel.cs" />
     <Compile Include="Models\SearchResultsViewModel.cs" />
     <Compile Include="Models\TagEntriesViewModel.cs" />
@@ -95,7 +97,7 @@
     <Content Include="Global.asax" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\load.js" />
-    <Content Include="Scripts\post.aspx.js" />
+    <Content Include="Scripts\entry.js" />
     <Content Include="Scripts\search.js" />
     <Content Include="Scripts\thumbtips.js" />
     <Content Include="Views\Shared\Error.cshtml" />

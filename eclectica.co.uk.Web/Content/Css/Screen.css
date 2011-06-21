@@ -18,9 +18,14 @@ li { font-size: 14px; line-height: 20px; }
 form { padding: 0 0 0 0; }
 cite { font-size: 11px; font-style: italic; }
 
-#commentform {padding: 10px 0 0 0; }
-#commentform p { padding: 10px 25px 0 0; }
-#commentform label { font-size: 11px; font-weight: bold; }
+#comment-form {padding: 10px 0 0 0; }
+#comment-form p { padding: 10px 25px 0 0; overflow: auto; }
+#comment-form input, #comment-form textarea { width: 300px; float: left; }
+#comment-form textarea { height: 100px; }
+#comment-form input#Comment_X7fw91Do { width: 40px; }
+#comment-form label { font-size: 11px; font-weight: bold; display: block; }
+
+.field-validation-error { padding: 3px 0 0 10px; font-weight: bold; font-size: 11px; display: block; float: left; color: #cc0000; }
 
 .postdate, #navigation h3 { font-weight: bold; font-size: 14px; line-height: 15px; background: url(http://s2.eclectica.co.uk/content/img/site/item_border.gif) 0 0 repeat-x; padding: 10px 0 0 0; margin-top: 20px; } 
 

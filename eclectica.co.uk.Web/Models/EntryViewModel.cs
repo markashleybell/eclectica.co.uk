@@ -9,5 +9,6 @@ namespace eclectica.co.uk.Web.Models
     public class EntryViewModel
     {
         public EntryModel Entry { get; set; }
+        public CommentViewModel Comment { get; set; }
     }
 }

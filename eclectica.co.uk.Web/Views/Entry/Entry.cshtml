@@ -7,6 +7,7 @@
 
 @section head {
 
+<script type="text/javascript" src="/scripts/entry.js"></script>
 <script type="text/javascript" src="/scripts/thumbtips.js"></script>
 
 }
@@ -84,7 +85,7 @@
             </div>
                 <div class="postcontrols">
 	                <p>By 
-                    @if(comment.Url != "") {
+                    @if(comment.Url != null && comment.Url != "") {
                         <a href="@((!comment.Url.StartsWith("http://")) ? "http://" : "")@comment.Url">@comment.Name</a>
                         } else {
                         @comment.Name
@@ -99,4 +100,37 @@
 		        }
         </div>
             }
+            
+            <h2 class="postdate">Add your comment:</h2>
+
+            @using(Html.BeginForm("Entry", "Entry", FormMethod.Post, new { id = "comment-form" })) {
+
+			<!-- <form id="commentform" method="post" action="/post_actions.aspx" onsubmit="return ValidateForm(this);"> -->
+				           
+                <p>@Html.LabelFor(x => x.Comment.Name)
+                @Html.TextBoxFor(x => x.Comment.Name)
+                @Html.ValidationMessageFor(x => x.Comment.Name)</p>
+                
+                <p>@Html.LabelFor(x => x.Comment.Email)
+                @Html.TextBoxFor(x => x.Comment.Email)
+                @Html.ValidationMessageFor(x => x.Comment.Email)</p>
+                
+                <p>@Html.LabelFor(x => x.Comment.Url)
+                @Html.TextBoxFor(x => x.Comment.Url)
+                @Html.ValidationMessageFor(x => x.Comment.Url)</p>
+                
+                <p>@Html.LabelFor(x => x.Comment.RawBody)
+                @Html.TextAreaFor(x => x.Comment.RawBody)
+                @Html.ValidationMessageFor(x => x.Comment.RawBody)</p>
+                
+			    <p>@Html.LabelFor(x => x.Comment.X7fw91Do)
+                @Html.TextBoxFor(x => x.Comment.X7fw91Do)
+                @Html.ValidationMessageFor(x => x.Comment.X7fw91Do)</p>
+                
+			    <p>@Html.HiddenFor(x => x.Comment.EntryID)
+                @Html.HiddenFor(x => x.Comment.EntryUrl)
+			    <input type="submit" id="SubmitButton" name="SubmitButton" value="Submit Comment" /></p>
+            }
+
+		<p class="note"><em>Please Note</em>: Your comment might not appear immediately after submission, but rest assured it'll pop up soon.</p>
 }

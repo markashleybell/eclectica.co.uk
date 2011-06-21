@@ -50,8 +50,37 @@ namespace eclectica.co.uk.Web.Controllers
             }
 
             return View(new EntryViewModel { 
-                Entry = entry
+                Entry = entry,
+                Comment = new CommentViewModel {
+                    EntryID = entry.EntryID,
+                    EntryUrl = entry.Url
+                }
             });
+        }
+
+        [HttpPost]
+        public ActionResult Entry(CommentViewModel comment)
+        {
+            if (!ModelState.IsValid)
+            {
+                var entry = _entryServices.GetEntryByUrl(comment.EntryUrl);
+
+                if (entry == null)
+                {
+                    return Content("404");
+                }
+
+                return View(new EntryViewModel
+                {
+                    Entry = entry,
+                    Comment = comment
+                });
+            }
+
+            // Add comment
+            _commentServices.AddComment(comment.EntryID, comment.Name, comment.Email, comment.Url, comment.RawBody);
+
+            return Redirect("/" + comment.EntryUrl);
         }
 
         public ActionResult Random()

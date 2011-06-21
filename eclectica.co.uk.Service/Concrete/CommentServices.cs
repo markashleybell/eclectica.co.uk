@@ -7,6 +7,7 @@ using eclectica.co.uk.Domain.Abstract;
 using eclectica.co.uk.Domain.Entities;
 using mab.lib.SimpleMapper;
 using eclectica.co.uk.Service.Entities;
+using eclectica.co.uk.Service.Extensions;
 
 namespace eclectica.co.uk.Service.Concrete
 {
@@ -31,6 +32,23 @@ namespace eclectica.co.uk.Service.Concrete
         public CommentModel GetComment(int id)
         {
             return Mapper.Map<Comment, CommentModel>(_commentRepository.Get(id));
+        }
+
+        public void AddComment(int entryId, string name, string email, string url, string rawBody)
+        {
+            var entry = _entryRepository.Get(entryId);
+
+            entry.Comments.Add(new Comment { 
+                Name = name,
+                Email = email,
+                Url = url,
+                RawBody = rawBody,
+                Body = rawBody.Sanitize(),
+                Date = DateTime.Now,
+                Approved = true
+            });
+
+            _unitOfWork.Commit();
         }
     }
 }
