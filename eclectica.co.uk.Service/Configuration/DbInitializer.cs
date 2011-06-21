@@ -39,6 +39,7 @@ namespace eclectica.co.uk.Service.Configuration
                 },
                 Body = "<p>This is the test article text.</p>",
                 Url = "test-article",
+                Publish = true,
                 Published = DateTime.Now,
                 Updated = DateTime.Now,
                 Comments = new List<Comment> 
@@ -78,6 +79,7 @@ namespace eclectica.co.uk.Service.Configuration
                 },
                 Body = "<p>This is the test article 2 text.</p>",
                 Url = "test-article-2",
+                Publish = true,
                 Published = DateTime.Now,
                 Updated = DateTime.Now,
                 Comments = new List<Comment> 
