@@ -1,0 +1,97 @@
+﻿@model eclectica.co.uk.Web.Models.LinksViewModel
+
+@{
+    ViewBag.Title = "Links";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+@section head {
+}
+
+@section content {
+
+    <h1 class="postdate">Links</h1>
+    <div class="post">
+        <p>Here's a list of some of the great sites I visit regularly&mdash;these are blogs, directories and sources rather than individual artists. If you run a design or visual arts blog or web site and would like to exchange links, please <a href="mailto:design@eclectica.co.uk">get in touch</a>.</p>
+        <div id="linkblock">
+            <div>
+                <h2>Art &amp; Design</h2>
+                <ul>      
+                @foreach(var link in Model.Links.Where(x => x.Category == "artdesign").OrderBy(x => x.Title))
+                {
+                    <li><a onclick="_gaq.push(['_trackEvent', 'Outgoing Link', 'Click', '@link.Title.EscapeSingleQuotes()']);" href="@link.Url">@link.Title</a></li>
+                }
+                </ul>
+                <h2>Graphic Design</h2>
+                <ul>
+                @foreach (var link in Model.Links.Where(x => x.Category == "graphicdesign").OrderBy(x => x.Title))
+                {
+                    <li><a onclick="_gaq.push(['_trackEvent', 'Outgoing Link', 'Click', '@link.Title.EscapeSingleQuotes()']);" href="@link.Url">@link.Title</a></li>
+                }
+                </ul>
+                <h2>Ephemera &amp; Images</h2>
+                <ul>
+                @foreach (var link in Model.Links.Where(x => x.Category == "ephemera").OrderBy(x => x.Title))
+                {
+                    <li><a onclick="_gaq.push(['_trackEvent', 'Outgoing Link', 'Click', '@link.Title.EscapeSingleQuotes()']);" href="@link.Url">@link.Title</a></li>
+                }
+                </ul>
+            </div>
+            <div>
+                <h2>Minimalist &amp; Grid Based</h2>
+                <ul>
+                @foreach (var link in Model.Links.Where(x => x.Category == "minimal").OrderBy(x => x.Title))
+                {
+                    <li><a onclick="_gaq.push(['_trackEvent', 'Outgoing Link', 'Click', '@link.Title.EscapeSingleQuotes()']);" href="@link.Url">@link.Title</a></li>
+                }
+                </ul>
+                <h2>Architecture &amp; Interior</h2>
+                <ul>
+                @foreach (var link in Model.Links.Where(x => x.Category == "architecture").OrderBy(x => x.Title))
+                {
+                    <li><a onclick="_gaq.push(['_trackEvent', 'Outgoing Link', 'Click', '@link.Title.EscapeSingleQuotes()']);" href="@link.Url">@link.Title</a></li>
+                }
+                </ul>
+                        
+                <h2>Illustration</h2>
+                <ul>
+                @foreach (var link in Model.Links.Where(x => x.Category == "illustration").OrderBy(x => x.Title))
+                {
+                    <li><a onclick="_gaq.push(['_trackEvent', 'Outgoing Link', 'Click', '@link.Title.EscapeSingleQuotes()']);" href="@link.Url">@link.Title</a></li>
+                }
+                </ul>
+            </div>
+            <div>
+                <h2>Modernist &amp; Retro</h2>
+                <ul>
+                @foreach(var link in Model.Links.Where(x => x.Category == "retro").OrderBy(x => x.Title))
+                {
+                    <li><a onclick="_gaq.push(['_trackEvent', 'Outgoing Link', 'Click', '@link.Title.EscapeSingleQuotes()']);" href="@link.Url">@link.Title</a></li>
+                }
+                </ul>
+                <h2>Photography</h2>
+                <ul>
+                @foreach (var link in Model.Links.Where(x => x.Category == "photography").OrderBy(x => x.Title))
+                {
+                    <li><a onclick="_gaq.push(['_trackEvent', 'Outgoing Link', 'Click', '@link.Title.EscapeSingleQuotes()']);" href="@link.Url">@link.Title</a></li>
+                }
+                </ul>
+                <h2>Fine Art</h2>
+                <ul>
+                @foreach(var link in Model.Links.Where(x => x.Category == "fineart").OrderBy(x => x.Title))
+                {
+                    <li><a onclick="_gaq.push(['_trackEvent', 'Outgoing Link', 'Click', '@link.Title.EscapeSingleQuotes()']);" href="@link.Url">@link.Title</a></li>
+                }
+                </ul>
+                <h2>Others</h2>
+                <ul>
+                @foreach (var link in Model.Links.Where(x => x.Category == "other").OrderBy(x => x.Title))
+                {
+                    <li><a onclick="_gaq.push(['_trackEvent', 'Outgoing Link', 'Click', '@link.Title.EscapeSingleQuotes()']);" href="@link.Url">@link.Title</a></li>
+                }
+                </ul>
+            </div>
+            <div class="clr">&nbsp;</div>
+        </div>
+    </div>
+}

@@ -13,7 +13,7 @@ namespace eclectica.co.uk.Web.Controllers
 {
     public class TemplateController : BaseController
     {
-        public TemplateController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices) : base(entryServices, commentServices, tagServices) { }
+        public TemplateController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, ILinkServices linkServices) : base(entryServices, commentServices, tagServices, linkServices) { }
 
         private MiniProfiler profiler = MiniProfiler.Current;
 
@@ -35,6 +35,13 @@ namespace eclectica.co.uk.Web.Controllers
                 return Json(model, JsonRequestBehavior.AllowGet);
             else
                 return View("SearchResults", model);
+        }
+
+        public ActionResult Links()
+        {
+            return View(new LinksViewModel { 
+                Links = _linkServices.GetSortedLinks().ToList()
+            });
         }
 
         public ActionResult Tags(string tagName)

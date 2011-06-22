@@ -43,6 +43,9 @@ namespace eclectica.co.uk.Web.Infrastructure
                 Bind<ITagRepository>()
                     .To<TagRepository>();
 
+                Bind<ILinkRepository>()
+                    .To<LinkRepository>();
+
                 Bind<ICommentRepository>()
                     .To<CommentRepository>();
 
@@ -54,6 +57,9 @@ namespace eclectica.co.uk.Web.Infrastructure
 
                 Bind<ITagServices>()
                     .To<TagServices>();
+
+                Bind<ILinkServices>()
+                    .To<LinkServices>();
 
                 Bind<IFormsAuthenticationProvider>()
                     .To<FormsAuthenticationProvider>();

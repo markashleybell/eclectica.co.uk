@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace eclectica.co.uk.Domain.Entities
+namespace eclectica.co.uk.Service.Entities
 {
     public class LinkModel
     {

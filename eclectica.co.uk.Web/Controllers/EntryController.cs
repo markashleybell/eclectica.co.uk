@@ -17,7 +17,7 @@ namespace eclectica.co.uk.Web.Controllers
 {
     public class EntryController : BaseController
     {
-        public EntryController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices) : base(entryServices, commentServices, tagServices) { }
+        public EntryController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, ILinkServices linkServices) : base(entryServices, commentServices, tagServices, linkServices) { }
 
         private MiniProfiler profiler = MiniProfiler.Current;
 

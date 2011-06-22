@@ -161,3 +161,7 @@ h2.archiveyear { width: 74px; height: 60px; margin: 2px 20px 0 0; float: left; l
 #searchresults .post .postcontrols p { margin-left: 0; }
 
 p.note { font-size: 11px; }
+
+#linkblock div { width: 168px; margin-right: 20px; float: left; }
+#linkblock h2 { font-size: 14px; font-weight: bold; }
+#linkblock ul { list-style: none; padding: 20px 20px 0 0; }

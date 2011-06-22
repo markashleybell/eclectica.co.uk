@@ -18,6 +18,11 @@ namespace eclectica.co.uk.Web.Extensions
             return Regex.Replace(s, @"<(.|\n)+?>", @"");
         }
 
+        public static string EscapeSingleQuotes(this string s)
+        {
+            return Regex.Replace(s, "'", "\\'");
+        }
+
         public static string FormatComment(this string s)
         {
             RegexOptions options = RegexOptions.IgnoreCase | RegexOptions.Singleline;

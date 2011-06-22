@@ -62,11 +62,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\ILinkServices.cs" />
     <Compile Include="Abstract\ITagServices.cs" />
     <Compile Include="Abstract\ICommentServices.cs" />
     <Compile Include="Abstract\IEntryServices.cs" />
     <Compile Include="Abstract\IFormsAuthenticationProvider.cs" />
     <Compile Include="Concrete\CommentServices.cs" />
+    <Compile Include="Concrete\LinkServices.cs" />
     <Compile Include="Concrete\TagServices.cs" />
     <Compile Include="Concrete\EntryServices.cs" />
     <Compile Include="Concrete\FormsAuthenticationProvider.cs" />
