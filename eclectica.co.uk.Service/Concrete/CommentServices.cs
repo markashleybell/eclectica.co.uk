@@ -34,11 +34,12 @@ namespace eclectica.co.uk.Service.Concrete
             return Mapper.Map<Comment, CommentModel>(_commentRepository.Get(id));
         }
 
-        public void AddComment(int entryId, string name, string email, string url, string rawBody)
+        public int AddComment(int entryId, string name, string email, string url, string rawBody)
         {
             var entry = _entryRepository.Get(entryId);
 
-            entry.Comments.Add(new Comment { 
+            var comment = new Comment
+            {
                 Name = name,
                 Email = email,
                 Url = url,
@@ -46,9 +47,13 @@ namespace eclectica.co.uk.Service.Concrete
                 Body = rawBody.Sanitize(),
                 Date = DateTime.Now,
                 Approved = true
-            });
+            };
+
+            entry.Comments.Add(comment);
 
             _unitOfWork.Commit();
+
+            return comment.CommentID;
         }
     }
 }

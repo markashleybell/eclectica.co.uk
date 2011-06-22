@@ -35,18 +35,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Entity Framework\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="MvcMiniProfiler">
-      <HintPath>..\lib\MvcMiniProfiler\MvcMiniProfiler.dll</HintPath>
+    <Reference Include="MvcMiniProfiler, Version=2.1.4183.14740, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MiniProfiler.1.3\lib\MvcMiniProfiler.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\lib\Json.NET\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.0.2.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.4.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Ninject, Version=2.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Ninject\Ninject.dll</HintPath>
+      <HintPath>..\packages\Ninject.2.2.1.4\lib\net40-Full\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -124,6 +122,7 @@
   <ItemGroup>
     <None Include="Auth.config" />
     <None Include="Auth.config.example" />
+    <Content Include="packages.config" />
     <None Include="Settings.config" />
     <None Include="Settings.config.example" />
     <None Include="Db.config.example" />

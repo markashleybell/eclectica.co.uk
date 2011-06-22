@@ -45,6 +45,9 @@ namespace eclectica.co.uk.Web.Infrastructure
 
         public override bool IsValid(object value)
         {
+            if (value == null)
+                return false;
+
             string val = (value as string).Trim();
 
             if (_caseInsensitive)

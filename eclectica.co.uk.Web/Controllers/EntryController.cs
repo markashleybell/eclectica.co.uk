@@ -78,9 +78,9 @@ namespace eclectica.co.uk.Web.Controllers
             }
 
             // Add comment
-            _commentServices.AddComment(comment.EntryID, comment.Name, comment.Email, comment.Url, comment.RawBody);
+            int commentId = _commentServices.AddComment(comment.EntryID, comment.Name, comment.Email, comment.Url, comment.RawBody);
 
-            return Redirect("/" + comment.EntryUrl);
+            return Redirect("/" + comment.EntryUrl + "#comment" + commentId);
         }
 
         public ActionResult Random()

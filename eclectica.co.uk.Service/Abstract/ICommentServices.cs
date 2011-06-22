@@ -10,6 +10,6 @@ namespace eclectica.co.uk.Service.Abstract
     {
         IEnumerable<CommentModel> All();
         CommentModel GetComment(int id);
-        void AddComment(int entryId, string name, string email, string url, string rawBody);
+        int AddComment(int entryId, string name, string email, string url, string rawBody);
     }
 }

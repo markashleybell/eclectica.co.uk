@@ -29,7 +29,7 @@
 		    </div>
 		    <div class="postcontrols">
 			    <p>By @Model.Entry.Author.Name @@ @Model.Entry.Published.ToString("HH:mm")</p>
-			    <p class="cl"><a title="Comment on this" href="/@Model.Entry.Url/#commentform">Comment on this</a> <span>(@Model.Entry.CommentCount)</span></p>
+			    <p class="cl"><a title="Comment on this" href="/@Model.Entry.Url/#comment-form">Comment on this</a> <span>(@Model.Entry.CommentCount)</span></p>
 						        
                 <div class="sharing">
 
@@ -129,6 +129,12 @@
                 
 			    <p>@Html.HiddenFor(x => x.Comment.EntryID)
                 @Html.HiddenFor(x => x.Comment.EntryUrl)
+                
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <input type="hidden" name="ScrollToForm" id="ScrollToForm" value="1" />
+                }
+
 			    <input type="submit" id="SubmitButton" name="SubmitButton" value="Submit Comment" /></p>
             }
 
