@@ -40,6 +40,20 @@ namespace eclectica.co.uk.Web.Controllers
             });
         }
 
+        public ActionResult Archive(int year, int month)
+        {
+            List<EntryModel> entries;
+
+            using (profiler.Step("Loading archived entries"))
+            {
+                entries = _entryServices.GetArchivedEntries(year, month).ToList();
+            }
+
+            return View(new ArchiveViewModel { 
+                Entries = entries
+            });
+        }
+
         public ActionResult Entry(string url)
         {
             var entry = _entryServices.GetEntryByUrl(url);

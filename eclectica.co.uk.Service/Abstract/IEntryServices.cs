@@ -15,6 +15,7 @@ namespace eclectica.co.uk.Service.Abstract
 
         IEnumerable<EntryModel> Page(int start, int count);
         IEnumerable<EntryModel> GetRecentEntries(int count);
+        IEnumerable<EntryModel> GetArchivedEntries(int year, int month);
 
         Dictionary<string, List<EntryModel>> GetEntriesForTag(string tag);
 

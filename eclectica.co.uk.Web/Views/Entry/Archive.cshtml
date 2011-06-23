@@ -1,0 +1,38 @@
+﻿@model eclectica.co.uk.Web.Models.ArchiveViewModel
+
+@{
+    ViewBag.Title = "Archive";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+@section head {
+
+<script type="text/javascript" src="/scripts/thumbtips.js"></script>
+
+}
+
+@section content {
+
+    <h1 class="postdate">Archived Items</h1>
+    <div class="post">
+
+    @if(Model.Entries.Count > 0) {
+            
+		<div id="monththumbnails">
+            
+            @{ var count = 0; }
+
+            @foreach (var entry in Model.Entries)
+            {
+                count++;
+                
+                <div@Html.Raw(((count % 7) == 0) ? " class=\"r\"" : "") style="background-image: url(@ConfigurationManager.AppSettings["CDN1"]/content/img/@entry.Thumbnail);"><a href="/@entry.Url">@entry.Title</a></div>
+            }
+            
+        </div>
+        <div class="clr">&nbsp;</div>
+    }
+
+    </div>
+
+}

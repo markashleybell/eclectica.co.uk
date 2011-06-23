@@ -57,9 +57,16 @@ namespace eclectica.co.uk.Web
             );
 
             routes.MapRoute(
-                "Tag Index and Entries By Tag", // Route name
+                "Archive", // Route name
                 "tags/{tagName}", // URL with parameters
                 new { controller = "Template", action = "Tags", tagName = UrlParameter.Optional } // Parameter defaults
+            );
+
+            routes.MapRoute(
+                "Archives", // Route name
+                "{year}/{month}", // URL with parameters
+                new { controller = "Entry", action = "Archive", year = 1970, month = 1 }, // Parameter defaults
+                new { year = @"\d{4}", month = @"\d{2}" }
             );
 
             routes.MapRoute(

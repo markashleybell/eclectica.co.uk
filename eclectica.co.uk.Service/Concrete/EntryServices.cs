@@ -115,6 +115,20 @@ namespace eclectica.co.uk.Service.Concrete
             return entryModels.Skip(start).Take(count);
         }
 
+        public IEnumerable<EntryModel> GetArchivedEntries(int year, int month)
+        {
+            var entryModels = from e in _entryRepository.Query(x => x.Publish == true && x.Published.Year == year && x.Published.Month == month)
+                              orderby e.Published descending
+                              select new EntryModel
+                              {
+                                  Title = ((e.Title == "") ? Regex.Matches(e.Body, "<p>(.*?)</p>", RegexOptions.Singleline | RegexOptions.IgnoreCase)[0].Groups[1].Value.StripHtml() : e.Title),
+                                  Url = e.Url,
+                                  Thumbnail = e.Body.GetRelatedThumbnail(e.Title)
+                              };
+
+            return entryModels.ToList();
+        }
+
         public IEnumerable<EntryModel> GetRecentEntries(int count)
         {
             var entryModels = from e in _entryRepository.Query(x => x.Publish == true)
