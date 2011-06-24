@@ -7,8 +7,6 @@ using System.Web.Routing;
 using eclectica.co.uk.Web.Infrastructure;
 using eclectica.co.uk.Service.Configuration;
 using MvcMiniProfiler;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity;
 
 namespace eclectica.co.uk.Web
 {
