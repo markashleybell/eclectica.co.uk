@@ -16,6 +16,32 @@
     <h1 class="postdate">Archived Items</h1>
     <div class="post">
 
+    <h2 class="archiveyear">@Model.Date.Year</h2>
+
+    <div id="monthpicker">
+                                        
+    @{ var x = 1; }
+                                        
+    @foreach (var month in Model.Months)
+    {
+        if (month.Value > 0)
+        {
+            <div@Html.Raw(((x % 6) == 0) ? " class=\"r\"" : "")@Html.Raw((x == Model.Date.Month) ? " id=\"currentmonth\"" : "")><a href="/@month.Key.Year/@((x < 10) ? "0" + x : x.ToString())">@month.Key.ToString("MMM")</a></div>
+        }
+        else                                                
+        {
+            <div@Html.Raw(((x % 6) == 0) ? " class=\"r\"" : "")@Html.Raw((x == Model.Date.Month) ? " id=\"currentmonth\"" : "")><span>@month.Key.ToString("MMM")</span></div>                                       
+        }
+        
+        x++;
+    }
+
+                                        
+                                        
+    </div>
+
+    <div class="clr">&nbsp;</div>
+
     @if(Model.Entries.Count > 0) {
             
 		<div id="monththumbnails">

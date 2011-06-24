@@ -43,6 +43,12 @@ namespace eclectica.co.uk.Web.Controllers
         public ActionResult Archive(int year, int month)
         {
             List<EntryModel> entries;
+            IDictionary<DateTime, int> months;
+
+            using (profiler.Step("Getting post counts"))
+            {
+                months = _entryServices.GetPostCountsPerMonth(year);
+            }
 
             using (profiler.Step("Loading archived entries"))
             {
@@ -50,6 +56,8 @@ namespace eclectica.co.uk.Web.Controllers
             }
 
             return View(new ArchiveViewModel { 
+                Date = new DateTime(year, month, 1),
+                Months = months,
                 Entries = entries
             });
         }
@@ -121,7 +129,6 @@ namespace eclectica.co.uk.Web.Controllers
             var json = w.DownloadString(url);
 
             JArray o = JArray.Parse(json);
-
 
             var statuses = from s in o
                            select new 

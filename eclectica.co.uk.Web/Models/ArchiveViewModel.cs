@@ -8,6 +8,8 @@ namespace eclectica.co.uk.Web.Models
 {
     public class ArchiveViewModel
     {
+        public DateTime Date { get; set; }
+        public IDictionary<DateTime, int> Months { get; set; }
         public List<EntryModel> Entries { get; set; }
     }
 }

@@ -115,6 +115,21 @@ namespace eclectica.co.uk.Service.Concrete
             return entryModels.Skip(start).Take(count);
         }
 
+        public IDictionary<DateTime, int> GetPostCountsPerMonth(int year)
+        {
+            var months = (from e in _entryRepository.Query(x => x.Publish == true && x.Published.Year == year)
+                          group e by e.Published.Month into m
+                          select new { Month = m.Key, Count = m.Count() }).ToList();
+
+            for (var x = 1; x <= 12; x++)
+            {
+                 if(!months.Any(m => m.Month == x)) 
+                     months.Add(new { Month = x, Count = 0 });
+            }
+
+            return months.OrderBy(x => x.Month).ToDictionary(x => new DateTime(year, x.Month, 1), x => x.Count);
+        }
+
         public IEnumerable<EntryModel> GetArchivedEntries(int year, int month)
         {
             var entryModels = from e in _entryRepository.Query(x => x.Publish == true && x.Published.Year == year && x.Published.Month == month)
@@ -143,7 +158,7 @@ namespace eclectica.co.uk.Service.Concrete
             return entryModels.Take(count);
         }
 
-        public Dictionary<string, List<EntryModel>> GetEntriesForTag(string tag)
+        public IDictionary<string, List<EntryModel>> GetEntriesForTag(string tag)
         {
             var entryDictionary = new Dictionary<string, List<EntryModel>>();
 
