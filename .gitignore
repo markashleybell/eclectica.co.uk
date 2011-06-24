@@ -56,7 +56,11 @@ Settings.config
 eclectica.co.uk.Web/App_Data/*
 !.gitignore
 eclectica.co.uk.Web/Content/Img/Lib/Cms/*
+!.gitignore
 eclectica.co.uk.Web/Content/Img/Lib/Crop/*
+!.gitignore
 eclectica.co.uk.Web/Content/Img/Lib/Drop/*
+!.gitignore
 eclectica.co.uk.Web/Content/Img/Lib/Std/*
+!.gitignore
 _bin_deployableAssemblies/
