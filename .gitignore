@@ -54,6 +54,7 @@ Auth.config
 Db.config
 Settings.config
 eclectica.co.uk.Web/App_Data/*
+!.gitignore
 eclectica.co.uk.Web/Content/Img/Lib/Cms/*
 eclectica.co.uk.Web/Content/Img/Lib/Crop/*
 eclectica.co.uk.Web/Content/Img/Lib/Drop/*
