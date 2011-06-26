@@ -29,6 +29,9 @@ namespace eclectica.co.uk.Web.Infrastructure
         {
             public override void Load()
             {
+                Bind<IFormsAuthenticationProvider>()
+                    .To<FormsAuthenticationProvider>();
+
                 Bind<IUnitOfWork>()
                     .To<UnitOfWork>()
                     .InRequestScope()
@@ -60,9 +63,6 @@ namespace eclectica.co.uk.Web.Infrastructure
 
                 Bind<ILinkServices>()
                     .To<LinkServices>();
-
-                Bind<IFormsAuthenticationProvider>()
-                    .To<FormsAuthenticationProvider>();
             }
         }
     }

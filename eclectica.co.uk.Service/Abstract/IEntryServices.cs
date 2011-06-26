@@ -23,5 +23,7 @@ namespace eclectica.co.uk.Service.Abstract
 
         void CreateSearchIndex();
         IEnumerable<EntryModel> SearchEntries(string query);
+
+        void UpdateEntry(EntryModel entry);
     }
 }

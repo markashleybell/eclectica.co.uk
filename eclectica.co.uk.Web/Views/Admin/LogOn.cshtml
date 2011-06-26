@@ -1,0 +1,32 @@
+﻿@model eclectica.co.uk.Web.Models.LogOnViewModel
+
+@{
+    ViewBag.Title = "LogOn";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@section head {
+}
+
+@section content {
+
+    <h1 class="postdate">Eclectica CMS</h1>
+	<div class="post">
+	    <h1>Log In</h1>
+
+        @using(Html.BeginForm("LogOn", "Admin", FormMethod.Post, new { id = "login-form" })) {
+            
+            <p>@Html.LabelFor(x => x.Username)
+            @Html.TextBoxFor(x => x.Username)
+            @Html.ValidationMessageFor(x => x.Username)</p>
+            
+            <p>@Html.LabelFor(x => x.Password)
+            @Html.PasswordFor(x => x.Password)
+            @Html.ValidationMessageFor(x => x.Password)</p>
+
+            <p><input type="submit" value="Log In" /></p>            
+        }
+
+    </div>
+
+}

@@ -1,0 +1,86 @@
+﻿@using System.Configuration;
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>Eclectica: design, photography, art, architecture and technology</title>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+		<meta http-equiv="content-language" content="en-gb" />
+		<link rel="shortcut icon" href="/content/img/site/favicon.ico" />
+
+		
+        <!--[if gt IE 6]><!-->
+        <link rel="stylesheet" type="text/css" href="@ConfigurationManager.AppSettings["CDN1"]/content/css/screen.css" />
+        <!--<![endif]-->
+
+		<link rel="alternate" type="application/rss+xml" title="Latest 10 Items" href="http://eclectica.co.uk/feed/main/" />
+
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+
+        @RenderSection("head", false)
+	</head>
+	<body id="index">
+		<div id="header">
+	        <a id="logo" href="/" title="Eclectica Home Page" ><img src="@ConfigurationManager.AppSettings["CDN1"]/content/img/site/logo.gif" alt="Eclectica Home Page" width="74" height="74" /></a>
+	       
+        </div>
+		<div id="content">
+
+		    @RenderSection("content", false)
+
+		</div>
+		<div id="navigation">
+            @if(Request.Url.AbsoluteUri.Contains("logon")) {
+                <h3>&nbsp;</h3>
+                <div>&nbsp;</div>
+            } else {
+		        <h3>Navigate</h3>
+		        <div>
+		            <ul id="mainnav">
+		                <li><a href="/admin/posts">Edit Posts</a></li>
+		                <li><a href="/admin/comments">Edit Comments</a></li>
+		                <li><a href="/admin/links">Edit Links</a></li>
+	                </ul>
+	            </div>
+            }
+	        <div class="nclr">&nbsp;</div>
+		</div>
+		<div class="clr">&nbsp;</div>
+		<div id="footer">
+	        <p id="copyright">&copy; 2009 <a href="http://markashleybell.com/">Mark Ashley Bell</a></p>
+        </div>
+		<script type="text/javascript" src="@ConfigurationManager.AppSettings["CDN1"]/scripts/load.js"></script>
+		<script type="text/javascript" src="@ConfigurationManager.AppSettings["CDN1"]/scripts/search.js"></script>
+		@if (!Convert.ToBoolean(ConfigurationManager.AppSettings["LocalTestMode"]))
+  {
+      
+            <script type="text/javascript">
+
+                var _gaq = _gaq || [];
+                _gaq.push(['_setAccount', 'UA-7512787-2']);
+                _gaq.push(['_trackPageview']);
+
+                (function () {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+                })();
+
+        </script>
+        <!-- Start of Woopra Code -->
+        <script type="text/javascript">
+            var woo_settings = { idle_timeout: '60000', domain: 'eclectica.co.uk' };
+            (function () {
+                var wsc = document.createElement('script');
+                wsc.src = document.location.protocol + '//static.woopra.com/js/woopra.js';
+                wsc.type = 'text/javascript';
+                wsc.async = true;
+                var ssc = document.getElementsByTagName('script')[0];
+                ssc.parentNode.insertBefore(wsc, ssc);
+            })();
+        </script>
+        <!-- End of Woopra Code -->
+        
+      }
+	</body>
+</html>

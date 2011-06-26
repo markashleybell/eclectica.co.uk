@@ -186,6 +186,11 @@ namespace eclectica.co.uk.Service.Concrete
             return entryDictionary;
         }
 
+        public void UpdateEntry(EntryModel entry)
+        {
+
+        }
+
         public void CreateSearchIndex()
         {
             var indexPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Index");

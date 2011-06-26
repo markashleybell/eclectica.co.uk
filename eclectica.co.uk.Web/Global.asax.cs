@@ -74,6 +74,12 @@ namespace eclectica.co.uk.Web
             );
 
             routes.MapRoute(
+                "Admin Area", // Route name
+                "admin/{action}", // URL with parameters
+                new { controller = "Admin", action = "Posts" } // Parameter defaults
+            );
+
+            routes.MapRoute(
                 "Entry", // Route name
                 "{url}", // URL with parameters
                 new { controller = "Entry", action = "Entry", url = UrlParameter.Optional } // Parameter defaults
