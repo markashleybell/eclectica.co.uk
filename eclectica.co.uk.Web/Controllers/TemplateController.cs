@@ -8,6 +8,7 @@ using eclectica.co.uk.Web.Models;
 using eclectica.co.uk.Service.Entities;
 using MvcMiniProfiler;
 using eclectica.co.uk.Web.Extensions;
+using System.IO;
 
 namespace eclectica.co.uk.Web.Controllers
 {
@@ -24,7 +25,9 @@ namespace eclectica.co.uk.Web.Controllers
 
         public ActionResult Search(SearchResultsViewModel model, bool? ajax)
         {
-            if (model.CreateIndex)
+            var indexPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Index");
+
+            if (!Directory.Exists(indexPath) || model.CreateIndex)
                 _entryServices.CreateSearchIndex();
 
             var results = _entryServices.SearchEntries(model.Query);
