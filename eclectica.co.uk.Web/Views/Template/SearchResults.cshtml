@@ -6,6 +6,7 @@
 }
 
 @section head {
+
 }
 
 @section content {
@@ -16,8 +17,8 @@
         <form action="" method="post">
             <p>
                 @Html.TextBoxFor(x => x.Query) 
+                @Html.CheckBoxFor(x => x.CreateIndex) 
                 <input type="submit" value="search" /> 
-                @Html.CheckBoxFor(x => x.CreateIndex)
                 <input type="checkbox" value="true" name="ajax" />
             </p>
         </form>
@@ -30,7 +31,11 @@
             
             <div class="post">
                 <div class="postcontent">
-                    <img alt="@((result.Title == "") ? result.Published.ToString("dddd dd MMMM yyyy, HH:mm") : result.Title)" src="/content/img/lib/crop/@(result.Thumbnail)" class="link-img">
+
+                    @if(result.Thumbnail != "") {
+                        <img alt="@((result.Title == "") ? result.Published.ToString("dddd dd MMMM yyyy, HH:mm") : result.Title)" src="/content/img/lib/crop/@(result.Thumbnail)" class="link-img" />
+                    }
+
                     <h3><a href="/@result.Url">@((result.Title == "") ? result.Published.ToString("dddd dd MMMM yyyy, HH:mm") : result.Title)</a></h3>
                     <p>@Html.Raw(result.Body)</p>
                     

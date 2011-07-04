@@ -9,7 +9,7 @@ function GetResults(o)
 	}
 	else 
 	{
-	    $.post('/ajax_search.aspx', { q: letters }, RenderResults)
+	    $.post('/search', { query: letters, ajax: true }, RenderResults)
 	}
 }
 
@@ -33,21 +33,22 @@ function RenderResults(data)
         if($('#searchresults').length == 0)	
 	        $('#content').prepend('<div id="searchresults"></div>');
 	    
-		if(data.indexOf('~') == -1)
-		{
-		    results.push('<div class="post"><h3>' + data + ' results</h3><p>That\'s too many: type some more letters to narrow your search, or <a href="/tags/">click here to view popular tags.</a></p></div>');
-		}
-		else
-		{
-			var a = data.split('|').reverse();
-			var r = '';
-			
-			for(var x=(a.length - 1); x>=0;)
+		//if(data.indexOf('~') == -1)
+		//{
+		//    results.push('<div class="post"><h3>' + data + ' results</h3><p>That\'s too many: type some more letters to narrow your search, or <a href="/tags/">click here to view popular tags.</a></p></div>');
+		//}
+		//else
+		//{
+	    data.SearchResults.reverse();
+
+	     
+
+			for(var x=(data.SearchResults.length - 1); x>=0; x--)
 			{
-				r = a[x--].split('~');
-				results.push(template.replace(/{%POSTDETAIL%}/gi, ((r[6] != '') ? '<img class="link-img" src="/img/lib/crop/' + r[6] + '" alt="" />' : '') + '<h3><a href="/' + r[0] + '/">' + ((r[2] == '') ? r[4] : r[2]) + '</a></h3><p>' + r[3] + '</p>').replace(/{%COMMENTS%}/gi, r[5] + ' comment' + ((r[5] != 1) ? 's' : '')).replace(/{%AUTHOR%}/gi, 'By ' + r[1]));
+			    var jsonDate = new Date(+data.SearchResults[x].Published.replace(/\/Date\((\d+)\)\//, '$1'));
+			    results.push(template.replace(/{%POSTDETAIL%}/gi, ((data.SearchResults[x].Thumbnail != '') ? '<img class="link-img" src="/content/img/lib/crop/' + data.SearchResults[x].Thumbnail + '" alt="" />' : '') + '<h3><a href="/' + data.SearchResults[x].Url + '/">' + ((data.SearchResults[x].Title == "") ? jsonDate : data.SearchResults[x].Title) + '</a></h3><p>' + data.SearchResults[x].Body + '</p>').replace(/{%COMMENTS%}/gi, data.SearchResults[x].CommentCount + ' comment' + ((data.SearchResults[x].CommentCount != 1) ? 's' : '')).replace(/{%AUTHOR%}/gi, 'By ' + data.SearchResults[x].Author.Name));
 			}
-		}
+		//}
 
 		$('#contentbuffer').hide();
 		$('#searchresults').html('<p class="postdate">Search Results</p>' + results.join(''));
@@ -67,6 +68,6 @@ $(document).ready(function () {
 
     $('#search #query').attr('autocomplete', 'off')
     			       .bind('focus', function () { if (this.value == this.defaultValue) this.value = ''; })
-	                   .bind('blur', function () { if (this.value == '') this.value = this.defaultValue; });
-    //.bind('keyup', function() { GetResults(this); });
+	                   .bind('blur', function () { if (this.value == '') this.value = this.defaultValue; })
+                       .bind('keyup', function() { GetResults(this); });
 });

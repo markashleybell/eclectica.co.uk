@@ -230,6 +230,7 @@ namespace eclectica.co.uk.Service.Concrete
                     document.Add(new Field("url", e.Url, Field.Store.YES, Field.Index.NOT_ANALYZED));
                     document.Add(new Field("published", e.Published.Ticks.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
                     document.Add(new Field("title", e.Title, Field.Store.YES, Field.Index.ANALYZED));
+                    document.Add(new Field("author", e.Author.Name, Field.Store.YES, Field.Index.NOT_ANALYZED));
                     document.Add(new Field("body", e.Body.StripHtml(), Field.Store.YES, Field.Index.ANALYZED));
                     document.Add(new Field("thumbnail", thumb, Field.Store.YES, Field.Index.NOT_ANALYZED));
                     document.Add(new Field("summary", summary, Field.Store.YES, Field.Index.NOT_ANALYZED));
@@ -269,6 +270,7 @@ namespace eclectica.co.uk.Service.Concrete
                 {
                     Title = document.GetValue("title"),
                     Url = document.GetValue("url"),
+                    Author = new AuthorModel { Name = document.GetValue("author") },
                     Published = new DateTime(document.GetValue<long>("published")),
                     Body = Regex.Replace(document.GetValue("summary"), "(" + _query + ")", "<b>$1</b>", RegexOptions.Singleline | RegexOptions.IgnoreCase),
                     Thumbnail = document.GetValue("thumbnail"),
