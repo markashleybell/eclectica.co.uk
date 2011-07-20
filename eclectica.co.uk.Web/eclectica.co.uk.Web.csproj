@@ -35,10 +35,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\MiniProfiler.1.5\lib\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="MvcMiniProfiler, Version=2.1.4183.14740, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MiniProfiler.1.3\lib\MvcMiniProfiler.dll</HintPath>
+    <Reference Include="MvcMiniProfiler, Version=1.6.0.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MiniProfiler.1.6\lib\MvcMiniProfiler.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.0.2.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.4.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -134,7 +135,9 @@
     <None Include="Db.config.example" />
     <None Include="Db.config" />
     <Content Include="Views\Web.config" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Entry\RecentEntries.cshtml" />
     <Content Include="Views\Template\About.cshtml" />
     <Content Include="Views\Template\TagIndex.cshtml" />

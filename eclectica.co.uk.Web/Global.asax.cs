@@ -7,6 +7,8 @@ using System.Web.Routing;
 using eclectica.co.uk.Web.Infrastructure;
 using eclectica.co.uk.Service.Configuration;
 using MvcMiniProfiler;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 
 namespace eclectica.co.uk.Web
 {
@@ -115,7 +117,10 @@ namespace eclectica.co.uk.Web
 
         protected void Application_EndRequest()
         {
-            MiniProfiler.Stop();
+            if (Request.IsLocal)
+            {
+                MiniProfiler.Stop();
+            }
         }
     }
 }

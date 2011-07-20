@@ -6,6 +6,8 @@ using eclectica.co.uk.Domain.Extensions;
 using eclectica.co.uk.Domain.Abstract;
 using MvcMiniProfiler.Data;
 using System.Data.SqlServerCe;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity;
 
 namespace eclectica.co.uk.Domain.Concrete
 {
@@ -15,12 +17,6 @@ namespace eclectica.co.uk.Domain.Concrete
 
         public Db Get()
         {
-            // This stuff will not work with EF 4.1 yet due to a bug in the mini profiler code
-            // var sqlConnection = new SqlCeConnection(@"Data Source=E:\Inetpub\myapps\eclectica.co.uk\eclectica.co.uk.Web\App_Data\eclectica.sdf");
-            // var profiledConnection = ProfiledDbConnection.Get(sqlConnection);
-
-            // _database = new Db(profiledConnection);
-
             _database = new Db();
 
             return _database;

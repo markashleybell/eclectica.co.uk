@@ -13,6 +13,10 @@ namespace eclectica.co.uk.Service.Configuration
     {
         public static void InitializeDb()
         {
+            var factory = new SqlCeConnectionFactory("System.Data.SqlServerCe.4.0"); // place your factory here ... can be sql server or whatever 
+            var profiled = new MvcMiniProfiler.Data.ProfiledDbConnectionFactory(factory);
+            Database.DefaultConnectionFactory = profiled;
+
             Database.SetInitializer<Db>(new DbInitializer());
         }
     }
