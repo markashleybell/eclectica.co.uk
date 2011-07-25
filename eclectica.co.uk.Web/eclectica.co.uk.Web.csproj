@@ -132,8 +132,12 @@
     <Content Include="packages.config" />
     <None Include="Settings.config" />
     <None Include="Settings.config.example" />
-    <None Include="Db.config.example" />
-    <None Include="Db.config" />
+    <None Include="Db.config.example">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Db.config">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="Views\Web.config" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

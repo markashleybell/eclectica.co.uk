@@ -6,6 +6,8 @@ using System.Data.Entity.Infrastructure;
 using eclectica.co.uk.Domain.Concrete;
 using eclectica.co.uk.Domain.Entities;
 using System.Data.Entity;
+using System.Configuration;
+using MvcMiniProfiler.Data;
 
 namespace eclectica.co.uk.Service.Configuration
 {
@@ -14,7 +16,10 @@ namespace eclectica.co.uk.Service.Configuration
         public static void InitializeDb()
         {
             var factory = new SqlCeConnectionFactory("System.Data.SqlServerCe.4.0"); // place your factory here ... can be sql server or whatever 
-            var profiled = new MvcMiniProfiler.Data.ProfiledDbConnectionFactory(factory);
+
+            // var factory = new SqlConnectionFactory(ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+
+            var profiled = new ProfiledDbConnectionFactory(factory);
             Database.DefaultConnectionFactory = profiled;
 
             Database.SetInitializer<Db>(new DbInitializer());
