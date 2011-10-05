@@ -37,8 +37,9 @@
     <Reference Include="Lucene.Net">
       <HintPath>..\packages\Lucene.2.9.2.2\lib\Lucene.Net.dll</HintPath>
     </Reference>
-    <Reference Include="mab.lib.SimpleMapper">
-      <HintPath>..\lib\SimpleMapper\mab.lib.SimpleMapper.dll</HintPath>
+    <Reference Include="mab.lib.SimpleMapper, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\mab.lib.SimpleMapper.1.5\lib\mab.lib.SimpleMapper.dll</HintPath>
     </Reference>
     <Reference Include="MvcMiniProfiler, Version=1.6.0.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
