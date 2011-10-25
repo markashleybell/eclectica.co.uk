@@ -3,46 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using eclectica.co.uk.Domain.Concrete;
-using System.Data.Entity;
 using System.Linq.Expressions;
+using System.Data;
+using Dapper;
+using eclectica.co.uk.Domain.Entities;
 
 namespace eclectica.co.uk.Domain.Abstract
 {
     public abstract class RepositoryBase<T> where T : class
     {
-        private readonly IDbSet<T> _dbset;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IDbConnection _connection;
 
-        protected RepositoryBase(IUnitOfWork unitOfWork)
+        protected RepositoryBase(IDbConnection connection)
         {
-            _unitOfWork = unitOfWork;
-            _dbset = _unitOfWork.Database.Set<T>();
+            _connection = connection;
         }
 
-        public virtual IEnumerable<T> All()
+        public IDbConnection Connection
         {
-            return _dbset;
+            get { return _connection; }
         }
 
-        public virtual IEnumerable<T> Query(Expression<Func<T, bool>> filter)
-        {
-            return _dbset.Where(filter);
-        }
-
-        public virtual T Get(long id)
-        {
-            return _dbset.Find(id);
-        }
-
-        public virtual void Add(T entity)
-        {
-            _dbset.Add(entity);
-        }
-
-        public virtual void Remove(long id)
-        {
-            _dbset.Remove(_dbset.Find(id));
-        }
+        public abstract IEnumerable<T> All();
+        public abstract T Get(long id);
+        public abstract void Add(T entity);
+        public abstract void Remove(long id);
 
     }
 }

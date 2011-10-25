@@ -14,12 +14,10 @@ namespace eclectica.co.uk.Service.Concrete
     public class TagServices : ITagServices
     {
         private ITagRepository _tagRepository;
-        private IUnitOfWork _unitOfWork;
 
-        public TagServices(ITagRepository tagRepository, IUnitOfWork unitOfWork)
+        public TagServices(ITagRepository tagRepository)
         {
             _tagRepository = tagRepository;
-            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<TagModel> All()
@@ -73,31 +71,33 @@ namespace eclectica.co.uk.Service.Concrete
 
         public Dictionary<string, List<EntryModel>> GetEntriesForTag(string tagName)
         {
-            var entryDictionary = new Dictionary<string, List<EntryModel>>();
+            //var entryDictionary = new Dictionary<string, List<EntryModel>>();
 
-            var tag = _tagRepository.Query(x => x.TagName == tagName).FirstOrDefault();
+            //var tag = _tagRepository.Query(x => x.TagName == tagName).FirstOrDefault();
 
-            if(tag != null)
-            {
-                foreach (var e in tag.Entries.OrderByDescending(x => x.Published))
-                {
-                    var date = e.Published.ToString("MMMM yyyy");
+            //if(tag != null)
+            //{
+            //    foreach (var e in tag.Entries.OrderByDescending(x => x.Published))
+            //    {
+            //        var date = e.Published.ToString("MMMM yyyy");
 
-                    if (!entryDictionary.ContainsKey(date))
-                        entryDictionary.Add(date, new List<EntryModel>());
+            //        if (!entryDictionary.ContainsKey(date))
+            //            entryDictionary.Add(date, new List<EntryModel>());
 
-                    entryDictionary[date].Add(new EntryModel { 
+            //        entryDictionary[date].Add(new EntryModel { 
 
-                        Title = e.Title,
-                        Published = e.Published,
-                        Url = e.Url,
-                        Body = (e.Title == "") ? e.Body : ""
+            //            Title = e.Title,
+            //            Published = e.Published,
+            //            Url = e.Url,
+            //            Body = (e.Title == "") ? e.Body : ""
 
-                    });
-                }
-            }
+            //        });
+            //    }
+            //}
 
-            return entryDictionary;
+            //return entryDictionary;
+
+            throw new NotImplementedException();
         }
     }
 }

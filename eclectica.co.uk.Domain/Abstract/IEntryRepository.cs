@@ -9,5 +9,6 @@ namespace eclectica.co.uk.Domain.Abstract
     public interface IEntryRepository : IRepository<Entry>
     {
         Entry GetByUrl(string url);
+        IEnumerable<Entry> Page(int start, int count);
     }
 }

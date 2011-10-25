@@ -9,7 +9,6 @@ namespace eclectica.co.uk.Domain.Abstract
     public interface IRepository<T> where T : class
     {
         IEnumerable<T> All();
-        IEnumerable<T> Query(Expression<Func<T, bool>> filter);
         T Get(long id);
         void Add(T entity);
         void Remove(long id);

@@ -10,6 +10,8 @@ using eclectica.co.uk.Domain.Concrete;
 using eclectica.co.uk.Domain.Abstract;
 using eclectica.co.uk.Service.Concrete;
 using eclectica.co.uk.Service.Abstract;
+using System.Data;
+using System.Data.SqlServerCe;
 
 namespace eclectica.co.uk.Web.Infrastructure
 {
@@ -32,10 +34,10 @@ namespace eclectica.co.uk.Web.Infrastructure
                 Bind<IFormsAuthenticationProvider>()
                     .To<FormsAuthenticationProvider>();
 
-                Bind<IUnitOfWork>()
-                    .To<UnitOfWork>()
+                Bind<IDbConnection>()
+                    .To<SqlCeConnection>()
                     .InRequestScope()
-                    .WithConstructorArgument("databaseFactory", new DbFactory());
+                    .WithConstructorArgument("connectionString", ConfigurationManager.ConnectionStrings["Db"].ConnectionString);
 
                 Bind<IEntryRepository>()
                     .To<EntryRepository>();

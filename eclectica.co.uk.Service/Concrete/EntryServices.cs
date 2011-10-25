@@ -17,7 +17,6 @@ using eclectica.co.uk.Service.Extensions;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.QueryParsers;
 using System.Text.RegularExpressions;
-using MvcMiniProfiler;
 
 namespace eclectica.co.uk.Service.Concrete
 {
@@ -26,16 +25,12 @@ namespace eclectica.co.uk.Service.Concrete
         private IEntryRepository _entryRepository;
         private IAuthorRepository _authorRepository;
         private ICommentRepository _commentRepository;
-        private IUnitOfWork _unitOfWork;
 
-        private MiniProfiler profiler = MiniProfiler.Current;
-
-        public EntryServices(IEntryRepository entryRepository, IAuthorRepository authorRepository, ICommentRepository commentRepository, IUnitOfWork unitOfWork)
+        public EntryServices(IEntryRepository entryRepository, IAuthorRepository authorRepository, ICommentRepository commentRepository)
         {
             _entryRepository = entryRepository;
             _authorRepository = authorRepository;
             _commentRepository = commentRepository;
-            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<EntryModel> All()
@@ -50,140 +45,154 @@ namespace eclectica.co.uk.Service.Concrete
 
         public string GetRandomEntryUrl()
         {
-            var entries = (from e in _entryRepository.Query(x => x.Publish == true)
-                           select e.Url).ToList();
+            //var entries = (from e in _entryRepository.Query(x => x.Publish == true)
+            //               select e.Url).ToList();
 
-            int random = new Random().Next(0, entries.Count);
+            //int random = new Random().Next(0, entries.Count);
 
-            return entries[random];
+            //return entries[random];
+
+            throw new NotImplementedException();
         }
 
         public EntryModel GetEntryByUrl(string url)
         {
-            IEnumerable<EntryModel> entryModel = null;
+            //IEnumerable<EntryModel> entryModel = null;
 
-            using(profiler.Step("Get Entry by Url"))
-            {
-                entryModel = from e in _entryRepository.Query(x => x.Url == url && x.Publish == true)
-                             orderby e.Published descending
-                             select new EntryModel
-                             {
-                                 EntryID = e.EntryID,
-                                 Published = e.Published,
-                                 Title = e.Title,
-                                 Body = e.Body,
-                                 Url = e.Url,
-                                 Author = new AuthorModel
-                                 {
-                                     Name = e.Author.Name
-                                 },
-                                 Tags = Mapper.MapList<Tag, TagModel>(e.Tags.ToList()),
-                                 CommentCount = (from c in _commentRepository.All() where c.Entry.EntryID == e.EntryID select c).Count(),
-                                 Comments = Mapper.MapList<Comment, CommentModel>(e.Comments.ToList()),
-                                 Related = (from r in e.Related
-                                            select new EntryModel {
-                                                Title = ((r.Title == "") ? Regex.Matches(r.Body, "<p>(.*?)</p>", RegexOptions.Singleline | RegexOptions.IgnoreCase)[0].Groups[1].Value.StripHtml() : r.Title),
-                                                Url = r.Url,
-                                                Thumbnail = r.Body.GetRelatedThumbnail(r.Title)
-                                            }).ToList()
-                             };
+            //entryModel = from e in _entryRepository.Query(x => x.Url == url && x.Publish == true)
+            //                orderby e.Published descending
+            //                select new EntryModel
+            //                {
+            //                    EntryID = e.EntryID,
+            //                    Published = e.Published,
+            //                    Title = e.Title,
+            //                    Body = e.Body,
+            //                    Url = e.Url,
+            //                    Author = new AuthorModel
+            //                    {
+            //                        Name = e.Author.Name
+            //                    },
+            //                    Tags = Mapper.MapList<Tag, TagModel>(e.Tags.ToList()),
+            //                    CommentCount = (from c in _commentRepository.All() where c.Entry.EntryID == e.EntryID select c).Count(),
+            //                    Comments = Mapper.MapList<Comment, CommentModel>(e.Comments.ToList()),
+            //                    Related = (from r in e.Related
+            //                            select new EntryModel {
+            //                                Title = ((r.Title == "") ? Regex.Matches(r.Body, "<p>(.*?)</p>", RegexOptions.Singleline | RegexOptions.IgnoreCase)[0].Groups[1].Value.StripHtml() : r.Title),
+            //                                Url = r.Url,
+            //                                Thumbnail = r.Body.GetRelatedThumbnail(r.Title)
+            //                            }).ToList()
+            //                };
 
-            }
+            //return entryModel.FirstOrDefault();
 
-            return entryModel.FirstOrDefault();
+            throw new NotImplementedException();
         }
 
         public IEnumerable<EntryModel> Page(int start, int count)
         {
-            var entryModels = from e in _entryRepository.Query(x => x.Publish == true)
-                              orderby e.Published descending
-                              select new EntryModel
-                              {
-                                  EntryID = e.EntryID,
-                                  Published = e.Published,
-                                  Title = e.Title,
-                                  Body = e.Body,
-                                  Url = e.Url,
-                                  Author = new AuthorModel
-                                  {
-                                      Name = e.Author.Name
-                                  },
-                                  Tags = Mapper.MapList<Tag, TagModel>(e.Tags.ToList()),
-                                  CommentCount = (from c in _commentRepository.All() where c.Entry.EntryID == e.EntryID select c).Count()
-                              };
+            //var models = _entryRepository.Query(x => x.Publish == true);
 
-            return entryModels.Skip(start).Take(count);
+            //var entryModels = from e in _entryRepository.Query(x => x.Publish == true)
+            //                  orderby e.Published descending
+            //                  select new EntryModel
+            //                  {
+            //                      EntryID = e.EntryID,
+            //                      Published = e.Published,
+            //                      Title = e.Title,
+            //                      Body = e.Body,
+            //                      Url = e.Url,
+            //                      Author = new AuthorModel
+            //                      {
+            //                          Name = e.Author.Name
+            //                      },
+            //                      Tags = Mapper.MapList<Tag, TagModel>(e.Tags.ToList()),
+            //                      CommentCount = (from c in _commentRepository.All() where c.Entry.EntryID == e.EntryID select c).Count()
+            //                  };
+
+            //return entryModels.Skip(start).Take(count);
+
+            var entryModels = _entryRepository.Page(start, count);
+
+            return Mapper.MapList<Entry, EntryModel>(entryModels.ToList());
         }
 
         public IDictionary<DateTime, int> GetPostCountsPerMonth(int year)
         {
-            var months = (from e in _entryRepository.Query(x => x.Publish == true && x.Published.Year == year)
-                          group e by e.Published.Month into m
-                          select new { Month = m.Key, Count = m.Count() }).ToList();
+            //var months = (from e in _entryRepository.Query(x => x.Publish == true && x.Published.Year == year)
+            //              group e by e.Published.Month into m
+            //              select new { Month = m.Key, Count = m.Count() }).ToList();
 
-            for (var x = 1; x <= 12; x++)
-            {
-                 if(!months.Any(m => m.Month == x)) 
-                     months.Add(new { Month = x, Count = 0 });
-            }
+            //for (var x = 1; x <= 12; x++)
+            //{
+            //     if(!months.Any(m => m.Month == x)) 
+            //         months.Add(new { Month = x, Count = 0 });
+            //}
 
-            return months.OrderBy(x => x.Month).ToDictionary(x => new DateTime(year, x.Month, 1), x => x.Count);
+            //return months.OrderBy(x => x.Month).ToDictionary(x => new DateTime(year, x.Month, 1), x => x.Count);
+
+            throw new NotImplementedException();
         }
 
         public IEnumerable<EntryModel> GetArchivedEntries(int year, int month)
         {
-            var entryModels = from e in _entryRepository.Query(x => x.Publish == true && x.Published.Year == year && x.Published.Month == month)
-                              orderby e.Published descending
-                              select new EntryModel
-                              {
-                                  Title = ((e.Title == "") ? Regex.Matches(e.Body, "<p>(.*?)</p>", RegexOptions.Singleline | RegexOptions.IgnoreCase)[0].Groups[1].Value.StripHtml() : e.Title),
-                                  Url = e.Url,
-                                  Thumbnail = e.Body.GetRelatedThumbnail(e.Title)
-                              };
+            //var entryModels = from e in _entryRepository.Query(x => x.Publish == true && x.Published.Year == year && x.Published.Month == month)
+            //                  orderby e.Published descending
+            //                  select new EntryModel
+            //                  {
+            //                      Title = ((e.Title == "") ? Regex.Matches(e.Body, "<p>(.*?)</p>", RegexOptions.Singleline | RegexOptions.IgnoreCase)[0].Groups[1].Value.StripHtml() : e.Title),
+            //                      Url = e.Url,
+            //                      Thumbnail = e.Body.GetRelatedThumbnail(e.Title)
+            //                  };
 
-            return entryModels.ToList();
+            //return entryModels.ToList();
+
+            throw new NotImplementedException();
         }
 
         public IEnumerable<EntryModel> GetRecentEntries(int count)
         {
-            var entryModels = from e in _entryRepository.Query(x => x.Publish == true)
-                              orderby e.Published descending
-                              select new EntryModel
-                              {
-                                  Url = e.Url,
-                                  Published = e.Published,
-                                  Title = e.Title
-                              };
+            //var entryModels = from e in _entryRepository.Query(x => x.Publish == true)
+            //                  orderby e.Published descending
+            //                  select new EntryModel
+            //                  {
+            //                      Url = e.Url,
+            //                      Published = e.Published,
+            //                      Title = e.Title
+            //                  };
 
-            return entryModels.Take(count);
+            //return entryModels.Take(count);
+
+            throw new NotImplementedException();
         }
 
         public IDictionary<string, List<EntryModel>> GetEntriesForTag(string tag)
         {
-            var entryDictionary = new Dictionary<string, List<EntryModel>>();
+            //var entryDictionary = new Dictionary<string, List<EntryModel>>();
 
-            var entryModels = from e in _entryRepository.Query(x => x.Publish == true)
-                              where e.Tags.Any(t => t.TagName == tag)
-                              orderby e.Published descending
-                              select new EntryModel
-                              {
-                                  Url = e.Url,
-                                  Published = e.Published,
-                                  Title = e.Title,
-                                  Body = (e.Title == "") ? e.Body : ""
-                              };
+            //var entryModels = from e in _entryRepository.Query(x => x.Publish == true)
+            //                  where e.Tags.Any(t => t.TagName == tag)
+            //                  orderby e.Published descending
+            //                  select new EntryModel
+            //                  {
+            //                      Url = e.Url,
+            //                      Published = e.Published,
+            //                      Title = e.Title,
+            //                      Body = (e.Title == "") ? e.Body : ""
+            //                  };
 
-            foreach (var e in entryModels)
-            {
-                var date = e.Published.ToString("MMMM yyyy");
+            //foreach (var e in entryModels)
+            //{
+            //    var date = e.Published.ToString("MMMM yyyy");
 
-                if (!entryDictionary.ContainsKey(date))
-                    entryDictionary.Add(date, new List<EntryModel>());
+            //    if (!entryDictionary.ContainsKey(date))
+            //        entryDictionary.Add(date, new List<EntryModel>());
 
-                entryDictionary[date].Add(e);
-            }
+            //    entryDictionary[date].Add(e);
+            //}
 
-            return entryDictionary;
+            //return entryDictionary;
+
+            throw new NotImplementedException();
         }
 
         public void UpdateEntry(EntryModel entry)
@@ -193,51 +202,53 @@ namespace eclectica.co.uk.Service.Concrete
 
         public void CreateSearchIndex()
         {
-            var indexPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Index");
+            //var indexPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Index");
 
-            var writer = new DirectoryIndexWriter(new DirectoryInfo(indexPath), true);
+            //var writer = new DirectoryIndexWriter(new DirectoryInfo(indexPath), true);
 
-            using (var indexService = new IndexService(writer))
-            {
-                indexService.IndexEntities(_entryRepository.Query(x => x.Publish == true).ToList(), e =>
-                {
+            //using (var indexService = new IndexService(writer))
+            //{
+            //    indexService.IndexEntities(_entryRepository.Query(x => x.Publish == true).ToList(), e =>
+            //    {
 
-                    string body = e.Body;
-                    RegexOptions options = RegexOptions.Singleline | RegexOptions.IgnoreCase;
+            //        string body = e.Body;
+            //        RegexOptions options = RegexOptions.Singleline | RegexOptions.IgnoreCase;
 
-                    string summary = Regex.Replace(Regex.Matches(body, "<p>(.*?)</p>", options)[0].Groups[1].Value, @"<(.|\n)*?>", string.Empty, options);
+            //        string summary = Regex.Replace(Regex.Matches(body, "<p>(.*?)</p>", options)[0].Groups[1].Value, @"<(.|\n)*?>", string.Empty, options);
 
-                    MatchCollection imgElements = Regex.Matches(body, "<img (?:.*?)?src=\"/content/img/lib/(.*?)/(.*?)\\.(jpg|gif)\" (?:.*?)?/>", options);
+            //        MatchCollection imgElements = Regex.Matches(body, "<img (?:.*?)?src=\"/content/img/lib/(.*?)/(.*?)\\.(jpg|gif)\" (?:.*?)?/>", options);
 
-                    string thumb = "";
+            //        string thumb = "";
 
-                    if (imgElements.Count > 0)
-                    {
-                        Match img = imgElements[0];
+            //        if (imgElements.Count > 0)
+            //        {
+            //            Match img = imgElements[0];
 
-                        // If it's a drop image it won't have a small image
-                        if (img.Groups[1].Value == "drop")
-                        {
-                            // Create one on the fly?
-                        }
-                        else
-                        {
-                            thumb = img.Groups[2].Value + "." + img.Groups[3].Value;
-                        }
-                    }
+            //            // If it's a drop image it won't have a small image
+            //            if (img.Groups[1].Value == "drop")
+            //            {
+            //                // Create one on the fly?
+            //            }
+            //            else
+            //            {
+            //                thumb = img.Groups[2].Value + "." + img.Groups[3].Value;
+            //            }
+            //        }
 
-                    var document = new Document();
-                    document.Add(new Field("url", e.Url, Field.Store.YES, Field.Index.NOT_ANALYZED));
-                    document.Add(new Field("published", e.Published.Ticks.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
-                    document.Add(new Field("title", e.Title, Field.Store.YES, Field.Index.ANALYZED));
-                    document.Add(new Field("author", e.Author.Name, Field.Store.YES, Field.Index.NOT_ANALYZED));
-                    document.Add(new Field("body", e.Body.StripHtml(), Field.Store.YES, Field.Index.ANALYZED));
-                    document.Add(new Field("thumbnail", thumb, Field.Store.YES, Field.Index.NOT_ANALYZED));
-                    document.Add(new Field("summary", summary, Field.Store.YES, Field.Index.NOT_ANALYZED));
-                    document.Add(new Field("commentcount", e.Comments.Count.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
-                    return document;
-                });
-            }
+            //        var document = new Document();
+            //        document.Add(new Field("url", e.Url, Field.Store.YES, Field.Index.NOT_ANALYZED));
+            //        document.Add(new Field("published", e.Published.Ticks.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+            //        document.Add(new Field("title", e.Title, Field.Store.YES, Field.Index.ANALYZED));
+            //        document.Add(new Field("author", e.Author.Name, Field.Store.YES, Field.Index.NOT_ANALYZED));
+            //        document.Add(new Field("body", e.Body.StripHtml(), Field.Store.YES, Field.Index.ANALYZED));
+            //        document.Add(new Field("thumbnail", thumb, Field.Store.YES, Field.Index.NOT_ANALYZED));
+            //        document.Add(new Field("summary", summary, Field.Store.YES, Field.Index.NOT_ANALYZED));
+            //        document.Add(new Field("commentcount", e.Comments.Count.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+            //        return document;
+            //    });
+            //}
+
+            throw new NotImplementedException();
         }
 
         public IEnumerable<EntryModel> SearchEntries(string query)

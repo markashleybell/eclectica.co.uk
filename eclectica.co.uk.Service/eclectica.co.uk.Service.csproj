@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\MiniProfiler.1.5\lib\EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Lucene.Net">
       <HintPath>..\packages\Lucene.2.9.2.2\lib\Lucene.Net.dll</HintPath>
     </Reference>
@@ -41,12 +38,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\mab.lib.SimpleMapper.1.5\lib\mab.lib.SimpleMapper.dll</HintPath>
     </Reference>
-    <Reference Include="MvcMiniProfiler, Version=1.6.0.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=4.0.3.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MiniProfiler.1.6\lib\MvcMiniProfiler.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.4.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.2.2.1.4\lib\net40-Full\Ninject.dll</HintPath>
@@ -76,7 +70,6 @@
     <Compile Include="Concrete\TagServices.cs" />
     <Compile Include="Concrete\EntryServices.cs" />
     <Compile Include="Concrete\FormsAuthenticationProvider.cs" />
-    <Compile Include="Configuration\DbInitializer.cs" />
     <Compile Include="Entities\AuthorModel.cs" />
     <Compile Include="Entities\CommentModel.cs" />
     <Compile Include="Entities\EntryModel.cs" />

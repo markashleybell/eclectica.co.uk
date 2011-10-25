@@ -5,10 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using eclectica.co.uk.Web.Infrastructure;
-using eclectica.co.uk.Service.Configuration;
 using MvcMiniProfiler;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 
 namespace eclectica.co.uk.Web
 {
@@ -103,8 +100,6 @@ namespace eclectica.co.uk.Web
             RegisterRoutes(RouteTable.Routes);
 
             ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory());
-
-            Initialization.InitializeDb();
         }
 
         protected void Application_BeginRequest()

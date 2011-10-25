@@ -15,13 +15,11 @@ namespace eclectica.co.uk.Service.Concrete
     {
         private IEntryRepository _entryRepository;
         private ICommentRepository _commentRepository;
-        private IUnitOfWork _unitOfWork;
-
-        public CommentServices(IEntryRepository entryRepository, ICommentRepository commentRepository, IUnitOfWork unitOfWork)
+        
+        public CommentServices(IEntryRepository entryRepository, ICommentRepository commentRepository)
         {
             _entryRepository = entryRepository;
             _commentRepository = commentRepository;
-            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<CommentModel> All()
@@ -50,8 +48,6 @@ namespace eclectica.co.uk.Service.Concrete
             };
 
             entry.Comments.Add(comment);
-
-            _unitOfWork.Commit();
 
             return comment.CommentID;
         }

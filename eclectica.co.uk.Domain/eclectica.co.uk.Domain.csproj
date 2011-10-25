@@ -31,14 +31,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MvcMiniProfiler, Version=1.6.0.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
+    <Reference Include="MvcMiniProfiler, Version=1.9.0.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MiniProfiler.1.6\lib\MvcMiniProfiler.dll</HintPath>
+      <HintPath>..\packages\MiniProfiler.1.9\lib\net40\MvcMiniProfiler.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,20 +50,15 @@
     <Compile Include="Abstract\ILinkRepository.cs" />
     <Compile Include="Abstract\IImageRepository.cs" />
     <Compile Include="Abstract\ICommentRepository.cs" />
-    <Compile Include="Abstract\IDbFactory.cs" />
     <Compile Include="Abstract\IEntryRepository.cs" />
     <Compile Include="Abstract\IRepository.cs" />
-    <Compile Include="Abstract\IUnitOfWork.cs" />
     <Compile Include="Abstract\RepositoryBase.cs" />
     <Compile Include="Concrete\CommentRepository.cs" />
     <Compile Include="Concrete\TagRepository.cs" />
     <Compile Include="Concrete\ImageRepository.cs" />
     <Compile Include="Concrete\LinkRepository.cs" />
     <Compile Include="Concrete\AuthorRepository.cs" />
-    <Compile Include="Concrete\Db.cs" />
-    <Compile Include="Concrete\DbFactory.cs" />
     <Compile Include="Concrete\EntryRepository.cs" />
-    <Compile Include="Concrete\UnitOfWork.cs" />
     <Compile Include="Dapper\SqlMapper.cs" />
     <Compile Include="Entities\Author.cs" />
     <Compile Include="Entities\Comment.cs" />

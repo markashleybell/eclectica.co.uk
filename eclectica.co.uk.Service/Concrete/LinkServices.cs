@@ -14,12 +14,10 @@ namespace eclectica.co.uk.Service.Concrete
     public class LinkServices : ILinkServices
     {
         private ILinkRepository _linkRepository;
-        private IUnitOfWork _unitOfWork;
 
-        public LinkServices(ILinkRepository linkRepository, IUnitOfWork unitOfWork)
+        public LinkServices(ILinkRepository linkRepository)
         {
             _linkRepository = linkRepository;
-            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<LinkModel> All()
