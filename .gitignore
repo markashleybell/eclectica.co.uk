@@ -65,3 +65,4 @@ eclectica.co.uk.Web/Content/Img/Lib/Std/*
 !.gitignore
 _bin_deployableAssemblies/
 Index
+eclectica.co.uk.Domain/Schema/test-db.sqlce

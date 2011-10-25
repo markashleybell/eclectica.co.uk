@@ -13,7 +13,6 @@ namespace eclectica.co.uk.Domain.Entities
         public string Url { get; set; }
         public DateTime Published { get; set; }
         public DateTime Updated { get; set; }
-        [Column(TypeName = "ntext")]
         public string Body { get; set; }
         public string Tweet { get; set; }
         public bool Publish { get; set; }
