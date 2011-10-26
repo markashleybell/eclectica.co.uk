@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using eclectica.co.uk.Service.Abstract;
 using eclectica.co.uk.Web.Models;
 using eclectica.co.uk.Service.Entities;
-using MvcMiniProfiler;
 using eclectica.co.uk.Web.Extensions;
 using System.IO;
 
@@ -15,8 +14,6 @@ namespace eclectica.co.uk.Web.Controllers
     public class TemplateController : BaseController
     {
         public TemplateController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, ILinkServices linkServices) : base(entryServices, commentServices, tagServices, linkServices) { }
-
-        private MiniProfiler profiler = MiniProfiler.Current;
 
         public ActionResult About()
         {
@@ -53,12 +50,9 @@ namespace eclectica.co.uk.Web.Controllers
             {
                 Dictionary<string, List<EntryModel>> entryDictionary;
 
-                using (profiler.Step("Get entries for specific tag (" + tagName + ")"))
-                {
-                    entryDictionary = _tagServices.GetEntriesForTag(tagName);
-                    // This is approx 100x slower - why?
-                    // entryDictionary = _entryServices.GetEntriesForTag(tagName);
-                }
+                entryDictionary = _tagServices.GetEntriesForTag(tagName);
+                // This is approx 100x slower - why?
+                // entryDictionary = _entryServices.GetEntriesForTag(tagName);
 
                 return View("TagEntries", new TagEntriesViewModel
                 { 
@@ -72,11 +66,8 @@ namespace eclectica.co.uk.Web.Controllers
 
                 Dictionary<string, List<TagModel>> tagDictionary;
 
-                using (profiler.Step("Loading all tags (+ use counts)"))
-                {
-                    tagDictionary = _tagServices.GetSortedTags();
-                }
-
+                tagDictionary = _tagServices.GetSortedTags();
+                
                 return View("TagIndex", new TagIndexViewModel
                 {
                     TagDictionary = tagDictionary

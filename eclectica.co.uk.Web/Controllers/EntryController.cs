@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using eclectica.co.uk.Service.Abstract;
 using eclectica.co.uk.Web.Models;
 using eclectica.co.uk.Web.Extensions;
-using MvcMiniProfiler;
 using eclectica.co.uk.Service.Entities;
 using System.Configuration;
 using System.Net;
@@ -19,19 +18,14 @@ namespace eclectica.co.uk.Web.Controllers
     {
         public EntryController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, ILinkServices linkServices) : base(entryServices, commentServices, tagServices, linkServices) { }
 
-        private MiniProfiler profiler = MiniProfiler.Current;
-
         public ActionResult Index(int? page)
         {
             List<EntryModel> entries;
 
             var currentPage = (page.HasValue) ? page.Value : 0;
             var pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["HomePagePostCount"]);
-
-            using(profiler.Step("Loading last 5 entries"))
-            {
-                entries = _entryServices.Page((pageSize * currentPage), pageSize).ToList();
-            }
+            
+            entries = _entryServices.Page((pageSize * currentPage), pageSize).ToList();
 
             return View(new IndexViewModel {
                 Entries = entries,
@@ -45,15 +39,9 @@ namespace eclectica.co.uk.Web.Controllers
             List<EntryModel> entries;
             IDictionary<DateTime, int> months;
 
-            using (profiler.Step("Getting post counts"))
-            {
-                months = _entryServices.GetPostCountsPerMonth(year);
-            }
-
-            using (profiler.Step("Loading archived entries"))
-            {
-                entries = _entryServices.GetArchivedEntries(year, month).ToList();
-            }
+            months = _entryServices.GetPostCountsPerMonth(year);
+            
+            entries = _entryServices.GetArchivedEntries(year, month).ToList();
 
             return View(new ArchiveViewModel { 
                 Date = new DateTime(year, month, 1),

@@ -36,28 +36,31 @@ namespace eclectica.co.uk.Domain.Concrete
         {
             IEnumerable<Entry> entries;
 
-            var ridiculousQuery = "SELECT e.EntryID, e.Title, e.Url, e.Published, e.Updated, CAST(e.Body AS nvarchar(512)), e.Tweet, e.Publish, e.Author_AuthorID, a.AuthorID, a.Name, a.Email, COUNT(c.CommentID) AS CommentCount " +
-                                  "FROM Entries AS e " +
-                                  "LEFT OUTER JOIN Comments AS c ON c.Entry_EntryID = e.EntryID " +
-                                  "LEFT OUTER JOIN Authors AS a ON a.AuthorID = e.Author_AuthorID " +
-                                  "GROUP BY e.EntryID, e.Title, e.Url, e.Published, e.Updated, CAST(e.Body AS nvarchar(512)), e.Tweet, e.Publish, e.Author_AuthorID, a.AuthorID, a.Name, a.Email ";
+            //var sql = "SELECT e.EntryID, e.Title, e.Url, e.Published, e.Updated, CAST(e.Body AS nvarchar(512)) as e.Body, e.Tweet, e.Publish, e.Author_AuthorID, COUNT(c.CommentID) AS CommentCount, a.AuthorID, a.Name, a.Email " +
+            //          "FROM Entries AS e " +
+            //          "LEFT OUTER JOIN Comments AS c ON c.Entry_EntryID = e.EntryID " +
+            //          "LEFT OUTER JOIN Authors AS a ON a.AuthorID = e.Author_AuthorID " +
+            //          "GROUP BY e.EntryID, e.Title, e.Url, e.Published, e.Updated, CAST(e.Body AS nvarchar(512)), e.Tweet, e.Publish, e.Author_AuthorID, a.AuthorID, a.Name, a.Email " + 
+            //          "order by Published desc offset @Offset rows fetch next @Count rows only;";
 
-            var query = "select * from Entries e " +
-                        "left join Authors a on a.AuthorID = e.Author_AuthorID " + 
-                        // "left join Comments c on c.Entry_EntryID = e.EntryID " + 
-                        "order by Published desc offset @Offset rows fetch next @Count rows only;";
+            var sql = "SELECT e.*, c.CommentCount, a.* " +
+                      "FROM Entries AS e " +
+                      "LEFT OUTER JOIN Authors AS a ON a.AuthorID = e.Author_AuthorID " +
+                      "LEFT OUTER JOIN (SELECT Entry_EntryID, COUNT(*) as CommentCount " +
+                      "FROM Comments GROUP BY Entry_EntryID) AS c " +
+                      "ON e.EntryID = c.Entry_EntryID " +
+                      "ORDER BY e.Published DESC OFFSET @Offset ROWS FETCH NEXT @Count ROWS ONLY";
 
             using (base.Connection)
             {
                 base.Connection.Open();
-                entries = base.Connection.Query<Entry, Author, Entry>(query, (entry, author) => { 
+                entries = base.Connection.Query<Entry, Author, Entry>(sql, (entry, author) => { 
                     entry.Author = author;
-                    entry.CommentCount = 3;
                     return entry; 
                 }, new { 
                     Offset = start, 
-                    Count = count 
-                }, splitOn: "AuthorID, CommentCount");
+                    Count = count
+                }, splitOn: "AuthorID");
             }
 
             return entries;
