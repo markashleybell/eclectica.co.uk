@@ -111,9 +111,19 @@ namespace eclectica.co.uk.Service.Concrete
 
             //return entryModels.Skip(start).Take(count);
 
-            var entryModels = _entryRepository.Page(start, count);
+            var entries = _entryRepository.Page(start, count);
 
-            return Mapper.MapList<Entry, EntryModel>(entryModels.ToList());
+            var models = new List<EntryModel>();
+
+            foreach(var entry in entries)
+            {
+                var model = Mapper.Map<Entry, EntryModel>(entry);
+                model.Author = Mapper.Map<Author, AuthorModel>(entry.Author);
+                model.Tags = new List<TagModel>();
+                models.Add(model);
+            }
+
+            return models;
         }
 
         public IDictionary<DateTime, int> GetPostCountsPerMonth(int year)
@@ -162,7 +172,8 @@ namespace eclectica.co.uk.Service.Concrete
 
             //return entryModels.Take(count);
 
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return new List<EntryModel>();
         }
 
         public IDictionary<string, List<EntryModel>> GetEntriesForTag(string tag)
