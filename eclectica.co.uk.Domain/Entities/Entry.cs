@@ -19,6 +19,8 @@ namespace eclectica.co.uk.Domain.Entities
 
         public virtual Author Author { get; set; }
 
+        public int CommentCount { get; set; }
+
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
         public virtual ICollection<Entry> Related { get; set; }
