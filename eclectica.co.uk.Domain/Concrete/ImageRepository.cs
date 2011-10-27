@@ -10,7 +10,7 @@ namespace eclectica.co.uk.Domain.Concrete
 {
     public class ImageRepository : RepositoryBase<Image>, IImageRepository
     {
-        public ImageRepository(IDbConnection connection) : base(connection) { }
+        public ImageRepository(IConnectionFactory connectionFactory) : base(connectionFactory) { }
 
         public override IEnumerable<Image> All()
         {

@@ -87,52 +87,19 @@ namespace eclectica.co.uk.Service.Concrete
 
         public IDictionary<DateTime, int> GetPostCountsPerMonth(int year)
         {
-            //var months = (from e in _entryRepository.Query(x => x.Publish == true && x.Published.Year == year)
-            //              group e by e.Published.Month into m
-            //              select new { Month = m.Key, Count = m.Count() }).ToList();
-
-            //for (var x = 1; x <= 12; x++)
-            //{
-            //     if(!months.Any(m => m.Month == x)) 
-            //         months.Add(new { Month = x, Count = 0 });
-            //}
-
-            //return months.OrderBy(x => x.Month).ToDictionary(x => new DateTime(year, x.Month, 1), x => x.Count);
-
-            throw new NotImplementedException();
+            return _entryRepository.GetPostCounts(year);
         }
 
         public IEnumerable<EntryModel> GetArchivedEntries(int year, int month)
         {
-            //var entryModels = from e in _entryRepository.Query(x => x.Publish == true && x.Published.Year == year && x.Published.Month == month)
-            //                  orderby e.Published descending
-            //                  select new EntryModel
-            //                  {
-            //                      Title = ((e.Title == "") ? Regex.Matches(e.Body, "<p>(.*?)</p>", RegexOptions.Singleline | RegexOptions.IgnoreCase)[0].Groups[1].Value.StripHtml() : e.Title),
-            //                      Url = e.Url,
-            //                      Thumbnail = e.Body.GetRelatedThumbnail(e.Title)
-            //                  };
+            var entries = _entryRepository.Month(month, year);
 
-            //return entryModels.ToList();
-
-            throw new NotImplementedException();
+            return Mapper.MapList<Entry, EntryModel>(entries.ToList());
         }
 
         public IEnumerable<EntryModel> GetRecentEntries(int count)
         {
-            //var entryModels = from e in _entryRepository.Query(x => x.Publish == true)
-            //                  orderby e.Published descending
-            //                  select new EntryModel
-            //                  {
-            //                      Url = e.Url,
-            //                      Published = e.Published,
-            //                      Title = e.Title
-            //                  };
-
-            //return entryModels.Take(count);
-
-            //throw new NotImplementedException();
-            return new List<EntryModel>();
+            return Mapper.MapList<Entry, EntryModel>(_entryRepository.GetLatest(10).ToList());
         }
 
         public IDictionary<string, List<EntryModel>> GetEntriesForTag(string tag)

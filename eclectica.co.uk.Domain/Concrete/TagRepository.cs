@@ -10,7 +10,7 @@ namespace eclectica.co.uk.Domain.Concrete
 {
     public class TagRepository : RepositoryBase<Tag>, ITagRepository
     {
-        public TagRepository(IDbConnection connection) : base(connection) { }
+        public TagRepository(IConnectionFactory connectionFactory) : base(connectionFactory) { }
 
         public override IEnumerable<Tag> All()
         {

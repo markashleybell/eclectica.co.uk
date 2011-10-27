@@ -32,39 +32,49 @@ namespace eclectica.co.uk.Web.Infrastructure
             public override void Load()
             {
                 Bind<IFormsAuthenticationProvider>()
-                    .To<FormsAuthenticationProvider>();
+                    .To<FormsAuthenticationProvider>()
+                    .InRequestScope();
 
-                Bind<IDbConnection>()
-                    .To<SqlCeConnection>()
+                Bind<IConnectionFactory>()
+                    .To<SqlCeConnectionFactory>()
                     .InRequestScope()
                     .WithConstructorArgument("connectionString", ConfigurationManager.ConnectionStrings["Db"].ConnectionString);
 
                 Bind<IEntryRepository>()
-                    .To<EntryRepository>();
+                    .To<EntryRepository>()
+                    .InRequestScope();
 
                 Bind<IAuthorRepository>()
-                    .To<AuthorRepository>();
+                    .To<AuthorRepository>()
+                    .InRequestScope();
 
                 Bind<ITagRepository>()
-                    .To<TagRepository>();
+                    .To<TagRepository>()
+                    .InRequestScope();
 
                 Bind<ILinkRepository>()
-                    .To<LinkRepository>();
+                    .To<LinkRepository>()
+                    .InRequestScope();
 
                 Bind<ICommentRepository>()
-                    .To<CommentRepository>();
+                    .To<CommentRepository>()
+                    .InRequestScope();
 
                 Bind<IEntryServices>()
-                    .To<EntryServices>();
+                    .To<EntryServices>()
+                    .InRequestScope();
 
                 Bind<ICommentServices>()
-                    .To<CommentServices>();
+                    .To<CommentServices>()
+                    .InRequestScope();
 
                 Bind<ITagServices>()
-                    .To<TagServices>();
+                    .To<TagServices>()
+                    .InRequestScope();
 
                 Bind<ILinkServices>()
-                    .To<LinkServices>();
+                    .To<LinkServices>()
+                    .InRequestScope();
             }
         }
     }

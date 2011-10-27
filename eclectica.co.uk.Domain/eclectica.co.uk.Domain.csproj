@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IAuthorRepository.cs" />
+    <Compile Include="Abstract\IConnectionFactory.cs" />
     <Compile Include="Abstract\ITagRepository.cs" />
     <Compile Include="Abstract\ILinkRepository.cs" />
     <Compile Include="Abstract\IImageRepository.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="Abstract\IRepository.cs" />
     <Compile Include="Abstract\RepositoryBase.cs" />
     <Compile Include="Concrete\CommentRepository.cs" />
+    <Compile Include="Concrete\SqlCeConnectionFactory.cs" />
     <Compile Include="Concrete\TagRepository.cs" />
     <Compile Include="Concrete\ImageRepository.cs" />
     <Compile Include="Concrete\LinkRepository.cs" />

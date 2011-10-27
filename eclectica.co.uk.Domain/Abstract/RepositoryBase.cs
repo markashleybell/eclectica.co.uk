@@ -15,16 +15,16 @@ namespace eclectica.co.uk.Domain.Abstract
 {
     public abstract class RepositoryBase<T> where T : class
     {
-        private readonly IDbConnection _connection;
+        private readonly IConnectionFactory _connectionFactory;
 
-        protected RepositoryBase(IDbConnection connection)
+        protected RepositoryBase(IConnectionFactory connectionFactory)
         {
-            _connection = new ProfiledDbConnection((DbConnection)connection, MiniProfiler.Current);
+            _connectionFactory = connectionFactory;
         }
 
-        public IDbConnection Connection
+        public IDbConnection GetOpenConnection()
         {
-            get { return _connection; }
+            return _connectionFactory.GetOpenConnection();
         }
 
         public abstract IEnumerable<T> All();

@@ -10,5 +10,9 @@ namespace eclectica.co.uk.Domain.Abstract
     {
         Entry GetByUrl(string url);
         IEnumerable<Entry> Page(int start, int count);
+        IEnumerable<Entry> Month(int month, int year);
+        IDictionary<DateTime, int> GetPostCounts(int year);
+        IEnumerable<Entry> GetByTag(string tag);
+        IEnumerable<Entry> GetLatest(int count);
     }
 }

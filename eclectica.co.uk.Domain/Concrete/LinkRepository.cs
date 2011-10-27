@@ -10,7 +10,7 @@ namespace eclectica.co.uk.Domain.Concrete
 {
     public class LinkRepository : RepositoryBase<Link>, ILinkRepository
     {
-        public LinkRepository(IDbConnection connection) : base(connection) { }
+        public LinkRepository(IConnectionFactory connectionFactory) : base(connectionFactory) { }
 
         public override IEnumerable<Link> All()
         {

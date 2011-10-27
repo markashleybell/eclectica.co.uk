@@ -10,7 +10,7 @@ namespace eclectica.co.uk.Domain.Concrete
 {
     public class CommentRepository : RepositoryBase<Comment>, ICommentRepository
     {
-        public CommentRepository(IDbConnection connection) : base(connection) { }
+        public CommentRepository(IConnectionFactory connectionFactory) : base(connectionFactory) { }
 
         public override IEnumerable<Comment> All()
         {

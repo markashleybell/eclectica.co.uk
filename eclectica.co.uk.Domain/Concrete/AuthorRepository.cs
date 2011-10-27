@@ -10,7 +10,7 @@ namespace eclectica.co.uk.Domain.Concrete
 {
     public class AuthorRepository : RepositoryBase<Author>, IAuthorRepository
     {
-        public AuthorRepository(IDbConnection connection) : base(connection) { }
+        public AuthorRepository(IConnectionFactory connectionFactory) : base(connectionFactory) { }
 
         public override IEnumerable<Author> All()
         {
