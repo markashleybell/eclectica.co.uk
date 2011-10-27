@@ -45,35 +45,47 @@ namespace eclectica.co.uk.Domain.Concrete
                       "ON e.EntryID = c.Entry_EntryID " +
                       "ORDER BY e.Published DESC OFFSET @Offset ROWS FETCH NEXT @Count ROWS ONLY";
 
-            var tagSql = "SELECT t.* " +
+            var tagSql = "SELECT t.TagID, t.TagName, et.Entry_EntryID as EntryID " +
                          "FROM Tags AS t " + 
                          "INNER JOIN EntryTags AS et ON et.Tag_TagID = t.TagID " +
-                         "WHERE et.Entry_EntryID = @EntryID";
+                         "WHERE et.Entry_EntryID IN @EntryIDs";
 
             IEnumerable<Entry> entries;
-            IEnumerable<Tag> tags;
+            IEnumerable<dynamic> tags;
 
-            using(_profiler.Step("Get entries for page"))
+            using(base.Connection)
             {
-                using(base.Connection)
-                {
-                    base.Connection.Open();
+                base.Connection.Open();
 
+                using(_profiler.Step("Get entries for page"))
+                {
                     // Get the entries for this page
                     entries = base.Connection.Query<Entry, Author, Entry>(sql, (entry, author) => {
                         entry.Author = author;
-                        entry.Tags = base.Connection.Query<Tag>(tagSql, new {
-                            EntryID = entry.EntryID
-                        }).ToList();
                         return entry;
                     }, new {
                         Offset = start,
                         Count = count
                     }, splitOn: "AuthorID");
                 }
+
+                using(_profiler.Step("Get tags"))
+                {
+                    // Get the tags for this page
+                    tags = base.Connection.Query(tagSql, new { EntryIDs = entries.Select(e => e.EntryID).ToArray() });
+                }
             }
 
-            return entries;
+            // Map the anonymous tag objects to proper entities and map to the correct entries
+            return entries.Select(e => {
+                e.Tags = (from t in tags.Where(t => t.EntryID == e.EntryID)
+                          select new Tag {
+                              TagID = t.TagID,
+                              TagName = t.TagName
+                          }).ToList();
+
+                return e;
+            });
         }
 
         public override Entry Get(long id)
