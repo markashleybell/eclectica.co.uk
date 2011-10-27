@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 using System.Data;
 using Dapper;
 using MvcMiniProfiler;
+using System.Text.RegularExpressions;
 
 namespace eclectica.co.uk.Domain.Concrete
 {
@@ -19,7 +20,75 @@ namespace eclectica.co.uk.Domain.Concrete
 
         public Entry GetByUrl(string url)
         {
-            throw new NotImplementedException();
+            var sql = "SELECT e.*, c.CommentCount, a.* " +
+                      "FROM Entries AS e " +
+                      "LEFT OUTER JOIN Authors AS a ON a.AuthorID = e.Author_AuthorID " +
+                      "LEFT OUTER JOIN (SELECT Entry_EntryID, COUNT(*) as CommentCount " +
+                      "FROM Comments GROUP BY Entry_EntryID) AS c " +
+                      "ON e.EntryID = c.Entry_EntryID " +
+                      "WHERE e.Url = @Url AND e.Publish = 1";
+
+            var tagSql = "SELECT t.TagID, t.TagName " +
+                         "FROM Tags AS t " + 
+                         "INNER JOIN EntryTags AS et ON et.Tag_TagID = t.TagID " +
+                         "WHERE et.Entry_EntryID = @EntryID";
+
+            var commentSql = "SELECT c.* " +
+                             "FROM Comments AS c " + 
+                             "WHERE c.Entry_EntryID = @EntryID AND c.Approved = 1";
+
+            var relatedSql = "SELECT e.EntryID, e.Title, e.Url, e.Body " +
+                             "FROM Entries AS e " +
+                             "INNER JOIN EntryEntries AS ee ON ee.Entry_EntryID1 = e.EntryID " +
+                             "WHERE ee.Entry_EntryID = @EntryID AND e.Publish = 1";
+
+            Entry entry;
+
+            using(base.Connection)
+            {
+                base.Connection.Open();
+
+                using(_profiler.Step("Get entry by url"))
+                {
+                    // Get the entry and perform sub-queries for the tags, comments and related entries
+                    entry = base.Connection.Query<Entry, Author, Entry>(sql, (e, a) => {
+                        e.Author = a;
+                        using(_profiler.Step("Get tags for entry")) { e.Tags = base.Connection.Query<Tag>(tagSql, new { EntryID = e.EntryID }).ToList(); }
+                        using(_profiler.Step("Get comments for entry")) { e.Comments = base.Connection.Query<Comment>(commentSql, new { EntryID = e.EntryID }).ToList(); }
+                        using(_profiler.Step("Get related entries for entry"))
+                        {
+                            e.Related = base.Connection.Query<Entry>(relatedSql, new { EntryID = e.EntryID })
+                                                       .Select(x => {
+                                                           x.Thumbnail = GetRelatedThumbnail(x.Body, x.Title);
+                                                           return x;
+                                                       }).ToList();
+                        }
+                        return e;
+                    }, new {
+                        Url = url,
+                    }, splitOn: "AuthorID").FirstOrDefault();
+                }
+            }
+
+            return entry;
+        }
+
+        private static string GetRelatedThumbnail(string body, string title)
+        {
+            MatchCollection matches = Regex.Matches(body, @"\/img/lib/(.*?)/(.*?)\.(jpg|gif)", RegexOptions.Singleline | RegexOptions.IgnoreCase);
+
+            string thumb = (matches.Count > 0) ? matches[0].Groups[2].Value : "";
+            bool drop = (matches.Count > 0 && matches[0].Groups[1].Value == "drop") ? true : false;
+            string ext = (matches.Count > 0) ? matches[0].Groups[3].Value : "";
+            string bg = (matches.Count > 0) ? "lib/" + ((drop) ? "drop" : "crop") + "/" + thumb + "." + ext : "";
+
+            if(bg == "" && body.Contains("<object"))
+                bg = "site/thumb-video.gif";
+
+            if(bg == "")
+                bg = "site/" + ((title == "") ? "thumb-quote" : "thumb-article") + ".gif";
+
+            return bg;
         }
 
         public override IEnumerable<Entry> All()
@@ -60,9 +129,9 @@ namespace eclectica.co.uk.Domain.Concrete
                 using(_profiler.Step("Get entries for page"))
                 {
                     // Get the entries for this page
-                    entries = base.Connection.Query<Entry, Author, Entry>(sql, (entry, author) => {
-                        entry.Author = author;
-                        return entry;
+                    entries = base.Connection.Query<Entry, Author, Entry>(sql, (e, a) => {
+                        e.Author = a;
+                        return e;
                     }, new {
                         Offset = start,
                         Count = count

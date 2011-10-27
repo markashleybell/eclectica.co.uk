@@ -57,60 +57,19 @@ namespace eclectica.co.uk.Service.Concrete
 
         public EntryModel GetEntryByUrl(string url)
         {
-            //IEnumerable<EntryModel> entryModel = null;
+            var entry = _entryRepository.GetByUrl(url);
 
-            //entryModel = from e in _entryRepository.Query(x => x.Url == url && x.Publish == true)
-            //                orderby e.Published descending
-            //                select new EntryModel
-            //                {
-            //                    EntryID = e.EntryID,
-            //                    Published = e.Published,
-            //                    Title = e.Title,
-            //                    Body = e.Body,
-            //                    Url = e.Url,
-            //                    Author = new AuthorModel
-            //                    {
-            //                        Name = e.Author.Name
-            //                    },
-            //                    Tags = Mapper.MapList<Tag, TagModel>(e.Tags.ToList()),
-            //                    CommentCount = (from c in _commentRepository.All() where c.Entry.EntryID == e.EntryID select c).Count(),
-            //                    Comments = Mapper.MapList<Comment, CommentModel>(e.Comments.ToList()),
-            //                    Related = (from r in e.Related
-            //                            select new EntryModel {
-            //                                Title = ((r.Title == "") ? Regex.Matches(r.Body, "<p>(.*?)</p>", RegexOptions.Singleline | RegexOptions.IgnoreCase)[0].Groups[1].Value.StripHtml() : r.Title),
-            //                                Url = r.Url,
-            //                                Thumbnail = r.Body.GetRelatedThumbnail(r.Title)
-            //                            }).ToList()
-            //                };
+            var model = Mapper.Map<Entry, EntryModel>(entry);
+            model.Author = Mapper.Map<Author, AuthorModel>(entry.Author);
+            model.Tags = Mapper.MapList<Tag, TagModel>(entry.Tags.ToList());
+            model.Related = Mapper.MapList<Entry, EntryModel>(entry.Related.ToList());
+            model.Comments = Mapper.MapList<Comment, CommentModel>(entry.Comments.ToList());
 
-            //return entryModel.FirstOrDefault();
-
-            throw new NotImplementedException();
+            return model;
         }
 
         public IEnumerable<EntryModel> Page(int start, int count)
         {
-            //var models = _entryRepository.Query(x => x.Publish == true);
-
-            //var entryModels = from e in _entryRepository.Query(x => x.Publish == true)
-            //                  orderby e.Published descending
-            //                  select new EntryModel
-            //                  {
-            //                      EntryID = e.EntryID,
-            //                      Published = e.Published,
-            //                      Title = e.Title,
-            //                      Body = e.Body,
-            //                      Url = e.Url,
-            //                      Author = new AuthorModel
-            //                      {
-            //                          Name = e.Author.Name
-            //                      },
-            //                      Tags = Mapper.MapList<Tag, TagModel>(e.Tags.ToList()),
-            //                      CommentCount = (from c in _commentRepository.All() where c.Entry.EntryID == e.EntryID select c).Count()
-            //                  };
-
-            //return entryModels.Skip(start).Take(count);
-
             var entries = _entryRepository.Page(start, count);
 
             var models = new List<EntryModel>();
