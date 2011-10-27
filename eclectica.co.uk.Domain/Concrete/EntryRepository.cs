@@ -7,11 +7,14 @@ using eclectica.co.uk.Domain.Entities;
 using System.Linq.Expressions;
 using System.Data;
 using Dapper;
+using MvcMiniProfiler;
 
 namespace eclectica.co.uk.Domain.Concrete
 {
     public class EntryRepository : RepositoryBase<Entry>, IEntryRepository
     {
+        private MiniProfiler _profiler = MiniProfiler.Current;
+
         public EntryRepository(IDbConnection connection) : base(connection) { }
 
         public Entry GetByUrl(string url)
@@ -34,15 +37,6 @@ namespace eclectica.co.uk.Domain.Concrete
 
         public IEnumerable<Entry> Page(int start, int count)
         {
-            IEnumerable<Entry> entries;
-
-            //var sql = "SELECT e.EntryID, e.Title, e.Url, e.Published, e.Updated, CAST(e.Body AS nvarchar(512)) as e.Body, e.Tweet, e.Publish, e.Author_AuthorID, COUNT(c.CommentID) AS CommentCount, a.AuthorID, a.Name, a.Email " +
-            //          "FROM Entries AS e " +
-            //          "LEFT OUTER JOIN Comments AS c ON c.Entry_EntryID = e.EntryID " +
-            //          "LEFT OUTER JOIN Authors AS a ON a.AuthorID = e.Author_AuthorID " +
-            //          "GROUP BY e.EntryID, e.Title, e.Url, e.Published, e.Updated, CAST(e.Body AS nvarchar(512)), e.Tweet, e.Publish, e.Author_AuthorID, a.AuthorID, a.Name, a.Email " + 
-            //          "order by Published desc offset @Offset rows fetch next @Count rows only;";
-
             var sql = "SELECT e.*, c.CommentCount, a.* " +
                       "FROM Entries AS e " +
                       "LEFT OUTER JOIN Authors AS a ON a.AuthorID = e.Author_AuthorID " +
@@ -51,16 +45,32 @@ namespace eclectica.co.uk.Domain.Concrete
                       "ON e.EntryID = c.Entry_EntryID " +
                       "ORDER BY e.Published DESC OFFSET @Offset ROWS FETCH NEXT @Count ROWS ONLY";
 
-            using (base.Connection)
+            var tagSql = "SELECT t.* " +
+                         "FROM Tags AS t " + 
+                         "INNER JOIN EntryTags AS et ON et.Tag_TagID = t.TagID " +
+                         "WHERE et.Entry_EntryID = @EntryID";
+
+            IEnumerable<Entry> entries;
+            IEnumerable<Tag> tags;
+
+            using(_profiler.Step("Get entries for page"))
             {
-                base.Connection.Open();
-                entries = base.Connection.Query<Entry, Author, Entry>(sql, (entry, author) => { 
-                    entry.Author = author;
-                    return entry; 
-                }, new { 
-                    Offset = start, 
-                    Count = count
-                }, splitOn: "AuthorID");
+                using(base.Connection)
+                {
+                    base.Connection.Open();
+
+                    // Get the entries for this page
+                    entries = base.Connection.Query<Entry, Author, Entry>(sql, (entry, author) => {
+                        entry.Author = author;
+                        entry.Tags = base.Connection.Query<Tag>(tagSql, new {
+                            EntryID = entry.EntryID
+                        }).ToList();
+                        return entry;
+                    }, new {
+                        Offset = start,
+                        Count = count
+                    }, splitOn: "AuthorID");
+                }
             }
 
             return entries;

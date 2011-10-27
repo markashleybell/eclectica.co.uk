@@ -7,6 +7,9 @@ using System.Linq.Expressions;
 using System.Data;
 using Dapper;
 using eclectica.co.uk.Domain.Entities;
+using MvcMiniProfiler;
+using MvcMiniProfiler.Data;
+using System.Data.Common;
 
 namespace eclectica.co.uk.Domain.Abstract
 {
@@ -16,7 +19,7 @@ namespace eclectica.co.uk.Domain.Abstract
 
         protected RepositoryBase(IDbConnection connection)
         {
-            _connection = connection;
+            _connection = new ProfiledDbConnection((DbConnection)connection, MiniProfiler.Current);
         }
 
         public IDbConnection Connection
