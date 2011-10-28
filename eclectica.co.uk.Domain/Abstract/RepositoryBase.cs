@@ -16,6 +16,7 @@ namespace eclectica.co.uk.Domain.Abstract
     public abstract class RepositoryBase<T> where T : class
     {
         private readonly IConnectionFactory _connectionFactory;
+        protected MiniProfiler _profiler = MiniProfiler.Current;
 
         protected RepositoryBase(IConnectionFactory connectionFactory)
         {

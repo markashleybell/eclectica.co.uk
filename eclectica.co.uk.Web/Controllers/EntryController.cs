@@ -97,6 +97,7 @@ namespace eclectica.co.uk.Web.Controllers
         {
             var url = _entryServices.GetRandomEntryUrl();
 
+            //return View("Debug");
             return Redirect("/" + url);
         }
 

@@ -48,9 +48,9 @@ namespace eclectica.co.uk.Web.Controllers
         {
             if (tagName != null) // Show list of entries for this tag
             {
-                Dictionary<string, List<EntryModel>> entryDictionary;
+                IDictionary<string, List<EntryModel>> entryDictionary;
 
-                entryDictionary = _tagServices.GetEntriesForTag(tagName);
+                entryDictionary = _entryServices.GetEntriesForTag(tagName);
                 // This is approx 100x slower - why?
                 // entryDictionary = _entryServices.GetEntriesForTag(tagName);
 

@@ -11,7 +11,5 @@ namespace eclectica.co.uk.Service.Abstract
         IEnumerable<TagModel> All();
 
         Dictionary<string, List<TagModel>> GetSortedTags();
-
-        Dictionary<string, List<EntryModel>> GetEntriesForTag(string tagName);
     }
 }

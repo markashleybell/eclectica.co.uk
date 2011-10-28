@@ -9,6 +9,6 @@ namespace eclectica.co.uk.Web.Models
     public class TagEntriesViewModel
     {
         public string TagName { get; set; }
-        public Dictionary<string, List<EntryModel>> EntryDictionary { get; set; }
+        public IDictionary<string, List<EntryModel>> EntryDictionary { get; set; }
     }
 }

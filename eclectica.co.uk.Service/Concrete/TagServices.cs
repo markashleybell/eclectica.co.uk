@@ -48,12 +48,12 @@ namespace eclectica.co.uk.Service.Concrete
             var tagDictionary = new Dictionary<string, List<TagModel>>();
 
             var tagModels = from t in _tagRepository.All()
-                            where t.Entries.Count > 0
+                            where t.UseCount > 0
                             orderby t.TagName
                             select new TagModel {
                                 TagName = t.TagName,
-                                UseCount = t.Entries.Count,
-                                Class = GetTagClass(t.Entries.Count)
+                                UseCount = t.UseCount,
+                                Class = GetTagClass(t.UseCount)
                             };
 
             foreach (var t in tagModels)
@@ -67,37 +67,6 @@ namespace eclectica.co.uk.Service.Concrete
             }
 
             return tagDictionary;
-        }
-
-        public Dictionary<string, List<EntryModel>> GetEntriesForTag(string tagName)
-        {
-            //var entryDictionary = new Dictionary<string, List<EntryModel>>();
-
-            //var tag = _tagRepository.Query(x => x.TagName == tagName).FirstOrDefault();
-
-            //if(tag != null)
-            //{
-            //    foreach (var e in tag.Entries.OrderByDescending(x => x.Published))
-            //    {
-            //        var date = e.Published.ToString("MMMM yyyy");
-
-            //        if (!entryDictionary.ContainsKey(date))
-            //            entryDictionary.Add(date, new List<EntryModel>());
-
-            //        entryDictionary[date].Add(new EntryModel { 
-
-            //            Title = e.Title,
-            //            Published = e.Published,
-            //            Url = e.Url,
-            //            Body = (e.Title == "") ? e.Body : ""
-
-            //        });
-            //    }
-            //}
-
-            //return entryDictionary;
-
-            throw new NotImplementedException();
         }
     }
 }

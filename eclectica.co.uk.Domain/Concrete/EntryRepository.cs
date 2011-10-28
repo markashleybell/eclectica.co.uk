@@ -15,8 +15,6 @@ namespace eclectica.co.uk.Domain.Concrete
 {
     public class EntryRepository : RepositoryBase<Entry>, IEntryRepository
     {
-        private MiniProfiler _profiler = MiniProfiler.Current;
-
         public EntryRepository(IConnectionFactory connectionFactory) : base(connectionFactory) { }
 
         public Entry GetByUrl(string url)
@@ -81,7 +79,8 @@ namespace eclectica.co.uk.Domain.Concrete
             {
                 using(_profiler.Step("Get random entry ID"))
                 {
-                    var allUrls = conn.Query<string>("SELECT e.Url from Entries AS e ORDER BY e.EntryID").ToArray();
+                    // Pull out all the entry urls in the database and grab one at random
+                    var allUrls = conn.Query<string>("SELECT e.Url from Entries AS e WHERE e.Publish = 1 ORDER BY e.EntryID").ToArray();
                     var rnd = new Random();
 
                     url = allUrls[rnd.Next(0, allUrls.Length - 1)];
@@ -122,7 +121,10 @@ namespace eclectica.co.uk.Domain.Concrete
 
             using (var conn = base.GetOpenConnection())
             {
-                entries = conn.Query<Entry>("select Title, Url, Published, Updated, Body from Entries");
+                using (_profiler.Step("Get all entries"))
+                {
+                    entries = conn.Query<Entry>("SELECT e.Title, e.Url, e.Published, e.Updated, e.Body FROM Entries AS e WHERE e.Publish = 1");
+                }
             }
 
             return entries;
@@ -231,7 +233,24 @@ namespace eclectica.co.uk.Domain.Concrete
 
         public IEnumerable<Entry> GetByTag(string tag)
         {
-            return new List<Entry>();
+            var sql = "SELECT e.Title, e.Published, e.Body, e.Url " +
+                      "FROM Entries AS e " +
+                      "INNER JOIN EntryTags AS et ON et.Entry_EntryID = e.EntryID " +
+                      "INNER JOIN Tags AS t ON t.TagID = et.Tag_TagID " +
+                      "WHERE t.TagName = @Tag";
+
+            IEnumerable<Entry> entries;
+
+            using (var conn = base.GetOpenConnection())
+            {
+                using (_profiler.Step("Get entries for tag '" + tag + "'"))
+                {
+                    // Get the entries for this tag
+                    entries = conn.Query<Entry>(sql, new { Tag = tag });
+                }
+            }
+
+            return entries;
         }
 
         public IDictionary<DateTime, int> GetPostCounts(int year)
