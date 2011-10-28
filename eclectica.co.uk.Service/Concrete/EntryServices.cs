@@ -45,14 +45,7 @@ namespace eclectica.co.uk.Service.Concrete
 
         public string GetRandomEntryUrl()
         {
-            //var entries = (from e in _entryRepository.Query(x => x.Publish == true)
-            //               select e.Url).ToList();
-
-            //int random = new Random().Next(0, entries.Count);
-
-            //return entries[random];
-
-            throw new NotImplementedException();
+            return _entryRepository.GetRandomEntryUrl();
         }
 
         public EntryModel GetEntryByUrl(string url)

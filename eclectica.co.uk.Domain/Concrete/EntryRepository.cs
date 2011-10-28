@@ -73,6 +73,25 @@ namespace eclectica.co.uk.Domain.Concrete
             return entry;
         }
 
+        public string GetRandomEntryUrl()
+        {
+            string url = null;
+
+            using(var conn = base.GetOpenConnection())
+            {
+                using(_profiler.Step("Get random entry ID"))
+                {
+                    var allUrls = conn.Query<string>("SELECT e.Url from Entries AS e ORDER BY e.EntryID").ToArray();
+                    var rnd = new Random();
+
+                    url = allUrls[rnd.Next(0, allUrls.Length - 1)];
+                }
+
+            }
+
+            return url;
+        }
+
         private string GetCaption(string title, string body)
         {
             var options = RegexOptions.Singleline | RegexOptions.IgnoreCase;

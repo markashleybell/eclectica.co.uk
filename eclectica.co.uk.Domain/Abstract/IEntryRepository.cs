@@ -9,6 +9,7 @@ namespace eclectica.co.uk.Domain.Abstract
     public interface IEntryRepository : IRepository<Entry>
     {
         Entry GetByUrl(string url);
+        string GetRandomEntryUrl();
         IEnumerable<Entry> Page(int start, int count);
         IEnumerable<Entry> Month(int month, int year);
         IDictionary<DateTime, int> GetPostCounts(int year);
