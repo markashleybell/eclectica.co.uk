@@ -48,24 +48,26 @@ namespace eclectica.co.uk.Domain.Concrete
             {
                 using(_profiler.Step("Get entry by url"))
                 {
-                    // Get the entry and perform sub-queries for the tags, comments and related entries
+                    // Get the entry details
                     entry = conn.Query<Entry, Author, Entry>(sql, (e, a) => {
                         e.Author = a;
-                        using (_profiler.Step("Get tags for entry")) { e.Tags = conn.Query<Tag>(tagSql, new { EntryID = e.EntryID }).ToList(); }
-                        using (_profiler.Step("Get comments for entry")) { e.Comments = conn.Query<Comment>(commentSql, new { EntryID = e.EntryID }).ToList(); }
-                        using (_profiler.Step("Get related entries for entry"))
-                        {
-                            e.Related = conn.Query<Entry>(relatedSql, new { EntryID = e.EntryID })
-                                            .Select(x => {
-                                                x.Title = GetCaption(x.Title, x.Body);
-                                                x.Thumbnail = GetThumbnail(x.Title, x.Body);
-                                                return x;
-                                            }).ToList();
-                        }
                         return e;
                     }, new {
                         Url = url,
                     }, splitOn: "AuthorID").FirstOrDefault();
+                }
+
+                // Perform queries for the tags, comments and related entries
+                using (_profiler.Step("Get tags for entry")) { entry.Tags = conn.Query<Tag>(tagSql, new { EntryID = entry.EntryID }).ToList(); }
+                using (_profiler.Step("Get comments for entry")) { entry.Comments = conn.Query<Comment>(commentSql, new { EntryID = entry.EntryID }).ToList(); }
+                using (_profiler.Step("Get related entries for entry"))
+                {
+                    entry.Related = conn.Query<Entry>(relatedSql, new { EntryID = entry.EntryID })
+                                        .Select(x => {
+                                            x.Title = GetCaption(x.Title, x.Body);
+                                            x.Thumbnail = GetThumbnail(x.Title, x.Body);
+                                            return x;
+                                        }).ToList();
                 }
             }
 
