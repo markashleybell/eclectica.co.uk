@@ -123,7 +123,12 @@ namespace eclectica.co.uk.Domain.Concrete
             {
                 using (_profiler.Step("Get all entries"))
                 {
-                    entries = conn.Query<Entry>("SELECT e.Title, e.Url, e.Published, e.Updated, e.Body FROM Entries AS e WHERE e.Publish = 1");
+                    entries = conn.Query<Entry>("SELECT e.* FROM Entries AS e")
+                                  .Select(x => {
+                                      x.Title = GetCaption(x.Title, x.Body);
+                                      x.Thumbnail = GetThumbnail(x.Title, x.Body);
+                                      return x;
+                                  }).ToList();
                 }
             }
 

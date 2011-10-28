@@ -21,7 +21,9 @@ namespace eclectica.co.uk.Web.Controllers
         [Authorize]
         public ActionResult Posts()
         {
-            return View();
+            return View(new AdminPostsViewModel { 
+                Entries = _entryServices.All().ToList()
+            });
         }
 
         [Authorize]
