@@ -4,20 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using MvcMiniProfiler.Data;
-using System.Data.SqlServerCe;
 using MvcMiniProfiler;
 using System.Data.Common;
 using eclectica.co.uk.Domain.Abstract;
+using System.Data.SqlClient;
 using eclectica.co.uk.Domain.Entities;
 
 namespace eclectica.co.uk.Domain.Concrete
 {
-    public class SqlCeConnectionFactory : IConnectionFactory
+    public class SqlConnectionFactory : IConnectionFactory
     {
         private string _connectionString;
         private DbServerType _serverType;
 
-        public SqlCeConnectionFactory(string connectionString, DbServerType serverType)
+        public SqlConnectionFactory(string connectionString, DbServerType serverType)
         {
             _connectionString = connectionString;
             _serverType = serverType;
@@ -27,7 +27,7 @@ namespace eclectica.co.uk.Domain.Concrete
 
         public IDbConnection GetOpenConnection()
         {
-            var connection = new ProfiledDbConnection((DbConnection)new SqlCeConnection(_connectionString), MiniProfiler.Current);
+            var connection = new ProfiledDbConnection((DbConnection)new SqlConnection(_connectionString), MiniProfiler.Current);
             connection.Open();
 
             return connection;

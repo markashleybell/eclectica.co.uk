@@ -28,6 +28,11 @@ namespace eclectica.co.uk.Domain.Abstract
             return _connectionFactory.GetOpenConnection();
         }
 
+        public DbServerType ServerType
+        {
+            get { return _connectionFactory.ServerType; }
+        }
+
         public abstract IEnumerable<T> All();
         public abstract T Get(long id);
         public abstract void Add(T entity);

@@ -54,6 +54,7 @@
     <Compile Include="Abstract\IRepository.cs" />
     <Compile Include="Abstract\RepositoryBase.cs" />
     <Compile Include="Concrete\CommentRepository.cs" />
+    <Compile Include="Concrete\SqlConnectionFactory.cs" />
     <Compile Include="Concrete\SqlCeConnectionFactory.cs" />
     <Compile Include="Concrete\TagRepository.cs" />
     <Compile Include="Concrete\ImageRepository.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Dapper\SqlMapper.cs" />
     <Compile Include="Entities\Author.cs" />
     <Compile Include="Entities\Comment.cs" />
+    <Compile Include="Entities\DbServerType.cs" />
     <Compile Include="Entities\Image.cs" />
     <Compile Include="Entities\Link.cs" />
     <Compile Include="Entities\Entry.cs" />

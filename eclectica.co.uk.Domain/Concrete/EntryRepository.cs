@@ -10,6 +10,7 @@ using Dapper;
 using MvcMiniProfiler;
 using System.Text.RegularExpressions;
 using System.Collections;
+using MvcMiniProfiler.Data;
 
 namespace eclectica.co.uk.Domain.Concrete
 {
@@ -137,13 +138,24 @@ namespace eclectica.co.uk.Domain.Concrete
 
         public IEnumerable<Entry> Page(int start, int count)
         {
-            var sql = "SELECT e.*, c.CommentCount, a.* " +
-                      "FROM Entries AS e " +
-                      "LEFT OUTER JOIN Authors AS a ON a.AuthorID = e.Author_AuthorID " +
-                      "LEFT OUTER JOIN (SELECT Entry_EntryID, COUNT(*) as CommentCount " +
-                      "FROM Comments GROUP BY Entry_EntryID) AS c " +
-                      "ON e.EntryID = c.Entry_EntryID " +
-                      "ORDER BY e.Published DESC OFFSET @Offset ROWS FETCH NEXT @Count ROWS ONLY";
+            var entrySql = "SELECT e.*, c.CommentCount, a.* " +
+                           "FROM Entries AS e " +
+                           "LEFT OUTER JOIN Authors AS a ON a.AuthorID = e.Author_AuthorID " +
+                           "LEFT OUTER JOIN (SELECT Entry_EntryID, COUNT(*) as CommentCount " +
+                           "FROM Comments GROUP BY Entry_EntryID) AS c " +
+                           "ON e.EntryID = c.Entry_EntryID " +
+                           "ORDER BY e.Published DESC OFFSET @Offset ROWS FETCH NEXT @Count ROWS ONLY";
+
+            var legacySql = "SELECT  * FROM ( " +
+                                "SELECT e.*, c.CommentCount, a.*, ROW_NUMBER() OVER ( ORDER BY e.Published DESC ) AS RowNum " +
+                                "FROM Entries AS e " +
+                                "LEFT OUTER JOIN Authors AS a ON a.AuthorID = e.Author_AuthorID " +
+                                "LEFT OUTER JOIN (SELECT Entry_EntryID, COUNT(*) as CommentCount " +
+                                "FROM Comments GROUP BY Entry_EntryID) AS c " +
+                                "ON e.EntryID = c.Entry_EntryID " +
+                            ") AS RowConstrainedResult " +
+                            "WHERE RowNum >= @Offset AND RowNum < (@Offset + @Count) " +
+                            "ORDER BY RowNum";
 
             var tagSql = "SELECT t.TagID, t.TagName, et.Entry_EntryID as EntryID " +
                          "FROM Tags AS t " + 
@@ -153,12 +165,16 @@ namespace eclectica.co.uk.Domain.Concrete
             IEnumerable<Entry> entries;
             IEnumerable<dynamic> tags;
 
+            // Hack to switch pagination SQL if Database doesn't support OFFSET/FETCH NEXT
+            if(base.ServerType == DbServerType.SQL2008)
+                entrySql = legacySql;
+
             using(var conn = base.GetOpenConnection())
             {
                 using(_profiler.Step("Get entries for page"))
                 {
                     // Get the entries for this page
-                    entries = conn.Query<Entry, Author, Entry>(sql, (e, a) => {
+                    entries = conn.Query<Entry, Author, Entry>(entrySql, (e, a) => {
                         e.Author = a;
                         return e;
                     }, new {

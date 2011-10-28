@@ -12,6 +12,7 @@ using eclectica.co.uk.Service.Concrete;
 using eclectica.co.uk.Service.Abstract;
 using System.Data;
 using System.Data.SqlServerCe;
+using eclectica.co.uk.Domain.Entities;
 
 namespace eclectica.co.uk.Web.Infrastructure
 {
@@ -35,10 +36,24 @@ namespace eclectica.co.uk.Web.Infrastructure
                     .To<FormsAuthenticationProvider>()
                     .InRequestScope();
 
-                Bind<IConnectionFactory>()
-                    .To<SqlCeConnectionFactory>()
-                    .InRequestScope()
-                    .WithConstructorArgument("connectionString", ConfigurationManager.ConnectionStrings["Db"].ConnectionString);
+                var serverType = ConfigurationManager.AppSettings["ServerType"];
+
+                if(serverType == "SQLCE4")
+                {
+                    Bind<IConnectionFactory>()
+                        .To<SqlCeConnectionFactory>()
+                        .InRequestScope()
+                        .WithConstructorArgument("connectionString", ConfigurationManager.ConnectionStrings["SqlCe"].ConnectionString)
+                        .WithConstructorArgument("serverType", DbServerType.SQLCE4);
+                }
+                else
+                {
+                    Bind<IConnectionFactory>()
+                        .To<SqlConnectionFactory>()
+                        .InRequestScope()
+                        .WithConstructorArgument("connectionString", ConfigurationManager.ConnectionStrings["Sql"].ConnectionString)
+                        .WithConstructorArgument("serverType", (serverType == "SQL2008") ? DbServerType.SQL2008 : DbServerType.SQL2012);
+                }
 
                 Bind<IEntryRepository>()
                     .To<EntryRepository>()

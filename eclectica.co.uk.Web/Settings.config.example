@@ -10,4 +10,5 @@
   <add key="TwitterAccessTokenSecret" value="ACCESSTOKENSECRET"/>
   <add key="TwitterAnywhereAPIKey" value="ANYWHEREAPIKEY"/>
   <add key="GoogleApiKey" value="GOOGLEAPIKEY" />
+  <add key="ServerType" value="SqlCe" />
 </appSettings>
