@@ -5,6 +5,8 @@ using System.Text;
 using eclectica.co.uk.Domain.Abstract;
 using eclectica.co.uk.Domain.Entities;
 using System.Data;
+using MvcMiniProfiler;
+using Dapper;
 
 namespace eclectica.co.uk.Domain.Concrete
 {
@@ -14,7 +16,17 @@ namespace eclectica.co.uk.Domain.Concrete
 
         public override IEnumerable<Link> All()
         {
-            throw new NotImplementedException();
+            IEnumerable<Link> tags;
+
+            using (var conn = base.GetOpenConnection())
+            {
+                using (_profiler.Step("Get all links"))
+                {
+                    tags = conn.Query<Link>("SELECT l.* FROM Links AS l");
+                }
+            }
+
+            return tags;
         }
 
         public override Link Get(long id)
