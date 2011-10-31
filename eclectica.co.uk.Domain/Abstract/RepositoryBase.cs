@@ -36,6 +36,7 @@ namespace eclectica.co.uk.Domain.Abstract
         public abstract IEnumerable<T> All();
         public abstract T Get(long id);
         public abstract void Add(T entity);
+        public abstract void Update(T entity);
         public abstract void Remove(long id);
 
     }

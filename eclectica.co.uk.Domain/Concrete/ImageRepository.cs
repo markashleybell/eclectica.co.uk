@@ -5,6 +5,8 @@ using System.Text;
 using eclectica.co.uk.Domain.Abstract;
 using eclectica.co.uk.Domain.Entities;
 using System.Data;
+using MvcMiniProfiler;
+using Dapper;
 
 namespace eclectica.co.uk.Domain.Concrete
 {
@@ -14,7 +16,17 @@ namespace eclectica.co.uk.Domain.Concrete
 
         public override IEnumerable<Image> All()
         {
-            throw new NotImplementedException();
+            IEnumerable<Image> images;
+
+            using (var conn = base.GetOpenConnection())
+            {
+                using (_profiler.Step("Get all images"))
+                {
+                    images = conn.Query<Image>("SELECT i.* FROM Images AS i ORDER BY i.ImageID DESC").ToList();
+                }
+            }
+
+            return images;
         }
 
         public override Image Get(long id)
@@ -23,6 +35,11 @@ namespace eclectica.co.uk.Domain.Concrete
         }
 
         public override void Add(Image entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Update(Image entity)
         {
             throw new NotImplementedException();
         }

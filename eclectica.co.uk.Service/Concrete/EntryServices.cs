@@ -25,12 +25,14 @@ namespace eclectica.co.uk.Service.Concrete
         private IEntryRepository _entryRepository;
         private IAuthorRepository _authorRepository;
         private ICommentRepository _commentRepository;
+        private IImageRepository _imageRepository;
 
-        public EntryServices(IEntryRepository entryRepository, IAuthorRepository authorRepository, ICommentRepository commentRepository)
+        public EntryServices(IEntryRepository entryRepository, IAuthorRepository authorRepository, ICommentRepository commentRepository, IImageRepository imageRepository)
         {
             _entryRepository = entryRepository;
             _authorRepository = authorRepository;
             _commentRepository = commentRepository;
+            _imageRepository = imageRepository;
         }
 
         public IEnumerable<EntryModel> All()
@@ -40,7 +42,12 @@ namespace eclectica.co.uk.Service.Concrete
 
         public EntryModel GetEntry(int id)
         {
-            return Mapper.Map<Entry, EntryModel>(_entryRepository.Get(id));
+            var entry = _entryRepository.Get(id);
+
+            var model = Mapper.Map<Entry, EntryModel>(entry);
+            model.Tags = Mapper.MapList<Tag, TagModel>(entry.Tags.ToList());
+
+            return model;
         }
 
         public string GetRandomEntryUrl()
@@ -76,6 +83,11 @@ namespace eclectica.co.uk.Service.Concrete
             }
 
             return models;
+        }
+
+        public IEnumerable<ImageModel> GetImages()
+        {
+            return Mapper.MapList<Image, ImageModel>(_imageRepository.All().ToList());
         }
 
         public IDictionary<DateTime, int> GetPostCountsPerMonth(int year)
@@ -122,9 +134,18 @@ namespace eclectica.co.uk.Service.Concrete
             return entryDictionary;
         }
 
-        public void UpdateEntry(EntryModel entry)
+        public void AddEntry(EntryModel entry)
         {
 
+        }
+
+        public void UpdateEntry(EntryModel model)
+        {
+            var entry = _entryRepository.Get(model.EntryID);
+
+            Mapper.CopyProperties<EntryModel, Entry>(model, entry);
+
+            _entryRepository.Update(entry);
         }
 
         public void CreateSearchIndex()

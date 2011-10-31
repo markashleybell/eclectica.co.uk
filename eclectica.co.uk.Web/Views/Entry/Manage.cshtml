@@ -1,4 +1,4 @@
-﻿@model eclectica.co.uk.Web.Models.AdminPostsViewModel
+﻿@model eclectica.co.uk.Web.Models.AdminEntriesViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -29,13 +29,15 @@
             {
                 <tr@((entry.Publish == true) ? "" : " class=\"unpublished\"")>
                     <td>@entry.Title</td>
-                    <td><a onclick="window.open(this.href); return false;" href="@entry.Published.ToString("/yyyy/MM/dd/")@entry.Url/">Show</a> &raquo;</td>
-                    <td><a href="/admin/post/edit/@entry.EntryID">Edit</a> | <a class="delete" href="/admin/post/delete/@entry.EntryID">Delete</a></td>
+                    <td><a onclick="window.open(this.href); return false;" href="/@entry.Url/">Show</a> &raquo;</td>
+                    <td>@Html.ActionLink("Edit", "Edit", new { id = entry.EntryID }, null) | @Html.ActionLink("Delete", "Delete", new { id = entry.EntryID }, null)</td>
                     <td>
                         @if(entry.Publish) {
-                        <a href="/admin/post/unpublish/@entry.EntryID">Unpublish</a>
-                        }else{
-                        <a href="/admin/post/publish/@entry.EntryID">Publish</a>
+                            @Html.ActionLink("Publish", "Publish", new { id = entry.EntryID }, null)
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Unpublish", "Unpublish", new { id = entry.EntryID }, null)
                         }
                     </td>
                 </tr>

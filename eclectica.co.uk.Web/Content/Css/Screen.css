@@ -194,7 +194,7 @@ td a { border: none; }
 
 input, select, textarea { font-family: "Courier New", Courier, monospace; font-size: 12px; }
 
-#Body { width: 600px; }
+#Entry_Body { width: 600px; }
 
 p span#insertlinks { width: 640px; padding-left: 155px; font-family: Arial, Helvetica, Sans-Serif; font-size: 9px; }
 

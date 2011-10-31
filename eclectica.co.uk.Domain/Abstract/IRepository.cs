@@ -11,6 +11,7 @@ namespace eclectica.co.uk.Domain.Abstract
         IEnumerable<T> All();
         T Get(long id);
         void Add(T entity);
+        void Update(T entity);
         void Remove(long id);
     }
 }

@@ -1,4 +1,5 @@
 ﻿@using System.Configuration;
+@using MvcMiniProfiler;
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -15,7 +16,8 @@
 
 		<link rel="alternate" type="application/rss+xml" title="Latest 10 Items" href="http://eclectica.co.uk/feed/main/" />
 
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+        @MiniProfiler.RenderIncludes(position: RenderPosition.Right, showTrivial: true, showTimeWithChildren: false)
 
         @RenderSection("head", false)
 	</head>
@@ -26,7 +28,10 @@
         </div>
 		<div id="content">
 
+            <h1 class="postdate">Eclectica CMS</h1>
+	        <div class="post">
 		    @RenderSection("content", false)
+            </div>
 
 		</div>
 		<div id="navigation">
@@ -37,13 +42,16 @@
 		        <h3>Navigate</h3>
 		        <div>
 		            <ul id="mainnav">
-		                <li><a href="/admin/posts">Edit Posts</a></li>
-		                <li><a href="/admin/comments">Edit Comments</a></li>
-		                <li><a href="/admin/links">Edit Links</a></li>
+		                <li>@Html.ActionLink("Manage Entries", "Manage", "Entry")</li>
+		                <li>@Html.ActionLink("Manage Comments", "Manage", "Comment")</li>
+		                <li>@Html.ActionLink("Manage Links", "Manage", "Link")</li>
 	                </ul>
 	            </div>
             }
 	        <div class="nclr">&nbsp;</div>
+
+            @RenderSection("sidebar", false)
+
 		</div>
 		<div class="clr">&nbsp;</div>
 		<div id="footer">
@@ -51,36 +59,6 @@
         </div>
 		<script type="text/javascript" src="@ConfigurationManager.AppSettings["CDN1"]/scripts/load.js"></script>
 		<script type="text/javascript" src="@ConfigurationManager.AppSettings["CDN1"]/scripts/search.js"></script>
-		@if (!Convert.ToBoolean(ConfigurationManager.AppSettings["LocalTestMode"]))
-  {
-      
-            <script type="text/javascript">
 
-                var _gaq = _gaq || [];
-                _gaq.push(['_setAccount', 'UA-7512787-2']);
-                _gaq.push(['_trackPageview']);
-
-                (function () {
-                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
-                })();
-
-        </script>
-        <!-- Start of Woopra Code -->
-        <script type="text/javascript">
-            var woo_settings = { idle_timeout: '60000', domain: 'eclectica.co.uk' };
-            (function () {
-                var wsc = document.createElement('script');
-                wsc.src = document.location.protocol + '//static.woopra.com/js/woopra.js';
-                wsc.type = 'text/javascript';
-                wsc.async = true;
-                var ssc = document.getElementsByTagName('script')[0];
-                ssc.parentNode.insertBefore(wsc, ssc);
-            })();
-        </script>
-        <!-- End of Woopra Code -->
-        
-      }
 	</body>
 </html>

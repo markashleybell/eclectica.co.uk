@@ -34,6 +34,13 @@ namespace eclectica.co.uk.Web.Controllers
             });
         }
 
+        public ActionResult Manage(int? page)
+        {
+            return View(new AdminEntriesViewModel {
+                Entries = _entryServices.All().ToList()
+            });
+        }
+
         public ActionResult Archive(int year, int month)
         {
             List<EntryModel> entries;
@@ -50,7 +57,32 @@ namespace eclectica.co.uk.Web.Controllers
             });
         }
 
-        public ActionResult Entry(string url)
+        public ActionResult Edit(int id)
+        {
+            var entry = _entryServices.GetEntry(id);
+
+            return View(new EntryEditViewModel { 
+                Entry = entry,
+                Images = _entryServices.GetImages(),
+                Tags = string.Join(" ", entry.Tags.Select(x => x.TagName).ToArray()),
+            });
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult Edit(EntryModel entry)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(entry);
+            }
+
+            _entryServices.UpdateEntry(entry);
+
+            return RedirectToAction("Edit", new { id = entry.EntryID });
+        }
+
+        public ActionResult Detail(string url)
         {
             var entry = _entryServices.GetEntryByUrl(url);
 
@@ -69,7 +101,7 @@ namespace eclectica.co.uk.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Entry(CommentViewModel comment)
+        public ActionResult Detail(CommentViewModel comment)
         {
             if (!ModelState.IsValid)
             {

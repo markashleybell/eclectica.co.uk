@@ -6,8 +6,9 @@ using eclectica.co.uk.Service.Entities;
 
 namespace eclectica.co.uk.Web.Models
 {
-    public class AdminPostsViewModel
+    public class EntryViewModel
     {
-        public List<EntryModel> Entries { get; set; }
+        public EntryModel Entry { get; set; }
+        public CommentViewModel Comment { get; set; }
     }
 }

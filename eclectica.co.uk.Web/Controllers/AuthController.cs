@@ -9,33 +9,14 @@ using eclectica.co.uk.Web.Models;
 namespace eclectica.co.uk.Web.Controllers
 {
     
-    public class AdminController : BaseController
+    public class AuthController : BaseController
     {
         IFormsAuthenticationProvider _auth;
 
-        public AdminController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, ILinkServices linkServices, IFormsAuthenticationProvider auth) : base(entryServices, commentServices, tagServices, linkServices) 
+        public AuthController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, ILinkServices linkServices, IFormsAuthenticationProvider auth)
+            : base(entryServices, commentServices, tagServices, linkServices) 
         {
             _auth = auth;
-        }
-
-        [Authorize]
-        public ActionResult Posts()
-        {
-            return View(new AdminPostsViewModel { 
-                Entries = _entryServices.All().ToList()
-            });
-        }
-
-        [Authorize]
-        public ActionResult Comments()
-        {
-            return View();
-        }
-
-        [Authorize]
-        public ActionResult Links()
-        {
-            return View();
         }
 
         public ActionResult LogOn()

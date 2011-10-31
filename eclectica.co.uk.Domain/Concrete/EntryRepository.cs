@@ -126,7 +126,7 @@ namespace eclectica.co.uk.Domain.Concrete
             {
                 using (_profiler.Step("Get all entries"))
                 {
-                    entries = conn.Query<Entry>("SELECT e.* FROM Entries AS e")
+                    entries = conn.Query<Entry>("SELECT e.* FROM Entries AS e ORDER BY e.Published DESC")
                                   .Select(x => {
                                       x.Title = GetCaption(x.Title, x.Body);
                                       x.Thumbnail = GetThumbnail(x.Title, x.Body);
@@ -300,12 +300,76 @@ namespace eclectica.co.uk.Domain.Concrete
 
         public override Entry Get(long id)
         {
+            var sql = "SELECT e.*, c.CommentCount, a.* " +
+                      "FROM Entries AS e " +
+                      "LEFT OUTER JOIN Authors AS a ON a.AuthorID = e.Author_AuthorID " +
+                      "LEFT OUTER JOIN (SELECT Entry_EntryID, COUNT(*) as CommentCount " +
+                      "FROM Comments GROUP BY Entry_EntryID) AS c " +
+                      "ON e.EntryID = c.Entry_EntryID " +
+                      "WHERE e.EntryID = @EntryID";
+
+            var tagSql = "SELECT t.TagID, t.TagName " +
+                         "FROM Tags AS t " +
+                         "INNER JOIN EntryTags AS et ON et.Tag_TagID = t.TagID " +
+                         "WHERE et.Entry_EntryID = @EntryID";
+
+            var relatedSql = "SELECT e.EntryID, e.Title, e.Url, e.Body " +
+                             "FROM Entries AS e " +
+                             "INNER JOIN EntryEntries AS ee ON ee.Entry_EntryID1 = e.EntryID " +
+                             "WHERE ee.Entry_EntryID = @EntryID AND e.Publish = 1";
+
+            Entry entry;
+
+            using (var conn = base.GetOpenConnection())
+            {
+                using (_profiler.Step("Get entry by url"))
+                {
+                    // Get the entry details
+                    entry = conn.Query<Entry, Author, Entry>(sql, (e, a) => {
+                        e.Author = a;
+                        return e;
+                    }, new {
+                        EntryID = id
+                    }, splitOn: "AuthorID").FirstOrDefault();
+                }
+
+                // Perform queries for the tags, comments and related entries
+                using (_profiler.Step("Get tags for entry")) { entry.Tags = conn.Query<Tag>(tagSql, new { EntryID = entry.EntryID }).ToList(); }
+                using (_profiler.Step("Get related entries for entry"))
+                {
+                    entry.Related = conn.Query<Entry>(relatedSql, new { EntryID = entry.EntryID })
+                                        .Select(x => {
+                                            x.Title = GetCaption(x.Title, x.Body);
+                                            x.Thumbnail = GetThumbnail(x.Title, x.Body);
+                                            return x;
+                                        }).ToList();
+                }
+            }
+
+            return entry;
+        }
+
+        public override void Add(Entry entry)
+        {
             throw new NotImplementedException();
         }
 
-        public override void Add(Entry entity)
+        public override void Update(Entry entry)
         {
-            throw new NotImplementedException();
+            var sql = "UPDATE Entries " +
+                      "SET Title = @Title, Body = @Body, Url = @Url, Updated = @Updated, Tweet = @Tweet, Publish = @Publish " +
+                      "WHERE EntryID = @EntryID";
+
+            entry.Updated = DateTime.Now;
+
+            using (var conn = base.GetOpenConnection())
+            {
+                using (_profiler.Step("Update entry"))
+                {
+                    // Get the entry details
+                    conn.Execute(sql, entry);
+                }
+            }
         }
 
         public override void Remove(long id)

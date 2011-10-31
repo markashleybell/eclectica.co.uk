@@ -32,9 +32,7 @@ namespace eclectica.co.uk.Web.Infrastructure
         {
             public override void Load()
             {
-                Bind<IFormsAuthenticationProvider>()
-                    .To<FormsAuthenticationProvider>()
-                    .InRequestScope();
+                Bind<IFormsAuthenticationProvider>().To<FormsAuthenticationProvider>().InRequestScope();
 
                 var serverType = ConfigurationManager.AppSettings["ServerType"];
 
@@ -55,41 +53,16 @@ namespace eclectica.co.uk.Web.Infrastructure
                         .WithConstructorArgument("serverType", (serverType == "SQL2008") ? DbServerType.SQL2008 : DbServerType.SQL2012);
                 }
 
-                Bind<IEntryRepository>()
-                    .To<EntryRepository>()
-                    .InRequestScope();
-
-                Bind<IAuthorRepository>()
-                    .To<AuthorRepository>()
-                    .InRequestScope();
-
-                Bind<ITagRepository>()
-                    .To<TagRepository>()
-                    .InRequestScope();
-
-                Bind<ILinkRepository>()
-                    .To<LinkRepository>()
-                    .InRequestScope();
-
-                Bind<ICommentRepository>()
-                    .To<CommentRepository>()
-                    .InRequestScope();
-
-                Bind<IEntryServices>()
-                    .To<EntryServices>()
-                    .InRequestScope();
-
-                Bind<ICommentServices>()
-                    .To<CommentServices>()
-                    .InRequestScope();
-
-                Bind<ITagServices>()
-                    .To<TagServices>()
-                    .InRequestScope();
-
-                Bind<ILinkServices>()
-                    .To<LinkServices>()
-                    .InRequestScope();
+                Bind<IEntryRepository>().To<EntryRepository>().InRequestScope();
+                Bind<IAuthorRepository>().To<AuthorRepository>().InRequestScope();
+                Bind<ITagRepository>().To<TagRepository>().InRequestScope();
+                Bind<ILinkRepository>().To<LinkRepository>().InRequestScope();
+                Bind<ICommentRepository>().To<CommentRepository>().InRequestScope();
+                Bind<IImageRepository>().To<ImageRepository>().InRequestScope();
+                Bind<IEntryServices>().To<EntryServices>().InRequestScope();
+                Bind<ICommentServices>().To<CommentServices>().InRequestScope();
+                Bind<ITagServices>().To<TagServices>().InRequestScope();
+                Bind<ILinkServices>().To<LinkServices>().InRequestScope();
             }
         }
     }

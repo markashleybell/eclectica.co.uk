@@ -81,13 +81,13 @@ namespace eclectica.co.uk.Web
             routes.MapRoute(
                 "Entry", // Route name
                 "{url}", // URL with parameters
-                new { controller = "Entry", action = "Entry", url = UrlParameter.Optional } // Parameter defaults
+                new { controller = "Entry", action = "Detail", url = UrlParameter.Optional } // Parameter defaults
             );
 
             routes.MapRoute(
                 "Default", // Route name
-                "{controller}/{action}/{page}", // URL with parameters
-                new { controller = "Entry", action = "Index", page = UrlParameter.Optional } // Parameter defaults
+                "{controller}/{action}/{id}", // URL with parameters
+                new { controller = "Entry", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
 
         }

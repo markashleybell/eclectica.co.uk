@@ -27,6 +27,11 @@ namespace eclectica.co.uk.Domain.Concrete
             throw new NotImplementedException();
         }
 
+        public override void Update(Author entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public override void Remove(long id)
         {
             throw new NotImplementedException();
