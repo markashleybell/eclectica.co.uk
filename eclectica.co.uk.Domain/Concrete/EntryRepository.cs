@@ -6,11 +6,13 @@ using eclectica.co.uk.Domain.Abstract;
 using eclectica.co.uk.Domain.Entities;
 using System.Linq.Expressions;
 using System.Data;
+using System.Data.Common;
 using Dapper;
 using MvcMiniProfiler;
 using System.Text.RegularExpressions;
 using System.Collections;
 using MvcMiniProfiler.Data;
+using System.Transactions;
 
 namespace eclectica.co.uk.Domain.Concrete
 {
@@ -351,7 +353,30 @@ namespace eclectica.co.uk.Domain.Concrete
 
         public override void Add(Entry entry)
         {
-            throw new NotImplementedException();
+            var sql = "INSERT INTO Entries (Title, Body, Url, Published, Updated, Tweet, Publish)" +
+                      "VALUES (@Title, @Body, @Url, @Published, @Updated, @Tweet, @Publish)";
+
+            var newId = 0;
+
+            entry.Published = DateTime.Now;
+            entry.Updated = entry.Published;
+
+            using (var conn = base.GetOpenConnection())
+            {
+                using (_profiler.Step("Add entry"))
+                {
+                    using (var transaction = conn.BeginTransaction())
+                    {
+                        // Get the entry details
+                        conn.Execute(sql, entry, transaction);
+                        newId = (int)conn.Query<decimal>("SELECT @@IDENTITY", null, transaction).First();
+
+                        transaction.Commit();
+                    }
+                }
+            }
+
+            entry.EntryID = newId;
         }
 
         public override void Update(Entry entry)

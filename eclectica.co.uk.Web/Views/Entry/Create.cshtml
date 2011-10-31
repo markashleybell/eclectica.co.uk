@@ -15,14 +15,13 @@
 
 @section content {
 
-    <h2>Update Entry</h2>
+    <h2>Add Entry</h2>
 
     @using (Html.BeginForm()) {
     
         <p>@Html.LabelFor(x => x.Entry.Title)<br />
         @Html.TextBoxFor(x => x.Entry.Title, new { size = 49 }) @Html.CheckBoxFor(x => x.Entry.Publish) @Html.LabelFor(x => x.Entry.Publish) | 
-        <a onclick="window.open(this.href); return false;" href="/@Model.Entry.Url/">Preview</a> &nbsp; 
-        <input type="submit" value="Save" /> <input class="action" type="button" id="DeleteButton" value="Delete" />
+        <input type="submit" value="Save" />
         @Html.HiddenFor(x => x.Entry.EntryID)</p>
         
         <p>@Html.LabelFor(x => x.Entry.Body) &nbsp;&nbsp;

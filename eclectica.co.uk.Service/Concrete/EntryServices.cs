@@ -134,9 +134,15 @@ namespace eclectica.co.uk.Service.Concrete
             return entryDictionary;
         }
 
-        public void AddEntry(EntryModel entry)
+        public void AddEntry(EntryModel model)
         {
+            var entry = new Entry();
 
+            Mapper.CopyProperties<EntryModel, Entry>(model, entry);
+
+            _entryRepository.Add(entry);
+
+            model.EntryID = entry.EntryID;
         }
 
         public void UpdateEntry(EntryModel model)
