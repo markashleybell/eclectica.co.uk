@@ -154,6 +154,11 @@ namespace eclectica.co.uk.Service.Concrete
             _entryRepository.Update(entry);
         }
 
+        public void DeleteEntry(int id)
+        {
+            _entryRepository.Remove(id);
+        }
+
         public void CreateSearchIndex()
         {
             //var indexPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Index");

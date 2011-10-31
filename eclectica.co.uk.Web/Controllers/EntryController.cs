@@ -148,6 +148,15 @@ namespace eclectica.co.uk.Web.Controllers
             return Redirect("/" + comment.EntryUrl + "#comment" + commentId);
         }
 
+        // TODO: Rework delete buttons into POSTs
+        // [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            _entryServices.DeleteEntry(id);
+
+            return RedirectToAction("Manage");
+        }
+
         public ActionResult Random()
         {
             var url = _entryServices.GetRandomEntryUrl();

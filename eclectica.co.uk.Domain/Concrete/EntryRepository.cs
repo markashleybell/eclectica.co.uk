@@ -365,9 +365,11 @@ namespace eclectica.co.uk.Domain.Concrete
             {
                 using (_profiler.Step("Add entry"))
                 {
+                    // We need to get the new ID with a separate query inside this transaction, because
+                    // we want to support SQL CE, which doesn't support batch queries or SCOPE_IDENTITY()
                     using (var transaction = conn.BeginTransaction())
                     {
-                        // Get the entry details
+                        // Do the insert and retrieve the new ID
                         conn.Execute(sql, entry, transaction);
                         newId = (int)conn.Query<decimal>("SELECT @@IDENTITY", null, transaction).First();
 
@@ -399,7 +401,13 @@ namespace eclectica.co.uk.Domain.Concrete
 
         public override void Remove(long id)
         {
-            throw new NotImplementedException();
+            using (var conn = base.GetOpenConnection())
+            {
+                using (_profiler.Step("Delete entry"))
+                {
+                    conn.Execute("DELETE FROM Entries WHERE EntryID = @EntryID", new { EntryID = id });
+                }
+            }
         }
     }
 }

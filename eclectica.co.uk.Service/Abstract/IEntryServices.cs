@@ -28,5 +28,6 @@ namespace eclectica.co.uk.Service.Abstract
 
         void AddEntry(EntryModel entry);
         void UpdateEntry(EntryModel entry);
+        void DeleteEntry(int id);
     }
 }
