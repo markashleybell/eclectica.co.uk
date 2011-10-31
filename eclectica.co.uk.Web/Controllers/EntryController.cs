@@ -11,12 +11,14 @@ using System.Configuration;
 using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.IO;
+using eclectica.co.uk.Web.Abstract;
 
 namespace eclectica.co.uk.Web.Controllers
 {
     public class EntryController : BaseController
     {
-        public EntryController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, ILinkServices linkServices) : base(entryServices, commentServices, tagServices, linkServices) { }
+        public EntryController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, ILinkServices linkServices, IConfigurationInfo config) : base(entryServices, commentServices, tagServices, linkServices, config) { }
 
         public ActionResult Index(int? page)
         {
@@ -155,6 +157,38 @@ namespace eclectica.co.uk.Web.Controllers
             _entryServices.DeleteEntry(id);
 
             return RedirectToAction("Manage");
+        }
+
+        [HttpPost]
+        public ActionResult UploadImage(HttpPostedFileBase upload)
+        {
+            var extension = Path.GetExtension(upload.FileName).ToLower();
+            var fileName = Path.GetFileName(upload.FileName);
+
+            if (extension == ".jpg")
+            {
+                _entryServices.AddImage(new ImageModel { Filename = fileName });
+
+
+
+                // Resize and save the physical image
+
+                var libraryPath = _config;
+
+                //ImageProcessor imageProcessor = new ImageProcessor();
+
+                //imageProcessor.SaveImageWithMaxDimensions(file, libraryPath + "\\std\\" + imageId + fileExt, 448, 448, 85);
+                //imageProcessor.SaveImageCropToDimensions(file, libraryPath + "\\crop\\" + imageId + fileExt, 74, 74, CropAnchorPosition.Center, 85);
+                //imageProcessor.SaveImageWithMaxDimensions(file, libraryPath + "\\cms\\" + imageId + fileExt, 90, 90, 50);
+
+                //// TODO: is this going to take up waaay to much disk space?
+                //// Save the original file for download
+                //file.SaveAs(libraryPath + "\\original\\" + imageId + fileExt);
+
+                //uploadedImages.Add(fileName + ":" + imageId.ToString());
+            }
+
+            return Content("DONE");
         }
 
         public ActionResult Random()

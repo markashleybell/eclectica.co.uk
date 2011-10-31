@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using eclectica.co.uk.Service.Abstract;
 using eclectica.co.uk.Web.Models;
+using eclectica.co.uk.Web.Abstract;
 
 namespace eclectica.co.uk.Web.Controllers
 {
@@ -13,8 +14,8 @@ namespace eclectica.co.uk.Web.Controllers
     {
         IFormsAuthenticationProvider _auth;
 
-        public AuthController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, ILinkServices linkServices, IFormsAuthenticationProvider auth)
-            : base(entryServices, commentServices, tagServices, linkServices) 
+        public AuthController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, ILinkServices linkServices, IConfigurationInfo config, IFormsAuthenticationProvider auth)
+            : base(entryServices, commentServices, tagServices, linkServices, config) 
         {
             _auth = auth;
         }

@@ -13,6 +13,8 @@ using eclectica.co.uk.Service.Abstract;
 using System.Data;
 using System.Data.SqlServerCe;
 using eclectica.co.uk.Domain.Entities;
+using eclectica.co.uk.Web.Abstract;
+using eclectica.co.uk.Web.Concrete;
 
 namespace eclectica.co.uk.Web.Infrastructure
 {
@@ -52,6 +54,13 @@ namespace eclectica.co.uk.Web.Infrastructure
                         .WithConstructorArgument("connectionString", ConfigurationManager.ConnectionStrings["Sql"].ConnectionString)
                         .WithConstructorArgument("serverType", (serverType == "SQL2008") ? DbServerType.SQL2008 : DbServerType.SQL2012);
                 }
+
+                Bind<IConfigurationInfo>()
+                        .To<ConfigurationInfo>()
+                        .InRequestScope()
+                        .WithConstructorArgument("cdn1", ConfigurationManager.AppSettings["CDN1"])
+                        .WithConstructorArgument("cdn2", ConfigurationManager.AppSettings["CDN2"])
+                        .WithConstructorArgument("imageLibraryFolder", ConfigurationManager.AppSettings["ImageLibraryFolder"]);
 
                 Bind<IEntryRepository>().To<EntryRepository>().InRequestScope();
                 Bind<IAuthorRepository>().To<AuthorRepository>().InRequestScope();

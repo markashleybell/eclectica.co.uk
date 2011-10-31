@@ -2,6 +2,7 @@
   <add key="LocalTestMode" value="true"/>
   <add key="HomePagePostCount" value="5"/>
   <add key="InstallationUrl" value="HOSTNAME"/>
+  <add key="ImageLibraryFolder" value="LIBRARYFOLDER" />
   <add key="CDN1" value="" />
   <add key="CDN2" value="" />
   <add key="TwitterConsumerKey" value="CONSUMERKEY"/>

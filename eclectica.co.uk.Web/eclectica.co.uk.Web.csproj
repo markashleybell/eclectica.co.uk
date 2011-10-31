@@ -72,6 +72,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\IConfigurationInfo.cs" />
+    <Compile Include="Concrete\ConfigurationInfo.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\EntryController.cs" />

@@ -34,9 +34,30 @@ namespace eclectica.co.uk.Domain.Concrete
             throw new NotImplementedException();
         }
 
-        public override void Add(Image entity)
+        public override void Add(Image image)
         {
-            throw new NotImplementedException();
+            var sql = "INSERT INTO Images (Filename) VALUES (@Filename)";
+
+            var newId = 0;
+
+            using (var conn = base.GetOpenConnection())
+            {
+                using (_profiler.Step("Add image"))
+                {
+                    // We need to get the new ID with a separate query inside this transaction, because
+                    // we want to support SQL CE, which doesn't support batch queries or SCOPE_IDENTITY()
+                    using (var transaction = conn.BeginTransaction())
+                    {
+                        // Do the insert and retrieve the new ID
+                        conn.Execute(sql, image, transaction);
+                        newId = (int)conn.Query<decimal>("SELECT @@IDENTITY", null, transaction).First();
+
+                        transaction.Commit();
+                    }
+                }
+            }
+
+            image.ImageID = newId;
         }
 
         public override void Update(Image entity)

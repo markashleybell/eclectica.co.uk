@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using eclectica.co.uk.Service.Abstract;
+using eclectica.co.uk.Web.Abstract;
 
 namespace eclectica.co.uk.Web.Controllers
 {
@@ -13,13 +14,15 @@ namespace eclectica.co.uk.Web.Controllers
         protected ICommentServices _commentServices;
         protected ITagServices _tagServices;
         protected ILinkServices _linkServices;
+        protected IConfigurationInfo _config;
 
-        public BaseController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, ILinkServices linkServices)
+        public BaseController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, ILinkServices linkServices, IConfigurationInfo config)
         {
             _entryServices = entryServices;
             _commentServices = commentServices;
             _tagServices = tagServices;
             _linkServices = linkServices;
+            _config = config;
         }
     }
 }

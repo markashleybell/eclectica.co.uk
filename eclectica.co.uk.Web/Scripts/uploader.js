@@ -80,8 +80,8 @@ function upload() {
     for (var i in fileList) fileCount++;
 
     if (fileList != null) {
-        uploader.setSimUploadLimit(((fileCount > simultaneousUploads) ? simultaneousUploads : fileCount));
-        uploader.uploadAll("/cms/upload_actions.aspx", "POST", { UserID: $('#userid').val() }, "ImageFiles");
+        //uploader.setSimUploadLimit(((fileCount > simultaneousUploads) ? simultaneousUploads : fileCount));
+        uploader.uploadAll("/Entry/UploadImage", "POST", {  }, "upload");
     }
 }
 

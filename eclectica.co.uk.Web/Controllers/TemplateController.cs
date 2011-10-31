@@ -8,12 +8,13 @@ using eclectica.co.uk.Web.Models;
 using eclectica.co.uk.Service.Entities;
 using eclectica.co.uk.Web.Extensions;
 using System.IO;
+using eclectica.co.uk.Web.Abstract;
 
 namespace eclectica.co.uk.Web.Controllers
 {
     public class TemplateController : BaseController
     {
-        public TemplateController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, ILinkServices linkServices) : base(entryServices, commentServices, tagServices, linkServices) { }
+        public TemplateController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, ILinkServices linkServices, IConfigurationInfo config) : base(entryServices, commentServices, tagServices, linkServices, config) { }
 
         public ActionResult About()
         {

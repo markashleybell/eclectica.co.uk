@@ -90,6 +90,17 @@ namespace eclectica.co.uk.Service.Concrete
             return Mapper.MapList<Image, ImageModel>(_imageRepository.All().ToList());
         }
 
+        public void AddImage(ImageModel model)
+        {
+            var image = new Image();
+
+            Mapper.CopyProperties<ImageModel, Image>(model, image);
+
+            _imageRepository.Add(image);
+
+            model.ImageID = image.ImageID;
+        }
+
         public IDictionary<DateTime, int> GetPostCountsPerMonth(int year)
         {
             return _entryRepository.GetPostCounts(year);

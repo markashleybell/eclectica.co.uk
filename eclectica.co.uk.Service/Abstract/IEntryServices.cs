@@ -18,6 +18,7 @@ namespace eclectica.co.uk.Service.Abstract
         IEnumerable<EntryModel> GetArchivedEntries(int year, int month);
 
         IEnumerable<ImageModel> GetImages();
+        void AddImage(ImageModel image);
 
         IDictionary<DateTime, int> GetPostCountsPerMonth(int year);
 
