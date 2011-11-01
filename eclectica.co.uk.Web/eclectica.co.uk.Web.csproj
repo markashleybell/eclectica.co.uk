@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="mab.lib.ImageSizer, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\mab.lib.ImageSizer.1.2\lib\mab.lib.ImageSizer.dll</HintPath>
+    </Reference>
     <Reference Include="MvcMiniProfiler">
       <HintPath>..\packages\MiniProfiler.1.9\lib\net40\MvcMiniProfiler.dll</HintPath>
     </Reference>

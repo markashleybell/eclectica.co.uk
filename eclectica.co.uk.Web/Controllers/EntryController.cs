@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using eclectica.co.uk.Web.Abstract;
+using mab.lib.ImageSizer;
 
 namespace eclectica.co.uk.Web.Controllers
 {
@@ -167,23 +168,18 @@ namespace eclectica.co.uk.Web.Controllers
 
             if (extension == ".jpg")
             {
-                _entryServices.AddImage(new ImageModel { Filename = fileName });
-
-
+                var image = new ImageModel { Filename = fileName };
+                _entryServices.AddImage(image);
 
                 // Resize and save the physical image
+                var libraryPath = _config.ImageLibraryFolder;
 
-                var libraryPath = _config;
+                var imageSizer = new ImageSizer();
 
-                //ImageProcessor imageProcessor = new ImageProcessor();
+                imageSizer.SaveImageCropToDimensions(upload, libraryPath + "\\crop\\" + image.ImageID + extension, 74, 74, CropAnchorPosition.Center, 85);
+                imageSizer.SaveImageWithMaxDimensions(upload, libraryPath + "\\cms\\" + image.ImageID + extension, 90, 90, 50);
 
-                //imageProcessor.SaveImageWithMaxDimensions(file, libraryPath + "\\std\\" + imageId + fileExt, 448, 448, 85);
-                //imageProcessor.SaveImageCropToDimensions(file, libraryPath + "\\crop\\" + imageId + fileExt, 74, 74, CropAnchorPosition.Center, 85);
-                //imageProcessor.SaveImageWithMaxDimensions(file, libraryPath + "\\cms\\" + imageId + fileExt, 90, 90, 50);
-
-                //// TODO: is this going to take up waaay to much disk space?
-                //// Save the original file for download
-                //file.SaveAs(libraryPath + "\\original\\" + imageId + fileExt);
+                upload.SaveAs(libraryPath + "\\std\\" + image.ImageID + extension);
 
                 //uploadedImages.Add(fileName + ":" + imageId.ToString());
             }
