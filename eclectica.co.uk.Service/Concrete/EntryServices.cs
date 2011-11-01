@@ -87,7 +87,7 @@ namespace eclectica.co.uk.Service.Concrete
 
         public IEnumerable<ImageModel> GetImages()
         {
-            return Mapper.MapList<Image, ImageModel>(_imageRepository.All().ToList());
+            return Mapper.MapList<Image, ImageModel>(_imageRepository.Last25().ToList());
         }
 
         public void AddImage(ImageModel model)

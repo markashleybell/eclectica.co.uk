@@ -29,6 +29,21 @@ namespace eclectica.co.uk.Domain.Concrete
             return images;
         }
 
+        public IEnumerable<Image> Last25()
+        {
+            IEnumerable<Image> images;
+
+            using (var conn = base.GetOpenConnection())
+            {
+                using (_profiler.Step("Get last 25 images"))
+                {
+                    images = conn.Query<Image>("SELECT TOP 25 i.* FROM Images AS i ORDER BY i.ImageID DESC").ToList();
+                }
+            }
+
+            return images;
+        }
+
         public override Image Get(long id)
         {
             throw new NotImplementedException();
