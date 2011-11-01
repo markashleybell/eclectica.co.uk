@@ -136,5 +136,5 @@ function onUploadResponse(event) {
 
     var image = images[0].split(':');
 
-    imageContainer.append('<li id="i' + image[1] + '"><span class="i" style="background-image: url(/img/lib/cms/' + image[1] + '.jpg);">' + image[1] + '</span><span>' + image[0] + '</span></li>');
+    imageContainer.prepend('<li id="i' + image[1] + '"><span class="i" style="background-image: url(/content/img/lib/cms/' + image[1] + '.jpg);">' + image[1] + '</span><span>' + image[0] + '</span></li>');
 }

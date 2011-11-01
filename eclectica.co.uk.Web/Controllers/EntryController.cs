@@ -165,10 +165,10 @@ namespace eclectica.co.uk.Web.Controllers
         {
             var extension = Path.GetExtension(upload.FileName).ToLower();
             var fileName = Path.GetFileName(upload.FileName);
+            var image = new ImageModel { Filename = fileName };
 
             if (extension == ".jpg")
             {
-                var image = new ImageModel { Filename = fileName };
                 _entryServices.AddImage(image);
 
                 // Resize and save the physical image
@@ -180,11 +180,9 @@ namespace eclectica.co.uk.Web.Controllers
                 imageSizer.SaveImageWithMaxDimensions(upload, libraryPath + "\\cms\\" + image.ImageID + extension, 90, 90, 50);
 
                 upload.SaveAs(libraryPath + "\\std\\" + image.ImageID + extension);
-
-                //uploadedImages.Add(fileName + ":" + imageId.ToString());
             }
 
-            return Content("DONE");
+            return Content(fileName + ":" + image.ImageID);
         }
 
         public ActionResult Random()
