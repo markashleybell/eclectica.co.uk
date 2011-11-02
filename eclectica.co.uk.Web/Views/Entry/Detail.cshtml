@@ -66,7 +66,7 @@
             {
                 count++;
                 
-                <div@Html.Raw(((count % 7) == 0) ? " class=\"r\"" : "") style="background-image: url(@ConfigurationManager.AppSettings["CDN1"]/content/img/@entry.Thumbnail);"><a href="/@entry.Url">@entry.Title</a></div>
+                <div@Html.Raw(((count % 7) == 0) ? " class=\"r\"" : "") style="background-image: url(@ConfigurationManager.AppSettings["CDN1"]/content/img/@entry.Thumbnail);"><a href="/@entry.Url">@EntryHelpers.GetCaption(entry.Title, entry.Body)</a></div>
             }
             <div class="clr">&nbsp;</div>
         </div>

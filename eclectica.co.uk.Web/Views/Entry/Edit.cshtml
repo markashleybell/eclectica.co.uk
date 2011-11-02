@@ -10,6 +10,8 @@
 <script type="text/javascript" src="/scripts/jquery.fieldselection.js"></script>
 <script type="text/javascript" src="http://yui.yahooapis.com/combo?2.9.0/build/yahoo-dom-event/yahoo-dom-event.js&2.9.0/build/element/element-min.js&2.9.0/build/uploader/uploader-min.js"></script>
 <script type="text/javascript" src="/scripts/uploader.js"></script>
+<script type="text/javascript" src="/scripts/tagsuggest.js"></script>
+<script type="text/javascript" src="/scripts/relatedsuggest.js"></script>
 <script type="text/javascript" src="/scripts/entry-admin.js"></script>
 
 }
@@ -83,5 +85,19 @@
         </div>
         <p><a href="post.aspx?postid=<%=postId%>&amp;img=true">Show All Images</a><br /><br /></p>       
 	</div>
+
+    <h3>Related Posts</h3>
+	<div>
+		<ul id="relatedposts">
+		    @foreach(var entry in Model.Entry.Related)
+            {
+                <li id="related@(entry.EntryID)">@((entry.Title == "") ? entry.Published.ToString("dd/MM/yyyy hh:mm") : entry.Title) 
+                <a href="#" onclick="$(this).parent().remove(); return false;">x</a></li>
+            }
+		</ul>
+	    <p><label for="RelatedSearch">Add</label><br />
+        <input type="text" size="50" id="RelatedSearch" name="RelatedSearch" value="" />
+        <input type="hidden" id="related" name="related" value="" /></p>
+    </div>
 
 }

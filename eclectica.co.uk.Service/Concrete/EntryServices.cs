@@ -46,6 +46,7 @@ namespace eclectica.co.uk.Service.Concrete
 
             var model = Mapper.Map<Entry, EntryModel>(entry);
             model.Tags = Mapper.MapList<Tag, TagModel>(entry.Tags.ToList());
+            model.Related = Mapper.MapList<Entry, EntryModel>(entry.Related.ToList());
 
             return model;
         }
@@ -168,6 +169,11 @@ namespace eclectica.co.uk.Service.Concrete
         public void DeleteEntry(int id)
         {
             _entryRepository.Remove(id);
+        }
+
+        public IEnumerable<EntryModel> SimpleSearch(string query)
+        {
+            return Mapper.MapList<Entry, EntryModel>(_entryRepository.Like(query).ToList());
         }
 
         public void CreateSearchIndex()

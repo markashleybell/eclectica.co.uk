@@ -39,7 +39,7 @@ namespace eclectica.co.uk.Domain.Concrete
                              "FROM Comments AS c " + 
                              "WHERE c.Entry_EntryID = @EntryID AND c.Approved = 1";
 
-            var relatedSql = "SELECT e.EntryID, e.Title, e.Url, e.Body " +
+            var relatedSql = "SELECT e.EntryID, e.Title, e.Url, e.Body, e.Published " +
                              "FROM Entries AS e " +
                              "INNER JOIN EntryEntries AS ee ON ee.Entry_EntryID1 = e.EntryID " +
                              "WHERE ee.Entry_EntryID = @EntryID AND e.Publish = 1";
@@ -66,7 +66,6 @@ namespace eclectica.co.uk.Domain.Concrete
                 {
                     entry.Related = conn.Query<Entry>(relatedSql, new { EntryID = entry.EntryID })
                                         .Select(x => {
-                                            x.Title = GetCaption(x.Title, x.Body);
                                             x.Thumbnail = GetThumbnail(x.Title, x.Body);
                                             return x;
                                         }).ToList();
@@ -94,12 +93,6 @@ namespace eclectica.co.uk.Domain.Concrete
             }
 
             return url;
-        }
-
-        private string GetCaption(string title, string body)
-        {
-            var options = RegexOptions.Singleline | RegexOptions.IgnoreCase;
-            return ((title == "") ? Regex.Replace(Regex.Matches(body, "<p>(.*?)</p>", options)[0].Groups[1].Value, @"<(.|\n)+?>", @"") : title);
         }
 
         private string GetThumbnail(string title, string body)
@@ -130,7 +123,6 @@ namespace eclectica.co.uk.Domain.Concrete
                 {
                     entries = conn.Query<Entry>("SELECT e.* FROM Entries AS e ORDER BY e.Published DESC")
                                   .Select(x => {
-                                      x.Title = GetCaption(x.Title, x.Body);
                                       x.Thumbnail = GetThumbnail(x.Title, x.Body);
                                       return x;
                                   }).ToList();
@@ -175,7 +167,7 @@ namespace eclectica.co.uk.Domain.Concrete
 
             using(var conn = base.GetOpenConnection())
             {
-                using(_profiler.Step("Get entries for page"))
+                using(_profiler.Step("Get " + count + " entries for current page"))
                 {
                     // Get the entries for this page
                     entries = conn.Query<Entry, Author, Entry>(entrySql, (e, a) => {
@@ -222,7 +214,6 @@ namespace eclectica.co.uk.Domain.Concrete
                     // Get the entries for this page
                     entries = conn.Query<Entry>(sql, new { Month = month, Year = year })
                                   .Select(x => {
-                                      x.Title = GetCaption(x.Title, x.Body);
                                       x.Thumbnail = GetThumbnail(x.Title, x.Body);
                                       return x;
                                   }).ToList();
@@ -315,7 +306,7 @@ namespace eclectica.co.uk.Domain.Concrete
                          "INNER JOIN EntryTags AS et ON et.Tag_TagID = t.TagID " +
                          "WHERE et.Entry_EntryID = @EntryID";
 
-            var relatedSql = "SELECT e.EntryID, e.Title, e.Url, e.Body " +
+            var relatedSql = "SELECT e.EntryID, e.Title, e.Url, e.Body, e.Published " +
                              "FROM Entries AS e " +
                              "INNER JOIN EntryEntries AS ee ON ee.Entry_EntryID1 = e.EntryID " +
                              "WHERE ee.Entry_EntryID = @EntryID AND e.Publish = 1";
@@ -341,7 +332,6 @@ namespace eclectica.co.uk.Domain.Concrete
                 {
                     entry.Related = conn.Query<Entry>(relatedSql, new { EntryID = entry.EntryID })
                                         .Select(x => {
-                                            x.Title = GetCaption(x.Title, x.Body);
                                             x.Thumbnail = GetThumbnail(x.Title, x.Body);
                                             return x;
                                         }).ToList();
@@ -408,6 +398,26 @@ namespace eclectica.co.uk.Domain.Concrete
                     conn.Execute("DELETE FROM Entries WHERE EntryID = @EntryID", new { EntryID = id });
                 }
             }
+        }
+
+        public IEnumerable<Entry> Like(string query)
+        {
+            var sql = "SELECT e.Title, e.Published, e.Body, e.Url " +
+                      "FROM Entries AS e " +
+                      "WHERE e.Title LIKE @Query OR e.Body LIKE @Query";
+
+            IEnumerable<Entry> entries;
+
+            using (var conn = base.GetOpenConnection())
+            {
+                using (_profiler.Step("Get entries matching '" + query + "'"))
+                {
+                    // Get the entries for this tag
+                    entries = conn.Query<Entry>(sql, new { Query = "%" + query + "%" });
+                }
+            }
+
+            return entries;
         }
     }
 }

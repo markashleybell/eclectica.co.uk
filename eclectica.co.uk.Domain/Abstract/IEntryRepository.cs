@@ -15,5 +15,6 @@ namespace eclectica.co.uk.Domain.Abstract
         IDictionary<DateTime, int> GetPostCounts(int year);
         IEnumerable<Entry> GetByTag(string tag);
         IEnumerable<Entry> GetLatest(int count);
+        IEnumerable<Entry> Like(string query);
     }
 }

@@ -195,6 +195,20 @@ namespace eclectica.co.uk.Web.Controllers
             return Content(fileName + ":" + image.ImageID);
         }
 
+        //[HttpPost]
+        public ActionResult RelatedSearch(string query)
+        {
+            var entries = _entryServices.SimpleSearch(query);
+
+            if(entries == null)
+                return Content("");
+
+            var matches = (from e in entries
+                           select e.EntryID + "^" + e.Title + "^" + e.Published.ToString("dd/MM/yyyy hh:mm")).ToArray();
+
+            return Content(string.Join("|", matches));
+        }
+
         public ActionResult Random()
         {
             var url = _entryServices.GetRandomEntryUrl();
