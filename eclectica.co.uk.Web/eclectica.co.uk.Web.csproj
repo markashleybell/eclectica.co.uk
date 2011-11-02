@@ -110,9 +110,12 @@
     <Content Include="Global.asax" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\entry-admin.js" />
+    <Content Include="Scripts\jquery.fieldselection.js" />
     <Content Include="Scripts\load.js" />
     <Content Include="Scripts\entry.js" />
+    <Content Include="Scripts\relatedsuggest.js" />
     <Content Include="Scripts\search.js" />
+    <Content Include="Scripts\tagsuggest.js" />
     <Content Include="Scripts\thumbtips.js" />
     <Content Include="Scripts\uploader.js" />
     <Content Include="Views\Shared\Error.cshtml" />
