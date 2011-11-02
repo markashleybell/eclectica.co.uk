@@ -157,11 +157,17 @@ namespace eclectica.co.uk.Service.Concrete
             model.EntryID = entry.EntryID;
         }
 
-        public void UpdateEntry(EntryModel model)
+        public void UpdateEntry(EntryModel model, int[] relatedIds, string[] tags)
         {
             var entry = _entryRepository.Get(model.EntryID);
 
             Mapper.CopyProperties<EntryModel, Entry>(model, entry);
+
+            if(relatedIds != null)
+                _entryRepository.UpdateRelatedEntries(model.EntryID, relatedIds);
+
+            if(tags != null)
+                _entryRepository.UpdateRelatedTags(model.EntryID, tags);
 
             _entryRepository.Update(entry);
         }

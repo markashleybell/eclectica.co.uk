@@ -9,6 +9,7 @@ namespace eclectica.co.uk.Service.Abstract
     public interface ITagServices
     {
         IEnumerable<TagModel> All();
+        IEnumerable<TagModel> Search(string query);
 
         Dictionary<string, List<TagModel>> GetSortedTags();
     }

@@ -16,5 +16,8 @@ namespace eclectica.co.uk.Domain.Abstract
         IEnumerable<Entry> GetByTag(string tag);
         IEnumerable<Entry> GetLatest(int count);
         IEnumerable<Entry> Like(string query);
+
+        void UpdateRelatedEntries(int entryId, int[] relatedIds);
+        void UpdateRelatedTags(int entryId, string[] tags);
     }
 }

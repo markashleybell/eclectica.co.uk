@@ -54,5 +54,24 @@ namespace eclectica.co.uk.Domain.Concrete
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Tag> Like(string query)
+        {
+            var sql = "SELECT t.TagName " +
+                      "FROM Tags AS t " +
+                      "WHERE t.TagName LIKE @Query";
+
+            IEnumerable<Tag> tags;
+
+            using (var conn = base.GetOpenConnection())
+            {
+                using (_profiler.Step("Get tags beginning with '" + query + "'"))
+                {
+                    tags = conn.Query<Tag>(sql, new { Query = query + "%" });
+                }
+            }
+
+            return tags;
+        }
     }
 }

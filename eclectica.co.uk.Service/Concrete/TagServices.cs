@@ -25,6 +25,11 @@ namespace eclectica.co.uk.Service.Concrete
             return Mapper.MapList<Tag, TagModel>(_tagRepository.All().ToList());
         }
 
+        public IEnumerable<TagModel> Search(string query)
+        {
+            return Mapper.MapList<Tag, TagModel>(_tagRepository.Like(query).ToList());
+        }
+
         private string GetTagClass(int usecount)
         {
             if (usecount < 3)

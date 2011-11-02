@@ -389,6 +389,65 @@ namespace eclectica.co.uk.Domain.Concrete
             }
         }
 
+        public void UpdateRelatedEntries(int entryId, int[] relatedIds)
+        {
+            using (var conn = base.GetOpenConnection())
+            {
+                using (_profiler.Step("Delete existing related entries"))
+                {
+                    // Get the entry details
+                    conn.Execute("DELETE FROM EntryEntries WHERE Entry_EntryID = @EntryID", new { EntryID = entryId });
+                }
+
+                using (_profiler.Step("Update related entries"))
+                {
+                    var inserts = (from id in relatedIds
+                                   select new { EntryID = entryId, RelatedID = id }).ToArray();
+
+                    // Get the entry details
+                    conn.Execute("INSERT INTO EntryEntries (Entry_EntryID, Entry_EntryID1) VALUES (@EntryID, @RelatedID)", inserts);
+                }
+            }
+        }
+
+        public void UpdateRelatedTags(int entryId, string[] tags)
+        {
+            using (var conn = base.GetOpenConnection())
+            {
+                using (_profiler.Step("Delete existing related tags"))
+                {
+                    // Get the entry details
+                    conn.Execute("DELETE FROM EntryTags WHERE Entry_EntryID = @EntryID", new { EntryID = entryId });
+                }
+
+                using (_profiler.Step("Update entry"))
+                {
+                    var existingTags = conn.Query<Tag>("SELECT t.TagID, t.TagName from Tags as t WHERE t.TagName IN @Tags", new { Tags = tags });
+
+                    var newTags = (from t in tags
+                                   where !existingTags.Any(x => x.TagName == t)
+                                   select new Tag { TagID = 0, TagName = t }).ToArray();
+
+                    for (var i = 0; i < newTags.Length; i++ )
+                    {
+                        using (var transaction = conn.BeginTransaction())
+                        {
+                            // Do the insert and retrieve the new ID
+                            conn.Execute("INSERT INTO Tags (TagName) VALUES (@TagName)", new { TagName = newTags[i].TagName }, transaction);
+                            newTags[i].TagID = (int)conn.Query<decimal>("SELECT @@IDENTITY", null, transaction).First();
+
+                            transaction.Commit();
+                        }
+                    }
+
+                    var inserts = (from t in existingTags.Concat(newTags)
+                                   select new { EntryID = entryId, TagID = t.TagID }).ToArray();
+
+                    conn.Execute("INSERT INTO EntryTags (Entry_EntryID, Tag_TagID) VALUES (@EntryID, @TagID)", inserts);
+                }
+            }
+        }
+
         public override void Remove(long id)
         {
             using (var conn = base.GetOpenConnection())
@@ -402,7 +461,7 @@ namespace eclectica.co.uk.Domain.Concrete
 
         public IEnumerable<Entry> Like(string query)
         {
-            var sql = "SELECT e.Title, e.Published, e.Body, e.Url " +
+            var sql = "SELECT e.EntryID, e.Title, e.Published, e.Body, e.Url " +
                       "FROM Entries AS e " +
                       "WHERE e.Title LIKE @Query OR e.Body LIKE @Query";
 

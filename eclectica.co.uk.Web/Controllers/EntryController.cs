@@ -91,6 +91,7 @@ namespace eclectica.co.uk.Web.Controllers
                 Entry = entry,
                 Images = _entryServices.GetImages(),
                 Tags = string.Join(" ", entry.Tags.Select(x => x.TagName).ToArray()),
+                Related = string.Join("|", entry.Related.Select(x => x.EntryID).ToArray()),
                 Entries = _entryServices.All()
                                         .Select(x => new SelectListItem { 
                                             Text = x.Published.ToString("dd/MM/yyyy hh:mm") + " " + x.Title.Truncate(50), 
@@ -105,6 +106,7 @@ namespace eclectica.co.uk.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
+                model.Images = _entryServices.GetImages();
                 model.Entries = _entryServices.All()
                                               .Select(x => new SelectListItem {
                                                   Text = x.Published.ToString("dd/MM/yyyy hh:mm") + " " + x.Title.Truncate(50),
@@ -113,7 +115,9 @@ namespace eclectica.co.uk.Web.Controllers
                 return View(model);
             }
 
-            _entryServices.UpdateEntry(model.Entry);
+            _entryServices.UpdateEntry(model.Entry, 
+                                       model.Related.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries).Select(x => Convert.ToInt32(x)).ToArray(),
+                                       model.Tags.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
 
             return RedirectToAction("Edit", new { id = model.Entry.EntryID });
         }
@@ -208,12 +212,26 @@ namespace eclectica.co.uk.Web.Controllers
             return Content(string.Join("|", matches));
         }
 
+        public ActionResult TagSearch(string query)
+        {
+            var tags = _tagServices.Search(query);
+
+            if (tags == null)
+                return Content("");
+
+            var matches = (from t in tags
+                           select t.TagName).ToArray();
+
+            return Content(string.Join("|", matches));
+        }
+
+
         public ActionResult Unpublish(int id)
         {
             var entry = _entryServices.GetEntry(id);
             entry.Publish = false;
 
-            _entryServices.UpdateEntry(entry);
+            _entryServices.UpdateEntry(entry, null, null);
 
             return RedirectToAction("Manage");
         }
@@ -223,7 +241,7 @@ namespace eclectica.co.uk.Web.Controllers
             var entry = _entryServices.GetEntry(id);
             entry.Publish = true;
 
-            _entryServices.UpdateEntry(entry);
+            _entryServices.UpdateEntry(entry, null, null);
 
             return RedirectToAction("Manage");
         }

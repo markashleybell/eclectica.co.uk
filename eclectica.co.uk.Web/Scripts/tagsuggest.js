@@ -67,7 +67,7 @@ function GetSuggestions(evt, o) {
                     var phrases = new Array();
                     var a = new Array();
 
-                    $.get('/cms/ajax_get_suggestions.aspx', { q: letters }, function(data) {
+                    $.get('/entry/TagSearch', { query: letters }, function (data) {
 
                         // console.log('data: ' + data);
 

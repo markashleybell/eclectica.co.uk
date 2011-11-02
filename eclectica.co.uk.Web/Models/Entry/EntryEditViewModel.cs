@@ -12,6 +12,7 @@ namespace eclectica.co.uk.Web.Models
         public EntryModel Entry { get; set; }
         public IEnumerable<ImageModel> Images { get; set; }
         public string Tags { get; set; }
+        public string Related { get; set; }
 
         public IQueryable<SelectListItem> Entries { get; set; }
     }

@@ -8,6 +8,6 @@ namespace eclectica.co.uk.Domain.Abstract
 {
     public interface ITagRepository : IRepository<Tag>
     {
-        
+        IEnumerable<Tag> Like(string query);
     }
 }
