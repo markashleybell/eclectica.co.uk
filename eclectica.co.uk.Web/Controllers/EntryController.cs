@@ -90,7 +90,12 @@ namespace eclectica.co.uk.Web.Controllers
             return View(new EntryEditViewModel { 
                 Entry = entry,
                 Images = _entryServices.GetImages(),
-                Tags = string.Join(" ", entry.Tags.Select(x => x.TagName).ToArray())
+                Tags = string.Join(" ", entry.Tags.Select(x => x.TagName).ToArray()),
+                Entries = _entryServices.All()
+                                        .Select(x => new SelectListItem { 
+                                            Text = x.Published.ToString("dd/MM/yyyy hh:mm") + " " + x.Title.Truncate(50), 
+                                            Value = x.EntryID.ToString()
+                                        }).AsQueryable()
             });
         }
 
@@ -100,6 +105,11 @@ namespace eclectica.co.uk.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
+                model.Entries = _entryServices.All()
+                                              .Select(x => new SelectListItem {
+                                                  Text = x.Published.ToString("dd/MM/yyyy hh:mm") + " " + x.Title.Truncate(50),
+                                                  Value = x.EntryID.ToString()
+                                              }).AsQueryable();
                 return View(model);
             }
 

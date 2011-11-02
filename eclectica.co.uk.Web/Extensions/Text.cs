@@ -23,6 +23,13 @@ namespace eclectica.co.uk.Web.Extensions
             return Regex.Replace(s, "'", "\\'");
         }
 
+        public static string Truncate(this string s, int length)
+        {
+            if (s == null)
+                return null;
+            return (s.Length > length) ? s.Substring(0, length - 3) + "..." : s;
+        }
+
         public static string FormatComment(this string s)
         {
             RegexOptions options = RegexOptions.IgnoreCase | RegexOptions.Singleline;

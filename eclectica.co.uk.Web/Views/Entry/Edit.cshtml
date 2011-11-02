@@ -7,15 +7,19 @@
 
 @section head {
 
+<script type="text/javascript" src="/scripts/jquery.fieldselection.js"></script>
 <script type="text/javascript" src="http://yui.yahooapis.com/combo?2.9.0/build/yahoo-dom-event/yahoo-dom-event.js&2.9.0/build/element/element-min.js&2.9.0/build/uploader/uploader-min.js"></script>
-
 <script type="text/javascript" src="/scripts/uploader.js"></script>
+<script type="text/javascript" src="/scripts/entry-admin.js"></script>
 
 }
 
 @section content {
 
     <h2>Update Entry</h2>
+
+    <p>@Html.LabelFor(x => x.Entries)<br />
+    @Html.DropDownListFor(x => x.Entry.EntryID, Model.Entries, "Please select...") <input class="action" type="button" id="AddButton" value="Add New" /></p>
 
     @using (Html.BeginForm()) {
     

@@ -108,6 +108,7 @@
     <Content Include="Content\Css\Screen.css" />
     <Content Include="Global.asax" />
     <Content Include="robots.txt" />
+    <Content Include="Scripts\entry-admin.js" />
     <Content Include="Scripts\load.js" />
     <Content Include="Scripts\entry.js" />
     <Content Include="Scripts\search.js" />
@@ -163,8 +164,6 @@
     <Content Include="Views\Shared\AdminLayout.cshtml" />
     <Content Include="Views\Entry\Manage.cshtml" />
     <Content Include="Views\Admin\LogOn.cshtml" />
-    <Content Include="Views\Admin\Links.cshtml" />
-    <Content Include="Views\Admin\Comments.cshtml" />
     <Content Include="Views\Shared\Debug.cshtml" />
     <Content Include="Views\Entry\Edit.cshtml" />
     <Content Include="Views\Entry\Create.cshtml" />
