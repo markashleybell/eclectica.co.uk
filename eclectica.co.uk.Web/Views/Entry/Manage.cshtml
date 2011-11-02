@@ -10,8 +10,6 @@
 
 @section content {
 
-    <h1 class="postdate">Eclectica CMS</h1>
-
 	<div class="post">
 	    <h1>Manage Posts</h1>
 
@@ -28,11 +26,11 @@
             @foreach(var entry in Model.Entries)
             {
                 <tr@((entry.Publish == true) ? "" : " class=\"unpublished\"")>
-                    <td>@entry.Title</td>
+                    <td>@EntryHelpers.GetCaption(entry.Title, entry.Body)</td>
                     <td><a onclick="window.open(this.href); return false;" href="/@entry.Url/">Show</a> &raquo;</td>
                     <td>@Html.ActionLink("Edit", "Edit", new { id = entry.EntryID }, null) | @Html.ActionLink("Delete", "Delete", new { id = entry.EntryID }, null)</td>
                     <td>
-                        @if(entry.Publish) {
+                        @if(!entry.Publish) {
                             @Html.ActionLink("Publish", "Publish", new { id = entry.EntryID }, null)
                         }
                         else

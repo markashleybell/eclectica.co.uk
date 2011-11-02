@@ -195,7 +195,6 @@ namespace eclectica.co.uk.Web.Controllers
             return Content(fileName + ":" + image.ImageID);
         }
 
-        //[HttpPost]
         public ActionResult RelatedSearch(string query)
         {
             var entries = _entryServices.SimpleSearch(query);
@@ -209,11 +208,29 @@ namespace eclectica.co.uk.Web.Controllers
             return Content(string.Join("|", matches));
         }
 
+        public ActionResult Unpublish(int id)
+        {
+            var entry = _entryServices.GetEntry(id);
+            entry.Publish = false;
+
+            _entryServices.UpdateEntry(entry);
+
+            return RedirectToAction("Manage");
+        }
+
+        public ActionResult Publish(int id)
+        {
+            var entry = _entryServices.GetEntry(id);
+            entry.Publish = true;
+
+            _entryServices.UpdateEntry(entry);
+
+            return RedirectToAction("Manage");
+        }
+
         public ActionResult Random()
         {
             var url = _entryServices.GetRandomEntryUrl();
-
-            //return View("Debug");
             return Redirect("/" + url);
         }
 

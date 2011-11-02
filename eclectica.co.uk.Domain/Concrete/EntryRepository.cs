@@ -315,7 +315,7 @@ namespace eclectica.co.uk.Domain.Concrete
 
             using (var conn = base.GetOpenConnection())
             {
-                using (_profiler.Step("Get entry by url"))
+                using (_profiler.Step("Get entry by id (" + id + ")"))
                 {
                     // Get the entry details
                     entry = conn.Query<Entry, Author, Entry>(sql, (e, a) => {
