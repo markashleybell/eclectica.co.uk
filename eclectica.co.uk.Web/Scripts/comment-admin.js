@@ -4,8 +4,6 @@
 
         if (id != '')
             window.location = '/Comment/Edit/' + id;
-        else
-            window.location = '/Comment/Create';
     });
 
     $('#AddButton').bind('click', function () {

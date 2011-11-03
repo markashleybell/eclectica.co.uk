@@ -51,5 +51,19 @@ namespace eclectica.co.uk.Service.Concrete
 
             return comment.CommentID;
         }
+
+        public void UpdateComment(CommentModel model)
+        {
+            var comment = _commentRepository.Get(model.CommentID);
+
+            Mapper.CopyProperties<CommentModel, Comment>(model, comment);
+
+            _commentRepository.Update(comment);
+        }
+
+        public void DeleteComment(int id)
+        {
+            _commentRepository.Remove(id);
+        }
     }
 }

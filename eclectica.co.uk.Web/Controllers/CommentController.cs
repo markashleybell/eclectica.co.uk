@@ -28,42 +28,6 @@ namespace eclectica.co.uk.Web.Controllers
             });
         }
 
-       
-
-        public ActionResult Create()
-        {
-            return View(new EntryEditViewModel {
-                Images = _entryServices.GetImages(),
-                Entries = _entryServices.All()
-                                        .Select(x => new SelectListItem {
-                                            Text = x.Published.ToString("dd/MM/yyyy hh:mm") + " " + x.Title.Truncate(50),
-                                            Value = x.EntryID.ToString()
-                                        }).AsQueryable()
-            });
-        }
-
-        [HttpPost]
-        [ValidateInput(false)]
-        public ActionResult Create(EntryEditViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                model.Images = _entryServices.GetImages();
-                model.Entries = _entryServices.All()
-                                              .Select(x => new SelectListItem {
-                                                  Text = x.Published.ToString("dd/MM/yyyy hh:mm") + " " + x.Title.Truncate(50),
-                                                  Value = x.EntryID.ToString()
-                                              }).AsQueryable();
-                return View(model);
-            }
-
-            _entryServices.AddEntry(model.Entry,
-                                    ((model.Related == null) ? null : model.Related.Split('|').Select(x => Convert.ToInt32(x)).ToArray()),
-                                    model.Tags.SplitOrNull(" "));
-
-            return RedirectToAction("Edit", new { id = model.Entry.EntryID });
-        }
-
         public ActionResult Edit(int id)
         {
             var comment = _commentServices.GetComment(id);
@@ -80,31 +44,28 @@ namespace eclectica.co.uk.Web.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Edit(EntryEditViewModel model)
+        public ActionResult Edit(CommentEditViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                model.Images = _entryServices.GetImages();
-                model.Entries = _entryServices.All()
-                                              .Select(x => new SelectListItem {
-                                                  Text = x.Published.ToString("dd/MM/yyyy hh:mm") + " " + x.Title.Truncate(50),
-                                                  Value = x.EntryID.ToString()
-                                              }).AsQueryable();
+                model.Comments = _commentServices.All()
+                                                 .Select(x => new SelectListItem {
+                                                     Text = x.Body.StripHtml().Truncate(50),
+                                                     Value = x.CommentID.ToString()
+                                                 }).AsQueryable();
                 return View(model);
             }
 
-            _entryServices.UpdateEntry(model.Entry,
-                                       ((model.Related == null) ? null : model.Related.Split('|').Select(x => Convert.ToInt32(x)).ToArray()),
-                                       model.Tags.SplitOrNull(" "));
+            _commentServices.UpdateComment(model.Comment);
 
-            return RedirectToAction("Edit", new { id = model.Entry.EntryID });
+            return RedirectToAction("Edit", new { id = model.Comment.CommentID });
         }
 
         // TODO: Rework delete buttons into POSTs
         // [HttpPost]
         public ActionResult Delete(int id)
         {
-            _entryServices.DeleteEntry(id);
+            _commentServices.DeleteComment(id);
 
             return RedirectToAction("Manage");
         }

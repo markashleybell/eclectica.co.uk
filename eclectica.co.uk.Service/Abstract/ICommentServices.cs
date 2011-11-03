@@ -11,5 +11,8 @@ namespace eclectica.co.uk.Service.Abstract
         IEnumerable<CommentModel> All();
         CommentModel GetComment(int id);
         int AddComment(int entryId, string name, string email, string url, string rawBody);
+
+        void UpdateComment(CommentModel model);
+        void DeleteComment(int id);
     }
 }

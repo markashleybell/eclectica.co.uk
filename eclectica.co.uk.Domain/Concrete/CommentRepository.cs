@@ -49,19 +49,38 @@ namespace eclectica.co.uk.Domain.Concrete
             return comment;
         }
 
-        public override void Add(Comment entity)
+        public override void Add(Comment comment)
         {
             throw new NotImplementedException();
         }
 
-        public override void Update(Comment entity)
+        public override void Update(Comment comment)
         {
-            throw new NotImplementedException();
+            var sql = "UPDATE Comments " +
+                      "SET Name = @Name, Email = @Email, Url = @Url, Body = @Body, RawBody = @RawBody, Date = @Date, Approved = @Approved " +
+                      "WHERE CommentID = @CommentID";
+
+            comment.Date = DateTime.Now;
+
+            using (var conn = base.GetOpenConnection())
+            {
+                using (_profiler.Step("Update comment"))
+                {
+                    // Get the entry details
+                    conn.Execute(sql, comment);
+                }
+            }
         }
 
         public override void Remove(long id)
         {
-            throw new NotImplementedException();
+            using (var conn = base.GetOpenConnection())
+            {
+                using (_profiler.Step("Delete comment"))
+                {
+                    conn.Execute("DELETE FROM Comments WHERE CommentID = @CommentID", new { CommentID = id });
+                }
+            }
         }
     }
 }
