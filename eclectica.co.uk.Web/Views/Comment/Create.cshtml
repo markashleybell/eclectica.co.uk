@@ -1,0 +1,98 @@
+﻿@model eclectica.co.uk.Web.Models.EntryEditViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@section head {
+
+<script type="text/javascript" src="/scripts/jquery.fieldselection.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.9.0/build/yahoo-dom-event/yahoo-dom-event.js&2.9.0/build/element/element-min.js&2.9.0/build/uploader/uploader-min.js"></script>
+<script type="text/javascript" src="/scripts/uploader.js"></script>
+<script type="text/javascript" src="/scripts/tagsuggest.js"></script>
+<script type="text/javascript" src="/scripts/relatedsuggest.js"></script>
+<script type="text/javascript" src="/scripts/entry-admin.js"></script>
+
+}
+
+@section content {
+
+    <h2>Update Entry</h2>
+
+    <p>@Html.LabelFor(x => x.Entries)<br />
+    @Html.DropDownList("EntryID", Model.Entries, "Please select...") <input class="action" type="button" id="AddButton" value="Add New" /></p>
+
+    @using (Html.BeginForm()) {
+    
+        <p>@Html.LabelFor(x => x.Entry.Title)<br />
+        @Html.TextBoxFor(x => x.Entry.Title, new { size = 49 }) @Html.CheckBoxFor(x => x.Entry.Publish) @Html.LabelFor(x => x.Entry.Publish) 
+        <input type="submit" value="Save" /> 
+        @Html.Hidden("related", Model.Related)</p>
+        
+        <p>@Html.LabelFor(x => x.Entry.Body) &nbsp;&nbsp;
+            <span id="insertlinks">
+                <a href="#" onclick="insertCitation(); return false;">Cite</a> | 
+                <a href="#" onclick="insertAnchor(); return false;">Lnk</a> |
+                <a href="#" onclick="insertClass('link-img'); return false;">LnkImg</a> | 
+                <a href="#" onclick="insertClass('l-img-double'); return false;">FlL2up</a> | 
+                <a href="#" onclick="insertClass('r-img-double'); return false;">FlR2up</a> | 
+                <a href="#" onclick="insertClass('l-img'); return false;">FlL</a> | 
+                <a href="#" onclick="insertClass('r-img'); return false;">FlR</a> | 
+                <a href="#" onclick="insertClass('quote'); return false;">Quot</a> | 
+                <a href="#" onclick="insertEntity('&#8220;'); return false;">LQuot</a> |
+                <a href="#" onclick="insertEntity('&#8221;'); return false;">RQuot</a> |
+                <a href="#" onclick="insertClass('captionw'); return false;">WCap</a> | 
+                <a href="#" onclick="insertClass('captionb'); return false;">BCap</a> |
+                <a href="#" onclick="insertClass('captionn'); return false;">NCap</a>
+            </span><br />
+        @Html.TextAreaFor(x => x.Entry.Body, new { rows = 15, cols = 60 })</p>
+        
+        <p>@Html.LabelFor(x => x.Tags)<br />
+        @Html.TextBoxFor(x => x.Tags, new { size = 50 })</p>
+        
+        <p>@Html.LabelFor(x => x.Entry.Url)<br />
+        @Html.TextBoxFor(x => x.Entry.Url, new { size = 50 })</p>
+        
+        <p>@Html.LabelFor(x => x.Entry.Tweet)<br />
+        @Html.TextAreaFor(x => x.Entry.Tweet, new { rows = 2, cols = 60 })</p>
+        
+    }
+    
+}
+
+@section sidebar {
+
+    <h3>Images</h3>
+	<div>
+		<div id="UploadContainer">
+            <div id="UploadButton"></div>
+        </div>
+        <div id="SelectedFiles"></div>
+        <p><input type="button" onclick="upload();" value="Upload Files" /></p>
+                        
+        <div id="imagepicker">
+            <ul id="imagepickerthumbs">
+            @foreach(var image in Model.Images)
+            {
+                <li id="i@(image.ImageID)">
+                    <span class="i" style="background-image: url(/content/img/lib/cms/@(image.ImageID).jpg);\">@(image.ImageID)</span>
+                    <span>@((image.Filename.Length > 15) ? image.Filename.Substring(0, 15) + "..." : image.Filename)</span>
+                </li>
+            }
+            </ul>
+        </div>
+        <p><a href="post.aspx?postid=<%=postId%>&amp;img=true">Show All Images</a><br /><br /></p>       
+	</div>
+
+    <h3>Related Posts</h3>
+	<div>
+		<ul id="relatedposts">
+
+		</ul>
+	    <p><label for="RelatedSearch">Add</label><br />
+        <input type="text" size="50" id="RelatedSearch" name="RelatedSearch" value="" />
+        <input type="hidden" id="related" name="related" value="" /></p>
+    </div>
+
+}

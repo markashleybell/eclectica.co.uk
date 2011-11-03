@@ -6,7 +6,7 @@ using eclectica.co.uk.Service.Entities;
 
 namespace eclectica.co.uk.Web.Models
 {
-    public class AdminCommentsViewModel
+    public class CommentManageViewModel
     {
         public List<CommentModel> Comments { get; set; }
     }

@@ -39,7 +39,7 @@ namespace eclectica.co.uk.Web.Controllers
 
         public ActionResult Manage(int? page)
         {
-            return View(new AdminEntriesViewModel {
+            return View(new EntryManageViewModel {
                 Entries = _entryServices.All().ToList()
             });
         }

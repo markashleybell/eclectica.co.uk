@@ -1,0 +1,48 @@
+﻿@model eclectica.co.uk.Web.Models.CommentEditViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@section head {
+
+<script type="text/javascript" src="/scripts/comment-admin.js"></script>
+
+}
+
+@section content {
+
+    <h2>Update Comment</h2>
+
+    <p>@Html.LabelFor(x => x.Comments)<br />
+    @Html.DropDownListFor(x => x.Comment.CommentID, Model.Comments, "Please select...") <input class="action" type="button" id="AddButton" value="Add New" /></p>
+
+    @using (Html.BeginForm()) {
+    
+        <p>@Html.LabelFor(x => x.Comment.Name)<br />
+        @Html.TextBoxFor(x => x.Comment.Name, new { size = 49 })
+        
+        @Html.CheckBoxFor(x => x.Comment.Approved) @Html.LabelFor(x => x.Comment.Approved)
+
+        @Html.HiddenFor(x => x.Comment.CommentID)
+        <input type="submit" value="Save" /> <input class="action" type="button" id="DeleteButton" value="Delete" />
+        </p>
+        
+        <p>@Html.LabelFor(x => x.Comment.Email)<br />
+        @Html.TextBoxFor(x => x.Comment.Email, new { size = 49 })</p>
+        
+        <p>@Html.LabelFor(x => x.Comment.Url)<br />
+        @Html.TextBoxFor(x => x.Comment.Url, new { size = 49 })</p>
+        
+        <p>@Html.LabelFor(x => x.Comment.Body)<br />
+        @Html.TextAreaFor(x => x.Comment.Body, new { rows = 15, cols = 60 })</p>
+        
+        <p>@Html.LabelFor(x => x.Comment.RawBody)<br />
+        @Html.TextAreaFor(x => x.Comment.RawBody, new { rows = 15, cols = 60 })</p>
+        
+        <p></p>
+        
+    }
+    
+}

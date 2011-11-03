@@ -79,6 +79,8 @@
     <Compile Include="Concrete\ConfigurationInfo.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
+    <Compile Include="Controllers\LinkController.cs" />
     <Compile Include="Controllers\EntryController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Extensions\Collection.cs" />
@@ -90,11 +92,11 @@
     <Compile Include="Helpers\EntryHelpers.cs" />
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
     <Compile Include="Infrastructure\ValidationAttributes.cs" />
-    <Compile Include="Models\AdminCommentsViewModel.cs" />
-    <Compile Include="Models\AdminLinksViewModel.cs" />
-    <Compile Include="Models\AdminEntriesViewModel.cs" />
+    <Compile Include="Models\Comment\CommentEditViewModel.cs" />
+    <Compile Include="Models\Comment\CommentManageViewModel.cs" />
+    <Compile Include="Models\Entry\EntryManageViewModel.cs" />
     <Compile Include="Models\ArchiveViewModel.cs" />
-    <Compile Include="Models\CommentViewModel.cs" />
+    <Compile Include="Models\Comment\CommentViewModel.cs" />
     <Compile Include="Models\Entry\EntryEditViewModel.cs" />
     <Compile Include="Models\Entry\EntryViewModel.cs" />
     <Compile Include="Models\LinksViewModel.cs" />
@@ -110,6 +112,7 @@
     <Content Include="Content\Css\Screen.css" />
     <Content Include="Global.asax" />
     <Content Include="robots.txt" />
+    <Content Include="Scripts\comment-admin.js" />
     <Content Include="Scripts\entry-admin.js" />
     <Content Include="Scripts\jquery.fieldselection.js" />
     <Content Include="Scripts\load.js" />
@@ -171,6 +174,9 @@
     <Content Include="Views\Shared\Debug.cshtml" />
     <Content Include="Views\Entry\Edit.cshtml" />
     <Content Include="Views\Entry\Create.cshtml" />
+    <Content Include="Views\Comment\Manage.cshtml" />
+    <Content Include="Views\Comment\Edit.cshtml" />
+    <Content Include="Views\Comment\Create.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
