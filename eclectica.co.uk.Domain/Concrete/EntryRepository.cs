@@ -98,6 +98,9 @@ namespace eclectica.co.uk.Domain.Concrete
 
         private string GetThumbnail(string title, string body)
         {
+            if (body == null)
+                return "";
+
             MatchCollection matches = Regex.Matches(body, @"\/img/lib/(.*?)/(.*?)\.(jpg|gif)", RegexOptions.Singleline | RegexOptions.IgnoreCase);
 
             string thumb = (matches.Count > 0) ? matches[0].Groups[2].Value : "";
@@ -344,8 +347,10 @@ namespace eclectica.co.uk.Domain.Concrete
 
         public override void Add(Entry entry)
         {
-            var sql = "INSERT INTO Entries (Title, Body, Url, Published, Updated, Tweet, Publish)" +
-                      "VALUES (@Title, @Body, @Url, @Published, @Updated, @Tweet, @Publish)";
+            // There's only one author at the moment and this is unlikely to change,
+            // so author assignment is hard-coded here for now
+            var sql = "INSERT INTO Entries (Title, Body, Url, Published, Updated, Tweet, Publish, Author_AuthorID) " +
+                      "VALUES (@Title, @Body, @Url, @Published, @Updated, @Tweet, @Publish, 1)";
 
             var newId = 0;
 
@@ -461,6 +466,7 @@ namespace eclectica.co.uk.Domain.Concrete
             {
                 using (_profiler.Step("Delete entry"))
                 {
+                    conn.Execute("DELETE FROM EntryEntries WHERE Entry_EntryID = @EntryID", new { EntryID = id });
                     conn.Execute("DELETE FROM Entries WHERE EntryID = @EntryID", new { EntryID = id });
                 }
             }

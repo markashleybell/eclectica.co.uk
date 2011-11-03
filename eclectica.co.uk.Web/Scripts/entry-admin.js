@@ -14,7 +14,7 @@
 
     $('#DeleteButton').bind('click', function () {
         if (confirm('Are you SURE you want to delete this post?'))
-            window.location = '/Entry/Delete/' + $('#postid').val()
+            window.location = '/Entry/Delete/' + $('#Entry_EntryID').val();
     });
 
     $('#imagepickerthumbs li').live('click', function () {
