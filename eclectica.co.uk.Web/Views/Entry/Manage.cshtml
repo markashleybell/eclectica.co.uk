@@ -13,6 +13,8 @@
 	<div class="post">
 	    <h1>Manage Posts</h1>
 
+        <p>@Html.ActionLink("Create new Entry", "Create") &raquo;</p>
+
         @if(Model.Entries.Count() > 0) 
         {
             <table id="postmanager">

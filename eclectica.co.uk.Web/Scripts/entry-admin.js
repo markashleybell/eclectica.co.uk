@@ -9,7 +9,7 @@
     });
 
     $('#AddButton').bind('click', function () {
-        window.location = '/cms/post_actions.aspx?postid=' + $('#postid').val() + '&userid=' + $('#userid').val() + '&delete=1';
+        window.location = '/Entry/Create';
     });
 
     $('#DeleteButton').bind('click', function () {

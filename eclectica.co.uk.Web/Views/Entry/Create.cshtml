@@ -7,22 +7,28 @@
 
 @section head {
 
+<script type="text/javascript" src="/scripts/jquery.fieldselection.js"></script>
 <script type="text/javascript" src="http://yui.yahooapis.com/combo?2.9.0/build/yahoo-dom-event/yahoo-dom-event.js&2.9.0/build/element/element-min.js&2.9.0/build/uploader/uploader-min.js"></script>
-
 <script type="text/javascript" src="/scripts/uploader.js"></script>
+<script type="text/javascript" src="/scripts/tagsuggest.js"></script>
+<script type="text/javascript" src="/scripts/relatedsuggest.js"></script>
+<script type="text/javascript" src="/scripts/entry-admin.js"></script>
 
 }
 
 @section content {
 
-    <h2>Add Entry</h2>
+    <h2>Update Entry</h2>
+
+    <p>@Html.LabelFor(x => x.Entries)<br />
+    @Html.DropDownList("EntryID", Model.Entries, "Please select...") <input class="action" type="button" id="AddButton" value="Add New" /></p>
 
     @using (Html.BeginForm()) {
     
         <p>@Html.LabelFor(x => x.Entry.Title)<br />
-        @Html.TextBoxFor(x => x.Entry.Title, new { size = 49 }) @Html.CheckBoxFor(x => x.Entry.Publish) @Html.LabelFor(x => x.Entry.Publish) | 
-        <input type="submit" value="Save" />
-        @Html.HiddenFor(x => x.Entry.EntryID)</p>
+        @Html.TextBoxFor(x => x.Entry.Title, new { size = 49 }) @Html.CheckBoxFor(x => x.Entry.Publish) @Html.LabelFor(x => x.Entry.Publish) 
+        <input type="submit" value="Save" /> 
+        @Html.Hidden("related", Model.Related)</p>
         
         <p>@Html.LabelFor(x => x.Entry.Body) &nbsp;&nbsp;
             <span id="insertlinks">
@@ -78,5 +84,15 @@
         </div>
         <p><a href="post.aspx?postid=<%=postId%>&amp;img=true">Show All Images</a><br /><br /></p>       
 	</div>
+
+    <h3>Related Posts</h3>
+	<div>
+		<ul id="relatedposts">
+
+		</ul>
+	    <p><label for="RelatedSearch">Add</label><br />
+        <input type="text" size="50" id="RelatedSearch" name="RelatedSearch" value="" />
+        <input type="hidden" id="related" name="related" value="" /></p>
+    </div>
 
 }

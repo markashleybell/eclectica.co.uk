@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using eclectica.co.uk.Domain.Abstract;
 using eclectica.co.uk.Domain.Entities;
+using eclectica.co.uk.Domain.Extensions;
 using System.Linq.Expressions;
 using System.Data;
 using System.Data.Common;
@@ -351,6 +352,9 @@ namespace eclectica.co.uk.Domain.Concrete
             entry.Published = DateTime.Now;
             entry.Updated = entry.Published;
 
+            if (entry.Url == null && entry.Title != null)
+                entry.Url = entry.Title.ConvertToSafeUrl();
+
             using (var conn = base.GetOpenConnection())
             {
                 using (_profiler.Step("Add entry"))
@@ -378,6 +382,9 @@ namespace eclectica.co.uk.Domain.Concrete
                       "WHERE EntryID = @EntryID";
 
             entry.Updated = DateTime.Now;
+
+            if (entry.Url == null && entry.Title != null)
+                entry.Url = entry.Title.ConvertToSafeUrl();
 
             using (var conn = base.GetOpenConnection())
             {

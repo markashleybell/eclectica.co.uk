@@ -146,7 +146,7 @@ namespace eclectica.co.uk.Service.Concrete
             return entryDictionary;
         }
 
-        public void AddEntry(EntryModel model)
+        public void AddEntry(EntryModel model, int[] relatedIds, string[] tags)
         {
             var entry = new Entry();
 
@@ -155,6 +155,12 @@ namespace eclectica.co.uk.Service.Concrete
             _entryRepository.Add(entry);
 
             model.EntryID = entry.EntryID;
+
+            if (relatedIds != null)
+                _entryRepository.UpdateRelatedEntries(model.EntryID, relatedIds);
+
+            if (tags != null)
+                _entryRepository.UpdateRelatedTags(model.EntryID, tags);
         }
 
         public void UpdateEntry(EntryModel model, int[] relatedIds, string[] tags)

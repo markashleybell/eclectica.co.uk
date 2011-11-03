@@ -63,9 +63,12 @@ namespace eclectica.co.uk.Web.Controllers
         public ActionResult Create()
         {
             return View(new EntryEditViewModel {
-                Entry = new EntryModel(),
                 Images = _entryServices.GetImages(),
-                Tags = ""
+                Entries = _entryServices.All()
+                                        .Select(x => new SelectListItem {
+                                            Text = x.Published.ToString("dd/MM/yyyy hh:mm") + " " + x.Title.Truncate(50),
+                                            Value = x.EntryID.ToString()
+                                        }).AsQueryable()
             });
         }
 
@@ -75,10 +78,18 @@ namespace eclectica.co.uk.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
+                model.Images = _entryServices.GetImages();
+                model.Entries = _entryServices.All()
+                                              .Select(x => new SelectListItem {
+                                                  Text = x.Published.ToString("dd/MM/yyyy hh:mm") + " " + x.Title.Truncate(50),
+                                                  Value = x.EntryID.ToString()
+                                              }).AsQueryable();
                 return View(model);
             }
 
-            _entryServices.AddEntry(model.Entry);
+            _entryServices.AddEntry(model.Entry,
+                                    ((model.Related == null) ? null : model.Related.Split('|').Select(x => Convert.ToInt32(x)).ToArray()),
+                                    model.Tags.SplitOrNull(" "));
 
             return RedirectToAction("Edit", new { id = model.Entry.EntryID });
         }
@@ -115,9 +126,9 @@ namespace eclectica.co.uk.Web.Controllers
                 return View(model);
             }
 
-            _entryServices.UpdateEntry(model.Entry, 
-                                       model.Related.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries).Select(x => Convert.ToInt32(x)).ToArray(),
-                                       model.Tags.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
+            _entryServices.UpdateEntry(model.Entry,
+                                       ((model.Related == null) ? null : model.Related.Split('|').Select(x => Convert.ToInt32(x)).ToArray()),
+                                       model.Tags.SplitOrNull(" "));
 
             return RedirectToAction("Edit", new { id = model.Entry.EntryID });
         }

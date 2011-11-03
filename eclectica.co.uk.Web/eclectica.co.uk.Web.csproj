@@ -81,6 +81,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\EntryController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
+    <Compile Include="Extensions\Collection.cs" />
     <Compile Include="Extensions\Text.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

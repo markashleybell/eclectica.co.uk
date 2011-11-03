@@ -28,7 +28,7 @@ namespace eclectica.co.uk.Service.Abstract
         IEnumerable<EntryModel> SearchEntries(string query);
         IEnumerable<EntryModel> SimpleSearch(string query);
 
-        void AddEntry(EntryModel entry);
+        void AddEntry(EntryModel entry, int[] relatedIds, string[] tags);
         void UpdateEntry(EntryModel entry, int[] relatedIds, string[] tags);
         void DeleteEntry(int id);
     }
