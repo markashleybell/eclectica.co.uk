@@ -1,0 +1,40 @@
+﻿@model eclectica.co.uk.Web.Models.LinkManageViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@section head {
+}
+
+@section content {
+
+	<div class="post">
+	    <h1>Manage Links</h1>
+
+        <p>@Html.ActionLink("Create new Link", "Create") &raquo;</p>
+
+        @if(Model.Links.Count() > 0) 
+        {
+            <table id="postmanager">
+            <tr>
+                <th>Link</th>
+                <th style="width: 90px;">Edit</th>
+            </tr>
+
+            @foreach (var link in Model.Links)
+            {
+                <tr>
+                    <td>@link.Title</td>
+                    <td>@Html.ActionLink("Edit", "Edit", new { id = link.LinkID }, null) | @Html.ActionLink("Delete", "Delete", new { id = link.LinkID }, null)</td>
+                </tr>
+            
+            }
+            
+            </table>
+        }
+
+    </div>
+
+}

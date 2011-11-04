@@ -23,8 +23,8 @@ namespace eclectica.co.uk.Web.Controllers
 
         public ActionResult Manage(int? page)
         {
-            return View(new EntryManageViewModel {
-                Entries = _entryServices.All().ToList()
+            return View(new LinkManageViewModel {
+                Links = _linkServices.All().ToList()
             });
         }
 
@@ -32,82 +32,72 @@ namespace eclectica.co.uk.Web.Controllers
 
         public ActionResult Create()
         {
-            return View(new EntryEditViewModel {
-                Images = _entryServices.GetImages(),
-                Entries = _entryServices.All()
-                                        .Select(x => new SelectListItem {
-                                            Text = x.Published.ToString("dd/MM/yyyy hh:mm") + " " + x.Title.Truncate(50),
-                                            Value = x.EntryID.ToString()
-                                        }).AsQueryable()
+            return View(new LinkEditViewModel {
+                Links = _linkServices.All()
+                                     .Select(x => new SelectListItem {
+                                         Text = x.Title,
+                                         Value = x.LinkID.ToString()
+                                     }).AsQueryable()
             });
         }
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Create(EntryEditViewModel model)
+        public ActionResult Create(LinkEditViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                model.Images = _entryServices.GetImages();
-                model.Entries = _entryServices.All()
-                                              .Select(x => new SelectListItem {
-                                                  Text = x.Published.ToString("dd/MM/yyyy hh:mm") + " " + x.Title.Truncate(50),
-                                                  Value = x.EntryID.ToString()
-                                              }).AsQueryable();
+                model.Links = _linkServices.All()
+                                           .Select(x => new SelectListItem {
+                                               Text = x.Title,
+                                               Value = x.LinkID.ToString()
+                                           }).AsQueryable();
                 return View(model);
             }
 
-            _entryServices.AddEntry(model.Entry,
-                                    ((model.Related == null) ? null : model.Related.Split('|').Select(x => Convert.ToInt32(x)).ToArray()),
-                                    model.Tags.SplitOrNull(" "));
+            _linkServices.AddLink(model.Link);
 
-            return RedirectToAction("Edit", new { id = model.Entry.EntryID });
+            return RedirectToAction("Edit", new { id = model.Link.LinkID });
         }
 
         public ActionResult Edit(int id)
         {
-            var entry = _entryServices.GetEntry(id);
+            var link = _linkServices.GetLink(id);
 
-            return View(new EntryEditViewModel { 
-                Entry = entry,
-                Images = _entryServices.GetImages(),
-                Tags = string.Join(" ", entry.Tags.Select(x => x.TagName).ToArray()),
-                Related = string.Join("|", entry.Related.Select(x => x.EntryID).ToArray()),
-                Entries = _entryServices.All()
-                                        .Select(x => new SelectListItem { 
-                                            Text = x.Published.ToString("dd/MM/yyyy hh:mm") + " " + x.Title.Truncate(50), 
-                                            Value = x.EntryID.ToString()
-                                        }).AsQueryable()
+            return View(new LinkEditViewModel {
+                Link = link,
+                Links = _linkServices.All()
+                                     .Select(x => new SelectListItem {
+                                         Text = x.Title,
+                                         Value = x.LinkID.ToString()
+                                     }).AsQueryable()
             });
         }
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Edit(EntryEditViewModel model)
+        public ActionResult Edit(LinkEditViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                model.Images = _entryServices.GetImages();
-                model.Entries = _entryServices.All()
-                                              .Select(x => new SelectListItem {
-                                                  Text = x.Published.ToString("dd/MM/yyyy hh:mm") + " " + x.Title.Truncate(50),
-                                                  Value = x.EntryID.ToString()
-                                              }).AsQueryable();
+                model.Links = _linkServices.All()
+                                           .Select(x => new SelectListItem {
+                                               Text = x.Title,
+                                               Value = x.LinkID.ToString()
+                                           }).AsQueryable();
                 return View(model);
             }
 
-            _entryServices.UpdateEntry(model.Entry,
-                                       ((model.Related == null) ? null : model.Related.Split('|').Select(x => Convert.ToInt32(x)).ToArray()),
-                                       model.Tags.SplitOrNull(" "));
+            _linkServices.UpdateLink(model.Link);
 
-            return RedirectToAction("Edit", new { id = model.Entry.EntryID });
+            return RedirectToAction("Edit", new { id = model.Link.LinkID });
         }
 
         // TODO: Rework delete buttons into POSTs
         // [HttpPost]
         public ActionResult Delete(int id)
         {
-            _entryServices.DeleteEntry(id);
+            _linkServices.DeleteLink(id);
 
             return RedirectToAction("Manage");
         }

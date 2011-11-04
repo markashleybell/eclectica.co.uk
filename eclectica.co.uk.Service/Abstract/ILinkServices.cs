@@ -11,6 +11,12 @@ namespace eclectica.co.uk.Service.Abstract
     {
         IEnumerable<LinkModel> All();
 
+        LinkModel GetLink(int id);
+
         IEnumerable<LinkModel> GetSortedLinks();
+
+        void AddLink(LinkModel model);
+        void UpdateLink(LinkModel model);
+        void DeleteLink(int id);
     }
 }

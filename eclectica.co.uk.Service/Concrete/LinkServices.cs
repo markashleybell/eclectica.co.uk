@@ -25,6 +25,11 @@ namespace eclectica.co.uk.Service.Concrete
             return Mapper.MapList<Link, LinkModel>(_linkRepository.All().ToList());
         }
 
+        public LinkModel GetLink(int id)
+        {
+            return Mapper.Map<Link, LinkModel>(_linkRepository.Get(id));
+        }
+
         public IEnumerable<LinkModel> GetSortedLinks()
         {
             var linkDictionary = new Dictionary<string, List<LinkModel>>();
@@ -37,6 +42,31 @@ namespace eclectica.co.uk.Service.Concrete
                              };
 
             return linkModels.ToList();
+        }
+
+        public void AddLink(LinkModel model)
+        {
+            var link = new Link();
+
+            Mapper.CopyProperties<LinkModel, Link>(model, link);
+
+            _linkRepository.Add(link);
+
+            model.LinkID = link.LinkID;
+        }
+
+        public void UpdateLink(LinkModel model)
+        {
+            var link = _linkRepository.Get(model.LinkID);
+
+            Mapper.CopyProperties<LinkModel, Link>(model, link);
+
+            _linkRepository.Update(link);
+        }
+
+        public void DeleteLink(int id)
+        {
+            _linkRepository.Remove(id);
         }
     }
 }

@@ -1,0 +1,36 @@
+﻿@model eclectica.co.uk.Web.Models.LinkEditViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@section head {
+
+<script type="text/javascript" src="/scripts/link-admin.js"></script>
+
+}
+
+@section content {
+
+    <h2>Update Link</h2>
+
+    <p>@Html.LabelFor(x => x.Links)<br />
+    @Html.DropDownListFor(x => x.Link.LinkID, Model.Links, "Please select...") <input type="button" id="AddButton" value="Add New" /></p>
+
+    @using (Html.BeginForm()) {
+    
+        <p>@Html.LabelFor(x => x.Link.Title)<br />
+        @Html.TextBoxFor(x => x.Link.Title, new { size = 49 })
+        <input type="submit" value="Save" /> 
+        </p>
+        
+        <p>@Html.LabelFor(x => x.Link.Url)<br />
+        @Html.TextBoxFor(x => x.Link.Url, new { size = 49 })</p>
+        
+        <p>@Html.LabelFor(x => x.Link.Category)<br />
+        @Html.TextBoxFor(x => x.Link.Category, new { size = 49 })</p>
+        
+    }
+    
+}
