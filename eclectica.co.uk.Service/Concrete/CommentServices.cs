@@ -32,24 +32,18 @@ namespace eclectica.co.uk.Service.Concrete
             return Mapper.Map<Comment, CommentModel>(_commentRepository.Get(id));
         }
 
-        public int AddComment(int entryId, string name, string email, string url, string rawBody)
+        public void AddComment(CommentModel model)
         {
-            var entry = _entryRepository.Get(entryId);
+            var comment = new Comment();
 
-            var comment = new Comment
-            {
-                Name = name,
-                Email = email,
-                Url = url,
-                RawBody = rawBody,
-                Body = rawBody.Sanitize(),
-                Date = DateTime.Now,
-                Approved = true
-            };
+            Mapper.CopyProperties<CommentModel, Comment>(model, comment);
 
-            entry.Comments.Add(comment);
+            comment.EntryID = model.Entry.EntryID;
+            comment.Body = comment.RawBody.Sanitize();
 
-            return comment.CommentID;
+            _commentRepository.Add(comment);
+
+            model.CommentID = comment.CommentID;
         }
 
         public void UpdateComment(CommentModel model)

@@ -8,6 +8,5 @@ namespace eclectica.co.uk.Domain.Abstract
 {
     public interface ICommentRepository : IRepository<Comment>
     {
-        
     }
 }

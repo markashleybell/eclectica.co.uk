@@ -51,7 +51,31 @@ namespace eclectica.co.uk.Domain.Concrete
 
         public override void Add(Comment comment)
         {
-            throw new NotImplementedException();
+            var sql = "INSERT INTO Comments (Name, Email, Url, Body, RawBody, Date, Approved, Entry_EntryID) " +
+                      "VALUES (@Name, @Email, @Url, @Body, @RawBody, @Date, 1, @EntryID)";
+
+            comment.Date = DateTime.Now;
+
+            var newId = 0;
+
+            using (var conn = base.GetOpenConnection())
+            {
+                using (_profiler.Step("Add comment"))
+                {
+                    // We need to get the new ID with a separate query inside this transaction, because
+                    // we want to support SQL CE, which doesn't support batch queries or SCOPE_IDENTITY()
+                    using (var transaction = conn.BeginTransaction())
+                    {
+                        // Do the insert and retrieve the new ID
+                        conn.Execute(sql, comment, transaction);
+                        newId = (int)conn.Query<decimal>("SELECT @@IDENTITY", null, transaction).First();
+
+                        transaction.Commit();
+                    }
+                }
+            }
+
+            comment.CommentID = newId;
         }
 
         public override void Update(Comment comment)

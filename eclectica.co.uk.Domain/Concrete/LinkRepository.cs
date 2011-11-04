@@ -51,8 +51,6 @@ namespace eclectica.co.uk.Domain.Concrete
 
         public override void Add(Link link)
         {
-            // There's only one author at the moment and this is unlikely to change,
-            // so author assignment is hard-coded here for now
             var sql = "INSERT INTO Links (Title, Url, Category) " +
                       "VALUES (@Title, @Url, @Category)";
 

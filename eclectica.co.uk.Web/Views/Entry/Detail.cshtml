@@ -123,13 +123,12 @@
                 @Html.TextAreaFor(x => x.Comment.RawBody)
                 @Html.ValidationMessageFor(x => x.Comment.RawBody)</p>
                 
-			    <p>@Html.LabelFor(x => x.Comment.X7fw91Do)
-                @Html.TextBoxFor(x => x.Comment.X7fw91Do)
-                @Html.ValidationMessageFor(x => x.Comment.X7fw91Do)</p>
+			    <p>@Html.LabelFor(x => x.X7fw91Do)
+                @Html.TextBoxFor(x => x.X7fw91Do)
+                @Html.ValidationMessageFor(x => x.X7fw91Do)</p>
                 
-			    <p>@Html.HiddenFor(x => x.Comment.EntryID)
-                @Html.HiddenFor(x => x.Comment.EntryUrl)
-                
+			    <p>@Html.HiddenFor(x => x.Entry.EntryID)
+                @Html.HiddenFor(x => x.Entry.Url)
                 @if (!ViewData.ModelState.IsValid)
                 {
                     <input type="hidden" name="ScrollToForm" id="ScrollToForm" value="1" />

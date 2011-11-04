@@ -17,6 +17,6 @@ namespace eclectica.co.uk.Domain.Entities
         public string RawBody { get; set; }
         public bool Approved { get; set; }
 
-        public virtual Entry Entry { get; set; }
+        public int EntryID { get; set; }
     }
 }

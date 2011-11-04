@@ -151,36 +151,27 @@ namespace eclectica.co.uk.Web.Controllers
 
             return View(new EntryViewModel { 
                 Entry = entry,
-                Comment = new CommentViewModel {
-                    EntryID = entry.EntryID,
-                    EntryUrl = entry.Url
+                Comment = new CommentModel {
+                    Entry = entry
                 }
             });
         }
 
         [HttpPost]
-        public ActionResult Detail(CommentViewModel comment)
+        public ActionResult Detail(EntryViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                var entry = _entryServices.GetEntryByUrl(comment.EntryUrl);
+                model.Entry = _entryServices.GetEntryByUrl(model.Entry.Url);
 
-                if (entry == null)
-                {
-                    return Content("404");
-                }
-
-                return View(new EntryViewModel
-                {
-                    Entry = entry,
-                    Comment = comment
-                });
+                return View(model);
             }
 
-            // Add comment
-            int commentId = _commentServices.AddComment(comment.EntryID, comment.Name, comment.Email, comment.Url, comment.RawBody);
+            model.Comment.Entry = model.Entry;
 
-            return Redirect("/" + comment.EntryUrl + "#comment" + commentId);
+            _commentServices.AddComment(model.Comment);
+
+            return Redirect("/" + model.Entry.Url + "#comment" + model.Comment.CommentID);
         }
 
         // TODO: Rework delete buttons into POSTs
