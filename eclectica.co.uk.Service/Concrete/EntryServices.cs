@@ -190,53 +190,53 @@ namespace eclectica.co.uk.Service.Concrete
 
         public void CreateSearchIndex()
         {
-            //var indexPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Index");
+            var indexPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Index");
 
-            //var writer = new DirectoryIndexWriter(new DirectoryInfo(indexPath), true);
+            var writer = new DirectoryIndexWriter(new DirectoryInfo(indexPath), true);
 
-            //using (var indexService = new IndexService(writer))
-            //{
-            //    indexService.IndexEntities(_entryRepository.Query(x => x.Publish == true).ToList(), e =>
-            //    {
+            var entries = _entryRepository.All().Where(x => x.Publish).ToList();
 
-            //        string body = e.Body;
-            //        RegexOptions options = RegexOptions.Singleline | RegexOptions.IgnoreCase;
+            using (var indexService = new IndexService(writer))
+            {
+                indexService.IndexEntities(entries, e => {
 
-            //        string summary = Regex.Replace(Regex.Matches(body, "<p>(.*?)</p>", options)[0].Groups[1].Value, @"<(.|\n)*?>", string.Empty, options);
+                    string body = e.Body;
+                    RegexOptions options = RegexOptions.Singleline | RegexOptions.IgnoreCase;
 
-            //        MatchCollection imgElements = Regex.Matches(body, "<img (?:.*?)?src=\"/content/img/lib/(.*?)/(.*?)\\.(jpg|gif)\" (?:.*?)?/>", options);
+                    string summary = Regex.Replace(Regex.Matches(body, "<p>(.*?)</p>", options)[0].Groups[1].Value, @"<(.|\n)*?>", string.Empty, options);
 
-            //        string thumb = "";
+                    MatchCollection imgElements = Regex.Matches(body, "<img (?:.*?)?src=\"/content/img/lib/(.*?)/(.*?)\\.(jpg|gif)\" (?:.*?)?/>", options);
 
-            //        if (imgElements.Count > 0)
-            //        {
-            //            Match img = imgElements[0];
+                    string thumb = "";
 
-            //            // If it's a drop image it won't have a small image
-            //            if (img.Groups[1].Value == "drop")
-            //            {
-            //                // Create one on the fly?
-            //            }
-            //            else
-            //            {
-            //                thumb = img.Groups[2].Value + "." + img.Groups[3].Value;
-            //            }
-            //        }
+                    if (imgElements.Count > 0)
+                    {
+                        Match img = imgElements[0];
 
-            //        var document = new Document();
-            //        document.Add(new Field("url", e.Url, Field.Store.YES, Field.Index.NOT_ANALYZED));
-            //        document.Add(new Field("published", e.Published.Ticks.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
-            //        document.Add(new Field("title", e.Title, Field.Store.YES, Field.Index.ANALYZED));
-            //        document.Add(new Field("author", e.Author.Name, Field.Store.YES, Field.Index.NOT_ANALYZED));
-            //        document.Add(new Field("body", e.Body.StripHtml(), Field.Store.YES, Field.Index.ANALYZED));
-            //        document.Add(new Field("thumbnail", thumb, Field.Store.YES, Field.Index.NOT_ANALYZED));
-            //        document.Add(new Field("summary", summary, Field.Store.YES, Field.Index.NOT_ANALYZED));
-            //        document.Add(new Field("commentcount", e.Comments.Count.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
-            //        return document;
-            //    });
-            //}
+                        // If it's a drop image it won't have a small image
+                        if (img.Groups[1].Value == "drop")
+                        {
+                            // Create one on the fly?
+                        }
+                        else
+                        {
+                            thumb = img.Groups[2].Value + "." + img.Groups[3].Value;
+                        }
+                    }
 
-            throw new NotImplementedException();
+                    var document = new Document();
+                    document.Add(new Field("url", e.Url, Field.Store.YES, Field.Index.NOT_ANALYZED));
+                    document.Add(new Field("published", e.Published.Ticks.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+                    document.Add(new Field("title", e.Title, Field.Store.YES, Field.Index.ANALYZED));
+                    document.Add(new Field("author", e.Author.Name, Field.Store.YES, Field.Index.NOT_ANALYZED));
+                    document.Add(new Field("body", e.Body.StripHtml(), Field.Store.YES, Field.Index.ANALYZED));
+                    document.Add(new Field("thumbnail", thumb, Field.Store.YES, Field.Index.NOT_ANALYZED));
+                    document.Add(new Field("summary", summary, Field.Store.YES, Field.Index.NOT_ANALYZED));
+                    document.Add(new Field("commentcount", e.CommentCount.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+                    return document;
+
+                });
+            }
         }
 
         public IEnumerable<EntryModel> SearchEntries(string query)
@@ -291,7 +291,7 @@ namespace eclectica.co.uk.Service.Concrete
                     string[] fields = { "title", "body" };
                     var parser = new MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_29,
                         fields, new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_29));
-                    Query multiQuery = parser.Parse(keywords);
+                    Query multiQuery = parser.Parse(keywords + "*");
 
                     this.AddQuery(multiQuery);
                 }

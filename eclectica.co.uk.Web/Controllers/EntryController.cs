@@ -37,6 +37,13 @@ namespace eclectica.co.uk.Web.Controllers
             });
         }
 
+        public ActionResult CreateSearchIndex()
+        {
+            _entryServices.CreateSearchIndex();
+
+            return View();
+        }
+
         public ActionResult Manage(int? page)
         {
             return View(new EntryManageViewModel {
