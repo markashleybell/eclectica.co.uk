@@ -10,5 +10,6 @@ namespace eclectica.co.uk.Web.Abstract
         string CDN1 { get; }
         string CDN2 { get; }
         string ImageLibraryFolder { get; }
+        int IndexPageSize { get; }
     }
 }

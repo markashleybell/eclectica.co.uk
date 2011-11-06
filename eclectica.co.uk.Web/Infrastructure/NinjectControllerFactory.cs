@@ -60,7 +60,8 @@ namespace eclectica.co.uk.Web.Infrastructure
                         .InRequestScope()
                         .WithConstructorArgument("cdn1", ConfigurationManager.AppSettings["CDN1"])
                         .WithConstructorArgument("cdn2", ConfigurationManager.AppSettings["CDN2"])
-                        .WithConstructorArgument("imageLibraryFolder", ConfigurationManager.AppSettings["ImageLibraryFolder"]);
+                        .WithConstructorArgument("imageLibraryFolder", ConfigurationManager.AppSettings["ImageLibraryFolder"])
+                        .WithConstructorArgument("indexPageSize", Convert.ToInt32(ConfigurationManager.AppSettings["IndexPageSize"]));
 
                 Bind<IEntryRepository>().To<EntryRepository>().InRequestScope();
                 Bind<IAuthorRepository>().To<AuthorRepository>().InRequestScope();

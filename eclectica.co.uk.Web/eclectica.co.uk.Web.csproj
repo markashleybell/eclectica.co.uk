@@ -184,6 +184,9 @@
     <Content Include="Views\Link\Edit.cshtml" />
     <Content Include="Views\Link\Create.cshtml" />
     <Content Include="Views\Entry\CreateSearchIndex.cshtml" />
+    <Content Include="Views\Entry\RssFull.cshtml" />
+    <Content Include="Views\Entry\RssFacebook.cshtml" />
+    <Content Include="Views\Entry\RssHeadlines.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

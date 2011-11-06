@@ -40,5 +40,13 @@ $(document).ready(function() {
 
         img.after('<div class="' + cls + '"><p>' + caption + '</p></div>');
     });
+
+    window.___gcfg = { lang: 'en-GB' };
+
+    (function () {
+        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+        po.src = 'https://apis.google.com/js/plusone.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+    })();
     
 });

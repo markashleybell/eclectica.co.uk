@@ -21,16 +21,16 @@ namespace eclectica.co.uk.Web.Controllers
     {
         public EntryController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, ILinkServices linkServices, IConfigurationInfo config) : base(entryServices, commentServices, tagServices, linkServices, config) { }
 
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? page, string view)
         {
             List<EntryModel> entries;
 
             var currentPage = (page.HasValue) ? page.Value : 0;
-            var pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["HomePagePostCount"]);
+            var pageSize = (view == null) ? _config.IndexPageSize : 10;
             
             entries = _entryServices.Page((pageSize * currentPage), pageSize).ToList();
 
-            return View(new IndexViewModel {
+            return View(((view == null) ? "Index" : view), new IndexViewModel {
                 Entries = entries,
                 PageSize = pageSize,
                 CurrentPage = currentPage

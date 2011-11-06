@@ -30,6 +30,24 @@ namespace eclectica.co.uk.Web
             );
 
             routes.MapRoute(
+                "Main RSS Feed", // Route name
+                "feed/main", // URL with parameters
+                new { controller = "Entry", action = "Index", view = "RssFull" } // Parameter defaults
+            );
+
+            routes.MapRoute(
+                "Headlines RSS Feed", // Route name
+                "feed/summary", // URL with parameters
+                new { controller = "Entry", action = "Index", view = "RssHeadlines" } // Parameter defaults
+            );
+
+            routes.MapRoute(
+                "Facebook RSS Feed", // Route name
+                "feed/facebook", // URL with parameters
+                new { controller = "Entry", action = "Index", view = "RssFacebook" } // Parameter defaults
+            );
+
+            routes.MapRoute(
                 "About Page", // Route name
                 "about", // URL with parameters
                 new { controller = "Template", action = "About" } // Parameter defaults
