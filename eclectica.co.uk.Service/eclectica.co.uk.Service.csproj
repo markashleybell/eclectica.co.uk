@@ -60,12 +60,10 @@
     <Compile Include="Abstract\ITagServices.cs" />
     <Compile Include="Abstract\ICommentServices.cs" />
     <Compile Include="Abstract\IEntryServices.cs" />
-    <Compile Include="Abstract\IFormsAuthenticationProvider.cs" />
     <Compile Include="Concrete\CommentServices.cs" />
     <Compile Include="Concrete\LinkServices.cs" />
     <Compile Include="Concrete\TagServices.cs" />
     <Compile Include="Concrete\EntryServices.cs" />
-    <Compile Include="Concrete\FormsAuthenticationProvider.cs" />
     <Compile Include="Entities\AuthorModel.cs" />
     <Compile Include="Entities\CommentModel.cs" />
     <Compile Include="Entities\EntryModel.cs" />

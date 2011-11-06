@@ -10,11 +10,10 @@
 
 @section content {
 
-    <h1 class="postdate">Eclectica CMS</h1>
 	<div class="post">
 	    <h1>Log In</h1>
 
-        @using(Html.BeginForm("LogOn", "Admin", FormMethod.Post, new { id = "login-form" })) {
+        @using(Html.BeginForm("LogOn", "Auth", FormMethod.Post, new { id = "login-form" })) {
             
             <p>@Html.LabelFor(x => x.Username)
             @Html.TextBoxFor(x => x.Username)

@@ -76,7 +76,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IConfigurationInfo.cs" />
+    <Compile Include="Abstract\IFormsAuthenticationProvider.cs" />
     <Compile Include="Concrete\ConfigurationInfo.cs" />
+    <Compile Include="Concrete\FormsAuthenticationProvider.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
@@ -174,7 +176,7 @@
     <Content Include="Views\Entry\Archive.cshtml" />
     <Content Include="Views\Shared\AdminLayout.cshtml" />
     <Content Include="Views\Entry\Manage.cshtml" />
-    <Content Include="Views\Admin\LogOn.cshtml" />
+    <Content Include="Views\Auth\LogOn.cshtml" />
     <Content Include="Views\Shared\Debug.cshtml" />
     <Content Include="Views\Entry\Edit.cshtml" />
     <Content Include="Views\Entry\Create.cshtml" />

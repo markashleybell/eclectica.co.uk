@@ -37,6 +37,7 @@ namespace eclectica.co.uk.Web.Controllers
             });
         }
 
+        [Authorize]
         public ActionResult CreateSearchIndex()
         {
             _entryServices.CreateSearchIndex();
@@ -44,6 +45,7 @@ namespace eclectica.co.uk.Web.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult Manage(int? page)
         {
             return View(new EntryManageViewModel {
@@ -67,6 +69,7 @@ namespace eclectica.co.uk.Web.Controllers
             });
         }
 
+        [Authorize]
         public ActionResult Create()
         {
             return View(new EntryEditViewModel {
@@ -79,6 +82,7 @@ namespace eclectica.co.uk.Web.Controllers
             });
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult Create(EntryEditViewModel model)
@@ -101,6 +105,7 @@ namespace eclectica.co.uk.Web.Controllers
             return RedirectToAction("Edit", new { id = model.Entry.EntryID });
         }
 
+        [Authorize]
         public ActionResult Edit(int id)
         {
             var entry = _entryServices.GetEntry(id);
@@ -118,6 +123,7 @@ namespace eclectica.co.uk.Web.Controllers
             });
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult Edit(EntryEditViewModel model)
@@ -176,6 +182,7 @@ namespace eclectica.co.uk.Web.Controllers
 
         // TODO: Rework delete buttons into POSTs
         // [HttpPost]
+        [Authorize]
         public ActionResult Delete(int id)
         {
             _entryServices.DeleteEntry(id);
@@ -183,6 +190,7 @@ namespace eclectica.co.uk.Web.Controllers
             return RedirectToAction("Manage");
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult UploadImage(HttpPostedFileBase upload)
         {
@@ -208,6 +216,7 @@ namespace eclectica.co.uk.Web.Controllers
             return Content(fileName + ":" + image.ImageID);
         }
 
+        [Authorize]
         public ActionResult RelatedSearch(string query)
         {
             var entries = _entryServices.SimpleSearch(query);
@@ -221,6 +230,7 @@ namespace eclectica.co.uk.Web.Controllers
             return Content(string.Join("|", matches));
         }
 
+        [Authorize]
         public ActionResult TagSearch(string query)
         {
             var tags = _tagServices.Search(query);
@@ -234,7 +244,7 @@ namespace eclectica.co.uk.Web.Controllers
             return Content(string.Join("|", matches));
         }
 
-
+        [Authorize]
         public ActionResult Unpublish(int id)
         {
             var entry = _entryServices.GetEntry(id);
@@ -245,6 +255,7 @@ namespace eclectica.co.uk.Web.Controllers
             return RedirectToAction("Manage");
         }
 
+        [Authorize]
         public ActionResult Publish(int id)
         {
             var entry = _entryServices.GetEntry(id);

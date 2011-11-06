@@ -91,9 +91,9 @@ namespace eclectica.co.uk.Web
             );
 
             routes.MapRoute(
-                "Admin Area", // Route name
-                "admin/{action}", // URL with parameters
-                new { controller = "Admin", action = "Posts" } // Parameter defaults
+                "Authentication", // Route name
+                "auth/{action}", // URL with parameters
+                new { controller = "Auth", action = "Logon" } // Parameter defaults
             );
 
             routes.MapRoute(

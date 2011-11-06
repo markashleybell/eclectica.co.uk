@@ -35,7 +35,7 @@ namespace eclectica.co.uk.Web.Controllers
             if (ModelState.IsValid)
             {
                 _auth.SetAuthCookie(model.Username, false);
-                return Redirect(returnUrl ?? "/admin/posts");
+                return Redirect(returnUrl ?? "/Entry/Manage");
             }
             else
             {
@@ -43,5 +43,11 @@ namespace eclectica.co.uk.Web.Controllers
             }
         }
 
+        public ActionResult LogOff()
+        {
+            _auth.DeleteAuthCookie();
+
+            return Redirect("/auth/logon");
+        }
     }
 }

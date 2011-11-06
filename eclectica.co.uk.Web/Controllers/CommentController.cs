@@ -21,6 +21,7 @@ namespace eclectica.co.uk.Web.Controllers
     {
         public CommentController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, ILinkServices linkServices, IConfigurationInfo config) : base(entryServices, commentServices, tagServices, linkServices, config) { }
 
+        [Authorize]
         public ActionResult Manage(int? page)
         {
             return View(new CommentManageViewModel {
@@ -28,6 +29,7 @@ namespace eclectica.co.uk.Web.Controllers
             });
         }
 
+        [Authorize]
         public ActionResult Edit(int id)
         {
             var comment = _commentServices.GetComment(id);
@@ -42,6 +44,7 @@ namespace eclectica.co.uk.Web.Controllers
             });
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult Edit(CommentEditViewModel model)
@@ -63,6 +66,7 @@ namespace eclectica.co.uk.Web.Controllers
 
         // TODO: Rework delete buttons into POSTs
         // [HttpPost]
+        [Authorize]
         public ActionResult Delete(int id)
         {
             _commentServices.DeleteComment(id);

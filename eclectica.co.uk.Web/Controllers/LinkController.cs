@@ -21,6 +21,7 @@ namespace eclectica.co.uk.Web.Controllers
     {
         public LinkController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, ILinkServices linkServices, IConfigurationInfo config) : base(entryServices, commentServices, tagServices, linkServices, config) { }
 
+        [Authorize]
         public ActionResult Manage(int? page)
         {
             return View(new LinkManageViewModel {
@@ -28,8 +29,7 @@ namespace eclectica.co.uk.Web.Controllers
             });
         }
 
-       
-
+        [Authorize]
         public ActionResult Create()
         {
             return View(new LinkEditViewModel {
@@ -41,6 +41,7 @@ namespace eclectica.co.uk.Web.Controllers
             });
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult Create(LinkEditViewModel model)
@@ -60,6 +61,7 @@ namespace eclectica.co.uk.Web.Controllers
             return RedirectToAction("Edit", new { id = model.Link.LinkID });
         }
 
+        [Authorize]
         public ActionResult Edit(int id)
         {
             var link = _linkServices.GetLink(id);
@@ -74,6 +76,7 @@ namespace eclectica.co.uk.Web.Controllers
             });
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult Edit(LinkEditViewModel model)
@@ -95,6 +98,7 @@ namespace eclectica.co.uk.Web.Controllers
 
         // TODO: Rework delete buttons into POSTs
         // [HttpPost]
+        [Authorize]
         public ActionResult Delete(int id)
         {
             _linkServices.DeleteLink(id);
