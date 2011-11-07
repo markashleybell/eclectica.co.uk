@@ -14,8 +14,8 @@ namespace eclectica.co.uk.Web.Controllers
     {
         IFormsAuthenticationProvider _auth;
 
-        public AuthController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, ILinkServices linkServices, IConfigurationInfo config, IFormsAuthenticationProvider auth)
-            : base(entryServices, commentServices, tagServices, linkServices, config) 
+        public AuthController(IEntryServices entryServices, ICommentServices commentServices, IConfigurationInfo config, IFormsAuthenticationProvider auth)
+            : base(entryServices, commentServices, config) 
         {
             _auth = auth;
         }

@@ -19,7 +19,7 @@ namespace eclectica.co.uk.Web.Controllers
 {
     public class CommentController : BaseController
     {
-        public CommentController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, ILinkServices linkServices, IConfigurationInfo config) : base(entryServices, commentServices, tagServices, linkServices, config) { }
+        public CommentController(IEntryServices entryServices, ICommentServices commentServices, IConfigurationInfo config) : base(entryServices, commentServices, config) { }
 
         [Authorize]
         public ActionResult Manage(int? page)

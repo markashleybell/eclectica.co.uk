@@ -19,7 +19,12 @@ namespace eclectica.co.uk.Web.Controllers
 {
     public class LinkController : BaseController
     {
-        public LinkController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, ILinkServices linkServices, IConfigurationInfo config) : base(entryServices, commentServices, tagServices, linkServices, config) { }
+        private ILinkServices _linkServices;
+
+        public LinkController(IEntryServices entryServices, ICommentServices commentServices, IConfigurationInfo config, ILinkServices linkServices) : base(entryServices, commentServices, config) 
+        {
+            _linkServices = linkServices;
+        }
 
         [Authorize]
         public ActionResult Manage(int? page)

@@ -19,7 +19,12 @@ namespace eclectica.co.uk.Web.Controllers
 {
     public class EntryController : BaseController
     {
-        public EntryController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, ILinkServices linkServices, IConfigurationInfo config) : base(entryServices, commentServices, tagServices, linkServices, config) { }
+        ITagServices _tagServices;
+
+        public EntryController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, IConfigurationInfo config) : base(entryServices, commentServices, config) 
+        {
+            _tagServices = tagServices;
+        }
 
         public ActionResult Index(int? page, string view)
         {

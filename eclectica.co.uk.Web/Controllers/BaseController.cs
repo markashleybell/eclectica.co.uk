@@ -12,16 +12,12 @@ namespace eclectica.co.uk.Web.Controllers
     {
         protected IEntryServices _entryServices;
         protected ICommentServices _commentServices;
-        protected ITagServices _tagServices;
-        protected ILinkServices _linkServices;
         protected IConfigurationInfo _config;
 
-        public BaseController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, ILinkServices linkServices, IConfigurationInfo config)
+        public BaseController(IEntryServices entryServices, ICommentServices commentServices, IConfigurationInfo config)
         {
             _entryServices = entryServices;
             _commentServices = commentServices;
-            _tagServices = tagServices;
-            _linkServices = linkServices;
             _config = config;
         }
     }

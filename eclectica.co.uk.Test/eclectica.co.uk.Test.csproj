@@ -31,6 +31,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.mocks, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="pnunit.framework, Version=1.0.4109.34242, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.2.5.10.11092\lib\pnunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,7 +48,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\FakeImageRepository.cs" />
+    <Compile Include="Data\FakeAuthorRepository.cs" />
+    <Compile Include="Data\FakeCommentRepository.cs" />
+    <Compile Include="Data\FakeEntryRepository.cs" />
+    <Compile Include="Data\FakeLinkRepository.cs" />
+    <Compile Include="Data\FakeTagRepository.cs" />
+    <Compile Include="EntryControllerTests.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\eclectica.co.uk.Domain\eclectica.co.uk.Domain.csproj">
+      <Project>{0F1FA8D3-3CA7-46AE-B428-0D3DD54C168F}</Project>
+      <Name>eclectica.co.uk.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\eclectica.co.uk.Service\eclectica.co.uk.Service.csproj">
+      <Project>{ECE05E79-CFDC-4589-9A41-A437D9256746}</Project>
+      <Name>eclectica.co.uk.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\eclectica.co.uk.Web\eclectica.co.uk.Web.csproj">
+      <Project>{F51ABB5F-3336-4761-A2DB-47D78AD8D41C}</Project>
+      <Name>eclectica.co.uk.Web</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

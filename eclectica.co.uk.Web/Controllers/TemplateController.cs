@@ -14,7 +14,14 @@ namespace eclectica.co.uk.Web.Controllers
 {
     public class TemplateController : BaseController
     {
-        public TemplateController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, ILinkServices linkServices, IConfigurationInfo config) : base(entryServices, commentServices, tagServices, linkServices, config) { }
+        private ITagServices _tagServices;
+        private ILinkServices _linkServices;
+
+        public TemplateController(IEntryServices entryServices, ICommentServices commentServices, IConfigurationInfo config, ITagServices tagServices, ILinkServices linkServices) : base(entryServices, commentServices, config) 
+        {
+            _tagServices = tagServices;
+            _linkServices = linkServices;
+        }
 
         public ActionResult About()
         {
