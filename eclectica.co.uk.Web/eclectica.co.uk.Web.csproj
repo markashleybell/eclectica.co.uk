@@ -189,6 +189,8 @@
     <Content Include="Views\Entry\RssFull.cshtml" />
     <Content Include="Views\Entry\RssFacebook.cshtml" />
     <Content Include="Views\Entry\RssHeadlines.cshtml" />
+    <Content Include="Views\Shared\Rss.cshtml" />
+    <Content Include="Views\Entry\XmlSiteMap.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

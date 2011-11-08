@@ -42,6 +42,11 @@ namespace eclectica.co.uk.Web.Controllers
             });
         }
 
+        public ActionResult XmlSiteMap()
+        {
+            return View(_entryServices.GetUrlList());
+        }
+
         [Authorize]
         public ActionResult CreateSearchIndex()
         {

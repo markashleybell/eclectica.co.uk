@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>Eclectica</title>
+    <subtitle>The latest items posted on Eclectica.co.uk</subtitle>
+    <link href="http://eclectica.co.uk@(ViewBag.FeedUrl)" rel="self" type="application/atom+xml" />
+    <link href="http://eclectica.co.uk/" rel="alternate" type="text/html" />
+    <id>http://eclectica.co.uk/</id>
+    <updated>@ViewBag.Updated</updated>
+    <author>
+            <name>Mark Bell</name>
+            <uri>http://eclectica.co.uk/</uri>
+            <email>design@eclectica.co.uk</email>
+    </author>
+    @RenderSection("content", true)
+</feed>

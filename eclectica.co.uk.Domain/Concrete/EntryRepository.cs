@@ -148,6 +148,40 @@ namespace eclectica.co.uk.Domain.Concrete
             return entries;
         }
 
+        public IEnumerable<string> UrlList()
+        {
+            var sql1 = "SELECT e.Url " +
+                       "FROM Entries AS e " +
+                       "WHERE e.Publish = 1 " +
+                       "ORDER BY e.Published DESC";
+
+            var sql2 = "SELECT DISTINCT DATEPART(month, e.Published) AS Month, DATEPART(year, e.Published) AS Year " + 
+                       "FROM Entries AS e " +
+                       "WHERE e.Publish = 1 " +
+                       "ORDER BY Year DESC, Month DESC";
+
+            List<string> urls1;
+            List<string> urls2;
+
+            using (var conn = base.GetOpenConnection())
+            {
+                using (_profiler.Step("Get all published entry urls"))
+                {
+                    urls1 = conn.Query<string>(sql1).ToList();
+                }
+
+                using (_profiler.Step("Get all archive urls"))
+                {
+                    urls2 = conn.Query(sql2)
+                                .Select(x => x.Year + "/" + x.Month)
+                                .Cast<string>()
+                                .ToList();                    
+                }
+            }
+
+            return urls1.Concat(urls2).ToList();
+        }
+
         public IEnumerable<Entry> Page(int start, int count)
         {
             var entrySql = "SELECT e.*, c.CommentCount, a.* " +

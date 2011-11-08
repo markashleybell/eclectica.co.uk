@@ -54,6 +54,12 @@ namespace eclectica.co.uk.Web
             );
 
             routes.MapRoute(
+                "Xml SiteMap", // Route name
+                "sitemap", // URL with parameters
+                new { controller = "Entry", action = "XmlSiteMap" } // Parameter defaults
+            );
+
+            routes.MapRoute(
                 "Links Page", // Route name
                 "links", // URL with parameters
                 new { controller = "Template", action = "Links" } // Parameter defaults

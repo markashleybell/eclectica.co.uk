@@ -1,0 +1,23 @@
+﻿@model List<string>
+@{
+    Response.ContentType = "application/xml";
+}
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+<url>
+    <loc>http://eclectica.co.uk/</loc>
+</url>
+
+<url>
+    <loc>http://eclectica.co.uk/about</loc>
+</url>
+
+@foreach (var url in Model)
+{
+    <url>
+        <loc>http://eclectica.co.uk/@url</loc>
+    </url>
+}
+
+</urlset>

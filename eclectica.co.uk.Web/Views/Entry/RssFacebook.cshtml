@@ -1,38 +1,33 @@
 ﻿@model eclectica.co.uk.Web.Models.IndexViewModel
-           
+
 @using System.Text.RegularExpressions
 
-<?xml version="1.0" encoding="utf-8"?>
- 
-<feed xmlns="http://www.w3.org/2005/Atom">
- 
-    <title>Eclectica</title>
-    <subtitle>The latest items posted on Eclectica.co.uk</subtitle>
-    <link href="http://eclectica.co.uk/feed/main/" rel="self" type="application/atom+xml" />
-    <link href="http://eclectica.co.uk/" rel="alternate" type="text/html" />
-    <id>http://eclectica.co.uk/</id>
-    <updated>@Model.Entries.Max(x => x.Updated).ToString("yyyy-MM-dd'T'HH:mm:ss")</updated>
-    <author>
-            <name>Mark Bell</name>
-            <uri>http://eclectica.co.uk/</uri>
-            <email>design@eclectica.co.uk</email>
-    </author>
- 
+@{
+    ViewBag.FeedUrl = "/feed/main";
+    ViewBag.Updated = Model.Entries.Max(x => x.Updated).ToString("yyyy-MM-dd'T'HH:mm:ss'Z'");
+    Layout = "~/Views/Shared/Rss.cshtml";
+}
+
+@section content {
+
     @foreach (var entry in Model.Entries)
     {
 
+        // Replace relative URLs with absolute URLs
+        var body = Regex.Replace(entry.Body, "\"(/.*?)\"", "\"http://eclectica.co.uk$1\"");
+        
         <entry>
                 <title type="text">@((entry.Title == null || entry.Title == "") ? entry.Published.ToString("dddd dd MMMM yyyy, HH:mm") : entry.Title)</title>
                 <link href="http://eclectica.co.uk/@entry.Url" rel="alternate" type="text/html" />
                 <content type="text/html">
-                    <p>@Html.Raw(Regex.Matches(entry.Body, "<p>(.*?)</p>", RegexOptions.Singleline | RegexOptions.IgnoreCase)[0].Groups[1].Value)</p>
+                    <p>@Html.Raw(Regex.Matches(body, "<p>(.*?)</p>", RegexOptions.Singleline | RegexOptions.IgnoreCase)[0].Groups[1].Value)</p>
                     <p><b><a href="http://eclectica.co.uk/@entry.Url">Click here to view the full post</a> &raquo;</b></p>
                 </content>
                 <id>http://eclectica.co.uk/@entry.Url</id>
-                <published>@entry.Updated.ToString("yyyy-MM-dd'T'HH:mm:ss")</published>
-                <updated>@entry.Updated.ToString("yyyy-MM-dd'T'HH:mm:ss")</updated>
+                <published>@entry.Updated.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")</published>
+                <updated>@entry.Updated.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")</updated>
         </entry>
             
     }
- 
-</feed>
+
+}

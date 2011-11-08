@@ -17,6 +17,8 @@ namespace eclectica.co.uk.Service.Abstract
         IEnumerable<EntryModel> GetRecentEntries(int count);
         IEnumerable<EntryModel> GetArchivedEntries(int year, int month);
 
+        IEnumerable<string> GetUrlList();
+
         IEnumerable<ImageModel> GetImages();
         void AddImage(ImageModel image);
 

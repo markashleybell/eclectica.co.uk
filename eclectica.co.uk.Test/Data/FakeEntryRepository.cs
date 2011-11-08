@@ -61,6 +61,11 @@ namespace eclectica.co.uk.Test.Data
             return _entries.Where(x => x.Url == url).First();
         }
 
+        public IEnumerable<string> UrlList()
+        {
+            throw new NotImplementedException();
+        }
+
         public string GetRandomEntryUrl()
         {
             throw new NotImplementedException();
