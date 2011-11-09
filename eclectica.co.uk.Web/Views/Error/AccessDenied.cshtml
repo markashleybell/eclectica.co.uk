@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Page Not Found";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+    Response.StatusCode = 403;
+}
+
+@section head {
+}
+
+@section content {
+
+    <h1 class="postdate">Access Denied</h1>
+    <div class="post">
+        <p>You do not have permission to access this page.</p>
+    </div>
+}

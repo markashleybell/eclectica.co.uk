@@ -14,6 +14,7 @@ using Newtonsoft.Json.Linq;
 using System.IO;
 using eclectica.co.uk.Web.Abstract;
 using mab.lib.ImageSizer;
+using Elmah.Contrib.Mvc;
 
 namespace eclectica.co.uk.Web.Controllers
 {
@@ -161,9 +162,7 @@ namespace eclectica.co.uk.Web.Controllers
             var entry = _entryServices.GetEntryByUrl(url);
 
             if (entry == null)
-            {
-                return Content("404");
-            }
+                throw new HttpException((int)HttpStatusCode.NotFound, "Page not found");
 
             return View(new EntryViewModel { 
                 Entry = entry,

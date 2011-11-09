@@ -60,16 +60,20 @@ namespace eclectica.co.uk.Domain.Concrete
                     }, splitOn: "AuthorID").FirstOrDefault();
                 }
 
-                // Perform queries for the tags, comments and related entries
-                using (_profiler.Step("Get tags for entry")) { entry.Tags = conn.Query<Tag>(tagSql, new { EntryID = entry.EntryID }).ToList(); }
-                using (_profiler.Step("Get comments for entry")) { entry.Comments = conn.Query<Comment>(commentSql, new { EntryID = entry.EntryID }).ToList(); }
-                using (_profiler.Step("Get related entries for entry"))
+                // If the entry exists
+                if (entry != null)
                 {
-                    entry.Related = conn.Query<Entry>(relatedSql, new { EntryID = entry.EntryID })
-                                        .Select(x => {
-                                            x.Thumbnail = GetThumbnail(x.Title, x.Body);
-                                            return x;
-                                        }).ToList();
+                    // Perform queries for the tags, comments and related entries
+                    using (_profiler.Step("Get tags for entry")) { entry.Tags = conn.Query<Tag>(tagSql, new { EntryID = entry.EntryID }).ToList(); }
+                    using (_profiler.Step("Get comments for entry")) { entry.Comments = conn.Query<Comment>(commentSql, new { EntryID = entry.EntryID }).ToList(); }
+                    using (_profiler.Step("Get related entries for entry"))
+                    {
+                        entry.Related = conn.Query<Entry>(relatedSql, new { EntryID = entry.EntryID })
+                                            .Select(x => {
+                                                x.Thumbnail = GetThumbnail(x.Title, x.Body);
+                                                return x;
+                                            }).ToList();
+                    }
                 }
             }
 

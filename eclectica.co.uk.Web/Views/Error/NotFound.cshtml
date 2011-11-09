@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Page Not Found";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+    Response.StatusCode = 404;
+}
+
+@section head {
+}
+
+@section content {
+
+    <h1 class="postdate">Page Not Found</h1>
+    <div class="post">
+        <h2>Oops...</h2>
+        <p>Sorry, but the page you requested cannot be found. It may have moved, the link you clicked on may be incorrect, or you may have made a typing error when entering the address.</p>
+    </div>
+}

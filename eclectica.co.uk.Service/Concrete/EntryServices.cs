@@ -65,6 +65,9 @@ namespace eclectica.co.uk.Service.Concrete
         {
             var entry = _entryRepository.GetByUrl(url);
 
+            if (entry == null)
+                return null;
+
             var model = Mapper.Map<Entry, EntryModel>(entry);
             model.Author = Mapper.Map<Author, AuthorModel>(entry.Author);
             model.Tags = Mapper.MapList<Tag, TagModel>(entry.Tags.ToList());

@@ -1,4 +1,5 @@
 ﻿<connectionStrings>
     <add name="SqlCe" connectionString="PATHTODB.sdf" providerName="System.Data.SqlServerCe.4.0" />
     <add name="Sql" connectionString="Server=.\SQLEXPRESS;Database=Eclectica;Trusted_Connection=True;" providerName="System.Data.SqlClient" />
+    <add name="elmah-sqlservercompact" connectionString="Data Source=|DataDirectory|\Elmah.sdf" />
 </connectionStrings>

@@ -9,6 +9,7 @@ using eclectica.co.uk.Service.Entities;
 using eclectica.co.uk.Web.Extensions;
 using System.IO;
 using eclectica.co.uk.Web.Abstract;
+using System.Net;
 
 namespace eclectica.co.uk.Web.Controllers
 {
