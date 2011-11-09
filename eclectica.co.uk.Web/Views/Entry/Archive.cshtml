@@ -1,7 +1,7 @@
 ﻿@model eclectica.co.uk.Web.Models.ArchiveViewModel
 
 @{
-    ViewBag.Title = "Archive";
+    ViewBag.Title = "Archive of entries for " + @Model.Date.ToString("MMMM yyyy") + " - Eclectica";
     Layout = "~/Views/Shared/MainLayout.cshtml";
 }
 

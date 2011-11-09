@@ -1,7 +1,7 @@
 ﻿@model eclectica.co.uk.Web.Models.TagEntriesViewModel
 
 @{
-    ViewBag.Title = "Documentary - Category Index - Eclectica";
+    ViewBag.Title = @Model.TagName.Capitalise() + " - Category Index - Eclectica";
     Layout = "~/Views/Shared/MainLayout.cshtml";
 }
 
