@@ -121,7 +121,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\ElmahErrors.txt" />
     <Content Include="Content\Css\Screen.css" />
     <Content Include="Global.asax" />
     <Content Include="robots.txt" />
@@ -139,6 +138,7 @@
     <Content Include="Views\Shared\MainLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Content\Img\" />
   </ItemGroup>
   <ItemGroup>

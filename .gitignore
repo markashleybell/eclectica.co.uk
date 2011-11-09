@@ -53,6 +53,9 @@ stylecop.*
 Auth.config
 Db.config
 Settings.config
+Auth.config.live
+Db.config.live
+Settings.config.live
 eclectica.co.uk.Web/App_Data/*
 !.gitignore
 eclectica.co.uk.Web/Content/Img/Lib/Cms/*

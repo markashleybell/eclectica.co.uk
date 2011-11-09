@@ -3,6 +3,7 @@
   <add key="IndexPageSize" value="5"/>
   <add key="InstallationUrl" value="HOSTNAME"/>
   <add key="ImageLibraryFolder" value="LIBRARYFOLDER" />
+  <add key="AnalyticsID" value="ANALYTICSID" />
   <add key="CDN1" value="" />
   <add key="CDN2" value="" />
   <add key="TwitterConsumerKey" value="CONSUMERKEY"/>
@@ -10,6 +11,5 @@
   <add key="TwitterAccessToken" value="ACCESSTOKEN"/>
   <add key="TwitterAccessTokenSecret" value="ACCESSTOKENSECRET"/>
   <add key="TwitterAnywhereAPIKey" value="ANYWHEREAPIKEY"/>
-  <add key="GoogleApiKey" value="GOOGLEAPIKEY" />
-  <add key="ServerType" value="SqlCe" />
+  <add key="ServerType" value="SQLCE4" />
 </appSettings>

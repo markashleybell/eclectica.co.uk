@@ -94,21 +94,24 @@
         </div>
 		<script type="text/javascript" src="@ConfigurationManager.AppSettings["CDN1"]/scripts/load.js"></script>
 		<script type="text/javascript" src="@ConfigurationManager.AppSettings["CDN1"]/scripts/search.js"></script>
-		@if (!Convert.ToBoolean(ConfigurationManager.AppSettings["LocalTestMode"])) {
+		@if (!Convert.ToBoolean(ConfigurationManager.AppSettings["LocalTestMode"]))
+        {
       
         <script type="text/javascript">
 
             var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-7512787-2']);
+            _gaq.push(['_setAccount', '@ConfigurationManager.AppSettings["AnalyticsID"]']);
+            _gaq.push(['_setDomainName', 'eclectica.co.uk']);
             _gaq.push(['_trackPageview']);
 
             (function () {
                 var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
                 ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
             })();
 
         </script>
+      
         <!-- Start of Woopra Code -->
         <script type="text/javascript">
             var woo_settings = { idle_timeout: '60000', domain: 'eclectica.co.uk' };
@@ -123,6 +126,6 @@
         </script>
         <!-- End of Woopra Code -->
         
-        }
+  }
 	</body>
 </html>
