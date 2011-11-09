@@ -150,18 +150,20 @@ namespace eclectica.co.uk.Web
 
         protected void Application_BeginRequest()
         {
-            if (Request.IsAuthenticated)
+            MiniProfiler.Start();
+        }
+
+        protected void Application_AuthenticateRequest(Object sender, EventArgs e)
+        {
+            if (Context.User == null || Context.User.Identity == null || !Context.User.Identity.IsAuthenticated)
             {
-                MiniProfiler.Start();
+                MiniProfiler.Stop(discardResults: true);
             }
         }
 
         protected void Application_EndRequest()
         {
-            if (Request.IsAuthenticated)
-            {
-                MiniProfiler.Stop();
-            }
+            MiniProfiler.Stop();
         }
 
         protected void Application_Error(object sender, EventArgs e)
