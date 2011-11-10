@@ -35,7 +35,7 @@
 
 		</div>
 		<div id="navigation">
-            @if(Request.Url.AbsoluteUri.Contains("logon")) {
+            @if(ViewBag.HideNav != null && ViewBag.HideNav) {
                 <h3>&nbsp;</h3>
                 <div>&nbsp;</div>
             } else {

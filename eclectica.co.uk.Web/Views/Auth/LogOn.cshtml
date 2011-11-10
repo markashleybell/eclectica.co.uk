@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "LogOn";
+    ViewBag.HideNav = true;
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
 
@@ -23,7 +24,8 @@
             @Html.PasswordFor(x => x.Password)
             @Html.ValidationMessageFor(x => x.Password)</p>
 
-            <p><input type="submit" value="Log In" /></p>            
+            <p>@Html.HiddenFor(x => x.ReturnUrl)
+            <input type="submit" value="Log In" /></p>            
         }
 
     </div>

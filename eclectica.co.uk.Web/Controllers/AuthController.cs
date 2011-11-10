@@ -20,9 +20,11 @@ namespace eclectica.co.uk.Web.Controllers
             _auth = auth;
         }
 
-        public ActionResult LogOn()
+        public ActionResult LogOn(string returnUrl)
         {
-            return View();
+            return View(new LogOnViewModel { 
+                ReturnUrl = returnUrl
+            });
         }
 
         [HttpPost]
