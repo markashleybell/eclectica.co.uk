@@ -17,6 +17,9 @@ function RenderResults(data)
 {
     var results = new Array();
 
+    var months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+    var days = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
+
     var template = '<div class="post">' +
 			            '<div class="postcontent">' +
 			                '{%POSTDETAIL%}' +
@@ -39,14 +42,29 @@ function RenderResults(data)
 		//}
 		//else
 		//{
-	    data.SearchResults.reverse();
-
-	     
+	        data.SearchResults.reverse();
 
 			for(var x=(data.SearchResults.length - 1); x>=0; x--)
 			{
 			    var jsonDate = new Date(+data.SearchResults[x].Published.replace(/\/Date\((\d+)\)\//, '$1'));
-			    results.push(template.replace(/{%POSTDETAIL%}/gi, ((data.SearchResults[x].Thumbnail != '') ? '<img class="link-img" src="/content/img/lib/crop/' + data.SearchResults[x].Thumbnail + '" alt="" />' : '') + '<h3><a href="/' + data.SearchResults[x].Url + '/">' + ((data.SearchResults[x].Title == "") ? jsonDate : data.SearchResults[x].Title) + '</a></h3><p>' + data.SearchResults[x].Body + '</p>').replace(/{%COMMENTS%}/gi, data.SearchResults[x].CommentCount + ' comment' + ((data.SearchResults[x].CommentCount != 1) ? 's' : '')).replace(/{%AUTHOR%}/gi, 'By ' + data.SearchResults[x].Author.Name));
+
+                var hours = jsonDate.getHours();
+                var minutes = jsonDate.getMinutes();
+
+			    var displayDate = days[jsonDate.getMonth()] + ' ' +
+                                  jsonDate.getDate() + ' ' +
+                                  months[jsonDate.getMonth()] + ' ' +
+                                  jsonDate.getFullYear() + ' ' +
+                                  ((hours < 10) ? '0' + hours : hours) + ':' + 
+                                  ((minutes < 10) ? '0' + minutes : minutes);
+
+			    var postDetail = ((data.SearchResults[x].Thumbnail != '') ? '<img class="link-img" src="/content/img/lib/crop/' + data.SearchResults[x].Thumbnail + '" alt="" />' : '') +
+                                 '<h3><a href="/' + data.SearchResults[x].Url + '">' + ((data.SearchResults[x].Title == "") ? displayDate : data.SearchResults[x].Title) + '</a></h3>' +
+                                 '<p>' + data.SearchResults[x].Body + '</p>';
+
+			    results.push(template.replace(/{%POSTDETAIL%}/gi, postDetail)
+                                     .replace(/{%COMMENTS%}/gi, data.SearchResults[x].CommentCount + ' comment' + ((data.SearchResults[x].CommentCount != 1) ? 's' : ''))
+                                     .replace(/{%AUTHOR%}/gi, 'By ' + data.SearchResults[x].Author.Name));
 			}
 		//}
 
