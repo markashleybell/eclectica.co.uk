@@ -1,0 +1,51 @@
+﻿@model eclectica.co.uk.Web.Models.RedirectManageViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@section head {
+
+}
+
+@section content {
+
+	<div class="post">
+	    <h1>Manage Redirects</h1>
+
+        @using(Html.BeginForm("Create", "Redirect")){
+            
+            <p>@Html.Label("Shorten Url:") <input type="text" name="Redirect.RedirectUrl" size="49" /> <input type="submit" value="Go" /></p>
+            
+        }
+
+        <!-- <p>@Html.ActionLink("Create new Redirect", "Create") &raquo;</p> -->
+
+        @if(Model.Redirects.Count() > 0) 
+        {
+            <table id="postmanager" class="redirectmanager">
+            <tr>
+                <th>ID</th>
+                <th>Redirect</th>
+                <th>Clicks</th>
+                <th style="width: 90px;">Edit</th>
+            </tr>
+
+            @foreach (var redirect in Model.Redirects)
+            {
+                <tr>
+                    <td>@redirect.RedirectID.ToString("D5")</td>
+                    <td>@redirect.RedirectUrl</td>
+                    <td>@redirect.Clicks</td>
+                    <td>@Html.ActionLink("Edit", "Edit", new { id = redirect.RedirectID }, null) | @Html.ActionLink("Delete", "Delete", new { id = redirect.RedirectID }, null)</td>
+                </tr>
+            
+            }
+            
+            </table>
+        }
+
+    </div>
+
+}

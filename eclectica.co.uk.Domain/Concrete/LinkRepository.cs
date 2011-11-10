@@ -101,6 +101,6 @@ namespace eclectica.co.uk.Domain.Concrete
                     conn.Execute("DELETE FROM Links WHERE LinkID = @LinkID", new { LinkID = id });
                 }
             }
-        }
+        }        
     }
 }

@@ -56,11 +56,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\IRedirectServices.cs" />
     <Compile Include="Abstract\ILinkServices.cs" />
     <Compile Include="Abstract\ITagServices.cs" />
     <Compile Include="Abstract\ICommentServices.cs" />
     <Compile Include="Abstract\IEntryServices.cs" />
     <Compile Include="Concrete\CommentServices.cs" />
+    <Compile Include="Concrete\RedirectServices.cs" />
     <Compile Include="Concrete\LinkServices.cs" />
     <Compile Include="Concrete\TagServices.cs" />
     <Compile Include="Concrete\EntryServices.cs" />
@@ -69,6 +71,7 @@
     <Compile Include="Entities\EntryModel.cs" />
     <Compile Include="Entities\ImageModel.cs" />
     <Compile Include="Entities\LinkModel.cs" />
+    <Compile Include="Entities\RedirectModel.cs" />
     <Compile Include="Entities\TagModel.cs" />
     <Compile Include="Extensions\Text.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

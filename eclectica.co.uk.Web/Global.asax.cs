@@ -118,6 +118,13 @@ namespace eclectica.co.uk.Web
             );
 
             routes.MapRoute(
+                "Short Link", // Route name
+                "{id}", // URL with parameters
+                new { controller = "Redirect", action = "Redirect", id = "0" },
+                new { id = @"\d{5}" } 
+            );
+
+            routes.MapRoute(
                 "Entry", // Route name
                 "{url}", // URL with parameters
                 new { controller = "Entry", action = "Detail", url = UrlParameter.Optional } // Parameter defaults

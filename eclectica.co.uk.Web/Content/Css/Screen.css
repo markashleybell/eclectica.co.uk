@@ -188,6 +188,7 @@ td { border: solid 1px #999999; padding: 5px 8px; vertical-align: top; }
 
 td a { border: none; }
 
+.redirectmanager { font-size: 11px; }
 
 .unpublished { background-color: #e0e0e0; }
 .unpublished td { color: #999999; }

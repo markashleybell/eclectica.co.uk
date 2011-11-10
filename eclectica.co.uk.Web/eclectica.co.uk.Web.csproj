@@ -88,6 +88,7 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
+    <Compile Include="Controllers\RedirectController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\LinkController.cs" />
     <Compile Include="Controllers\EntryController.cs" />
@@ -103,6 +104,9 @@
     <Compile Include="Infrastructure\ValidationAttributes.cs" />
     <Compile Include="Models\Comment\CommentEditViewModel.cs" />
     <Compile Include="Models\Comment\CommentManageViewModel.cs" />
+    <Compile Include="Models\Redirect\RedirectEditViewModel.cs" />
+    <Compile Include="Models\Redirect\RedirectManageViewModel.cs" />
+    <Compile Include="Models\Redirect\RedirectViewModel.cs" />
     <Compile Include="Models\Entry\EntryManageViewModel.cs" />
     <Compile Include="Models\ArchiveViewModel.cs" />
     <Compile Include="Models\Comment\CommentViewModel.cs" />
@@ -125,6 +129,7 @@
     <Content Include="Global.asax" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\comment-admin.js" />
+    <Content Include="Scripts\redirect-admin.js" />
     <Content Include="Scripts\link-admin.js" />
     <Content Include="Scripts\entry-admin.js" />
     <Content Include="Scripts\jquery.fieldselection.js" />
@@ -201,6 +206,9 @@
     <Content Include="Views\Error\OtherHttpStatusCode.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
     <Content Include="Views\Error\ServerError.cshtml" />
+    <Content Include="Views\Redirect\Create.cshtml" />
+    <Content Include="Views\Redirect\Edit.cshtml" />
+    <Content Include="Views\Redirect\Manage.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

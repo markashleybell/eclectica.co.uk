@@ -69,10 +69,12 @@ namespace eclectica.co.uk.Web.Infrastructure
                 Bind<ILinkRepository>().To<LinkRepository>().InRequestScope();
                 Bind<ICommentRepository>().To<CommentRepository>().InRequestScope();
                 Bind<IImageRepository>().To<ImageRepository>().InRequestScope();
+                Bind<IRedirectRepository>().To<RedirectRepository>().InRequestScope();
                 Bind<IEntryServices>().To<EntryServices>().InRequestScope();
                 Bind<ICommentServices>().To<CommentServices>().InRequestScope();
                 Bind<ITagServices>().To<TagServices>().InRequestScope();
                 Bind<ILinkServices>().To<LinkServices>().InRequestScope();
+                Bind<IRedirectServices>().To<RedirectServices>().InRequestScope();
             }
         }
     }

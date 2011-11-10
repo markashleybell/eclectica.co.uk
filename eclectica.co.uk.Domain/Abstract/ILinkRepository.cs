@@ -8,6 +8,6 @@ namespace eclectica.co.uk.Domain.Abstract
 {
     public interface ILinkRepository : IRepository<Link>
     {
-        
+
     }
 }

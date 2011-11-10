@@ -1,0 +1,34 @@
+﻿@model eclectica.co.uk.Web.Models.RedirectEditViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@section head {
+
+<script type="text/javascript" src="/scripts/redirect-admin.js"></script>
+
+}
+
+@section content {
+
+    <h2>Update Redirect</h2>
+
+    <p>@Html.LabelFor(x => x.Redirects)<br />
+    @Html.DropDownListFor(x => x.Redirect.RedirectID, Model.Redirects, "Please select...") <input type="button" id="AddButton" value="Add New" /></p>
+
+    @using (Html.BeginForm()) {
+    
+        <p>@Html.LabelFor(x => x.Redirect.RedirectUrl)<br />
+        @Html.TextBoxFor(x => x.Redirect.RedirectUrl, new { size = 49 })
+        @Html.HiddenFor(x => x.Redirect.RedirectID)
+        <input type="submit" value="Save" /> <input class="action" type="button" id="DeleteButton" value="Delete" />
+        </p>
+        
+        <p>@Html.LabelFor(x => x.Redirect.Clicks)<br />
+        @Html.TextBoxFor(x => x.Redirect.Clicks, new { size = 49 })</p>
+        
+    }
+    
+}
