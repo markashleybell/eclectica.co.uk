@@ -12,7 +12,7 @@
 @section content {
 
 	<div class="post">
-	    <h1>Manage Redirects</h1>
+	    <h1>Manage Short Urls</h1>
 
         @using(Html.BeginForm("Create", "Redirect")){
             
@@ -36,7 +36,7 @@
             {
                 <tr>
                     <td>@redirect.RedirectID.ToString("D5")</td>
-                    <td>@redirect.RedirectUrl</td>
+                    <td>@redirect.RedirectUrl.Truncate(70)</td>
                     <td>@redirect.Clicks</td>
                     <td>@Html.ActionLink("Edit", "Edit", new { id = redirect.RedirectID }, null) | @Html.ActionLink("Delete", "Delete", new { id = redirect.RedirectID }, null)</td>
                 </tr>
