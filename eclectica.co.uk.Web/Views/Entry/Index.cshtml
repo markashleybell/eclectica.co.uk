@@ -36,7 +36,10 @@
 		    <div class="postcontrols">
 			    <p>By @entry.Author.Name @@ @entry.Published.ToString("HH:mm")</p>
 			    <p class="cl"><a title="Comment on this" href="/@entry.Url/#commentform">Comment on this</a> <span>(@entry.CommentCount)</span></p>
-						        
+						     
+                @if (entry.Title != "")
+                {   
+                                 
                 <div class="sharing">
 
                     @{ var url = "http://eclectica.co.uk/" + entry.Url; }
@@ -56,6 +59,8 @@
                     
 
                 </div>
+                    
+                }
 
 				    <p>Filed under:</p>
 				    <ul>
