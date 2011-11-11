@@ -59,13 +59,7 @@ namespace eclectica.co.uk.Web
             routes.MapRoute(
                 "404 Page", // Route name
                 "notfound", // URL with parameters
-                new { controller = "Template", action = "NotFound" } // Parameter defaults
-            );
-
-            routes.MapRoute(
-                "500 Page", // Route name
-                "error", // URL with parameters
-                new { controller = "Template", action = "Error" } // Parameter defaults
+                new { controller = "Error", action = "NotFound" } // Parameter defaults
             );
 
             routes.MapRoute(
@@ -186,6 +180,7 @@ namespace eclectica.co.uk.Web
                 httpException = new HttpException(500, "Internal Server Error", exception);
 
             Response.Clear();
+            Response.TrySkipIisCustomErrors = true;
             RouteData routeData = new RouteData();
             routeData.Values.Add("controller", "Error");
             routeData.Values.Add("fromAppErrorEvent", true);
