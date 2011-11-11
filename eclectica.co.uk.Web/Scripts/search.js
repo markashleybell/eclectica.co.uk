@@ -51,7 +51,7 @@ function RenderResults(data)
                 var hours = jsonDate.getHours();
                 var minutes = jsonDate.getMinutes();
 
-			    var displayDate = days[jsonDate.getMonth()] + ' ' +
+			    var displayDate = days[jsonDate.getDay()] + ' ' +
                                   jsonDate.getDate() + ' ' +
                                   months[jsonDate.getMonth()] + ' ' +
                                   jsonDate.getFullYear() + ' ' +
