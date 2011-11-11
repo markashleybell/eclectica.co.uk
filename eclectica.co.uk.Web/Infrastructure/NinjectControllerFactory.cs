@@ -55,6 +55,11 @@ namespace eclectica.co.uk.Web.Infrastructure
                         .WithConstructorArgument("serverType", (serverType == "SQL2008") ? DbServerType.SQL2008 : DbServerType.SQL2012);
                 }
 
+                Bind<IELMAHConnectionFactory>()
+                        .To<ELMAHConnectionFactory>()
+                        .InRequestScope()
+                        .WithConstructorArgument("connectionString", ConfigurationManager.ConnectionStrings["elmah-sqlservercompact"].ConnectionString);
+
                 Bind<IConfigurationInfo>()
                         .To<ConfigurationInfo>()
                         .InRequestScope()

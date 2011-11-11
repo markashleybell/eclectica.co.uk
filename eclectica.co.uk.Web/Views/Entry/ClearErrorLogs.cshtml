@@ -1,0 +1,40 @@
+﻿@model eclectica.co.uk.Web.Models.ClearErrorLogViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@section head {
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            $('#clear-logs-form').bind('submit', function () {
+
+                return confirm('Are you sure you want to clear ALL errors logged before ' + $('#Limit').val() + '?');
+
+            });
+
+        });
+
+    </script>
+
+}
+
+@section content {
+
+	<div class="post">
+	    <h1>Clear Error Logs</h1>
+
+        @using (Html.BeginForm("ClearErrorLogs", "Entry", FormMethod.Post, new { id = "clear-logs-form" }))
+        {
+
+            <p>@Html.TextBoxFor(x => x.Limit) <input type="submit" value="Clear all logs before this date" /></p>
+            
+        }
+
+    </div>
+
+}

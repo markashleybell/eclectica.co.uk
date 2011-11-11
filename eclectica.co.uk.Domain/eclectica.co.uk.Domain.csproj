@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\IELMAHConnectionFactory.cs" />
     <Compile Include="Abstract\IRedirectRepository.cs" />
     <Compile Include="Abstract\IAuthorRepository.cs" />
     <Compile Include="Abstract\IConnectionFactory.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Abstract\IRepository.cs" />
     <Compile Include="Abstract\RepositoryBase.cs" />
     <Compile Include="Concrete\CommentRepository.cs" />
+    <Compile Include="Concrete\ELMAHConnectionFactory.cs" />
     <Compile Include="Concrete\RedirectRepository.cs" />
     <Compile Include="Concrete\SqlConnectionFactory.cs" />
     <Compile Include="Concrete\SqlCeConnectionFactory.cs" />

@@ -196,6 +196,11 @@ namespace eclectica.co.uk.Service.Concrete
             return Mapper.MapList<Entry, EntryModel>(_entryRepository.Like(query).ToList());
         }
 
+        public void ClearErrorLogs(DateTime limit)
+        {
+            _entryRepository.ClearErrorLogs(limit);
+        }
+
         public void CreateSearchIndex()
         {
             var indexPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Index");

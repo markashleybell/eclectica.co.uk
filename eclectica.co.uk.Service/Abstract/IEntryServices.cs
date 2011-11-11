@@ -26,6 +26,7 @@ namespace eclectica.co.uk.Service.Abstract
 
         IDictionary<string, List<EntryModel>> GetEntriesForTag(string tag);
 
+        void ClearErrorLogs(DateTime limit);
         void CreateSearchIndex();
         IEnumerable<EntryModel> SearchEntries(string query);
         IEnumerable<EntryModel> SimpleSearch(string query);

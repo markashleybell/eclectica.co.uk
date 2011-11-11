@@ -19,7 +19,12 @@ namespace eclectica.co.uk.Domain.Concrete
 {
     public class EntryRepository : RepositoryBase<Entry>, IEntryRepository
     {
-        public EntryRepository(IConnectionFactory connectionFactory) : base(connectionFactory) { }
+        private IELMAHConnectionFactory _elmahConnectionFactory;
+
+        public EntryRepository(IConnectionFactory connectionFactory, IELMAHConnectionFactory elmahConnectionFactory) : base(connectionFactory) 
+        {
+            _elmahConnectionFactory = elmahConnectionFactory;
+        }
 
         public Entry GetByUrl(string url)
         {
@@ -540,6 +545,17 @@ namespace eclectica.co.uk.Domain.Concrete
             }
 
             return entries;
+        }
+
+        public void ClearErrorLogs(DateTime limit)
+        {
+            using (var conn = _elmahConnectionFactory.GetOpenConnection())
+            {
+                using (_profiler.Step("Delete error logs"))
+                {
+                    conn.Execute("DELETE FROM [ELMAH_Error] WHERE TimeUtc < @Limit", new { Limit = limit });
+                }
+            }
         }
     }
 }

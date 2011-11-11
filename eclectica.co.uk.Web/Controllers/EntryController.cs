@@ -57,6 +57,23 @@ namespace eclectica.co.uk.Web.Controllers
         }
 
         [Authorize]
+        public ActionResult ClearErrorLogs()
+        {
+            return View(new ClearErrorLogViewModel { 
+                Limit = DateTime.Now
+            });
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult ClearErrorLogs(ClearErrorLogViewModel model)
+        {
+            _entryServices.ClearErrorLogs(model.Limit);
+
+            return RedirectToAction("ClearErrorLogs");
+        }
+
+        [Authorize]
         public ActionResult Manage(int? page)
         {
             return View(new EntryManageViewModel {

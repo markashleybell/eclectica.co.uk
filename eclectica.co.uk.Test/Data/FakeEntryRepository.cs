@@ -135,5 +135,10 @@ namespace eclectica.co.uk.Test.Data
         {
             throw new NotImplementedException();
         }
+
+        public void ClearErrorLogs(DateTime limit)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

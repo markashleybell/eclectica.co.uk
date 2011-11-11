@@ -20,5 +20,7 @@ namespace eclectica.co.uk.Domain.Abstract
 
         void UpdateRelatedEntries(int entryId, int[] relatedIds);
         void UpdateRelatedTags(int entryId, string[] tags);
+
+        void ClearErrorLogs(DateTime limit);
     }
 }
