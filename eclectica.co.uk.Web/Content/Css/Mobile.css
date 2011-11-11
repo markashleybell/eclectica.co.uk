@@ -58,6 +58,7 @@ acronym { text-decoration: none; border-bottom: dotted 1px #000000; }
 .pclr { overflow: hidden; height: 20px; clear: both; }
 
 img { border: solid 1px #999999; margin: 20px 0 0 0; }
+img, object { max-width: 100%; }
 .l-img { float: left; margin: 20px 20px 17px 0; }
 .r-img { float: right; margin: 17px 0 17px 20px; }
 .link-img { float: left; margin: 20px 20px 50px 0; }
@@ -71,8 +72,8 @@ img { border: solid 1px #999999; margin: 20px 0 0 0; }
 
 #navigation div.nclr { background: none; overflow: hidden; height: 20px; clear: both; }
 
-.postcontent { width: 450px; float: left; margin-right: 20px;  }
-.postcontrols { width: 170px; float: left; }
+.postcontent { float: left; }
+.postcontrols { float: left; }
 
 .postcontrols .cl { padding: 0; }
 .postcontrols ul { padding: 0; }
