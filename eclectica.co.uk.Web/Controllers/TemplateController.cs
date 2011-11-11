@@ -24,9 +24,9 @@ namespace eclectica.co.uk.Web.Controllers
             _linkServices = linkServices;
         }
 
-        public ActionResult About()
+        public ActionResult About(bool mobile = false)
         {
-            return View();
+            return View(mobile);
         }
 
         public ActionResult Search(SearchResultsViewModel model, bool? ajax)
@@ -46,14 +46,15 @@ namespace eclectica.co.uk.Web.Controllers
                 return View("SearchResults", model);
         }
 
-        public ActionResult Links()
+        public ActionResult Links(bool mobile = false)
         {
             return View(new LinksViewModel { 
+                Mobile = mobile,
                 Links = _linkServices.GetSortedLinks().ToList()
             });
         }
 
-        public ActionResult Tags(string tagName)
+        public ActionResult Tags(string tagName, bool mobile = false)
         {
             if (tagName != null) // Show list of entries for this tag
             {
@@ -63,8 +64,8 @@ namespace eclectica.co.uk.Web.Controllers
                 // This is approx 100x slower - why?
                 // entryDictionary = _entryServices.GetEntriesForTag(tagName);
 
-                return View("TagEntries", new TagEntriesViewModel
-                { 
+                return View("TagEntries", new TagEntriesViewModel {
+                    Mobile = mobile,
                     TagName = tagName.Capitalise(),
                     EntryDictionary = entryDictionary
                 });
@@ -77,8 +78,8 @@ namespace eclectica.co.uk.Web.Controllers
 
                 tagDictionary = _tagServices.GetSortedTags();
                 
-                return View("TagIndex", new TagIndexViewModel
-                {
+                return View("TagIndex", new TagIndexViewModel {
+                    Mobile = mobile,
                     TagDictionary = tagDictionary
                 });
 

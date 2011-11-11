@@ -5,7 +5,7 @@
 @{
     ViewBag.Title = ((Model.Entry.Title != null && Model.Entry.Title != "") ? Model.Entry.Title : Model.Entry.Published.ToString("dddd dd MMMM yyyy hh:mm")) + " - Eclectica";
     ViewBag.Description = Regex.Replace(Regex.Matches(Model.Entry.Body, "<p>(.*?)</p>", RegexOptions.Singleline | RegexOptions.IgnoreCase)[0].Groups[1].Value, @"<(.|\n)+?>", @"");
-    Layout = "~/Views/Shared/MainLayout.cshtml";
+    Layout = "~/Views/Shared/" + ((Model.Mobile) ? "Mobile" : "Main") + "Layout.cshtml";
 }
 
 @section head {

@@ -9,7 +9,7 @@ using System.ComponentModel;
 
 namespace eclectica.co.uk.Web.Models
 {
-    public class EntryViewModel
+    public class EntryViewModel : BaseViewModel
     {
         public EntryModel Entry { get; set; }
         public CommentModel Comment { get; set; }

@@ -27,7 +27,7 @@ namespace eclectica.co.uk.Web.Controllers
             _tagServices = tagServices;
         }
 
-        public ActionResult Index(int? page, string view)
+        public ActionResult Index(int? page, string view, bool mobile = false)
         {
             List<EntryModel> entries;
 
@@ -37,6 +37,7 @@ namespace eclectica.co.uk.Web.Controllers
             entries = _entryServices.Page((pageSize * currentPage), pageSize).ToList();
 
             return View(((view == null) ? "Index" : view), new IndexViewModel {
+                Mobile = mobile,
                 Entries = entries,
                 PageSize = pageSize,
                 CurrentPage = currentPage
@@ -81,7 +82,7 @@ namespace eclectica.co.uk.Web.Controllers
             });
         }
 
-        public ActionResult Archive(int year, int month)
+        public ActionResult Archive(int year, int month, bool mobile = false)
         {
             List<EntryModel> entries;
             IDictionary<DateTime, int> months;
@@ -91,6 +92,7 @@ namespace eclectica.co.uk.Web.Controllers
             entries = _entryServices.GetArchivedEntries(year, month).ToList();
 
             return View(new ArchiveViewModel { 
+                Mobile = mobile,
                 Date = new DateTime(year, month, 1),
                 Months = months,
                 Entries = entries
@@ -174,7 +176,7 @@ namespace eclectica.co.uk.Web.Controllers
             return RedirectToAction("Edit", new { id = model.Entry.EntryID });
         }
 
-        public ActionResult Detail(string url)
+        public ActionResult Detail(string url, bool mobile = false)
         {
             var entry = _entryServices.GetEntryByUrl(url);
 
@@ -182,6 +184,7 @@ namespace eclectica.co.uk.Web.Controllers
                 throw new HttpException((int)HttpStatusCode.NotFound, "Page not found");
 
             return View(new EntryViewModel { 
+                Mobile = mobile,
                 Entry = entry,
                 Comment = new CommentModel {
                     Entry = entry
@@ -190,7 +193,7 @@ namespace eclectica.co.uk.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Detail(EntryViewModel model)
+        public ActionResult Detail(EntryViewModel model, bool mobile = false)
         {
             if (!ModelState.IsValid)
             {

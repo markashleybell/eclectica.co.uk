@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Archive of entries for " + @Model.Date.ToString("MMMM yyyy") + " - Eclectica";
-    Layout = "~/Views/Shared/MainLayout.cshtml";
+    Layout = "~/Views/Shared/" + ((Model.Mobile) ? "Mobile" : "Main") + "Layout.cshtml";
 }
 
 @section head {

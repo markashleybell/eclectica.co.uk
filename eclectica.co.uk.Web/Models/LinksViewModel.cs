@@ -6,7 +6,7 @@ using eclectica.co.uk.Service.Entities;
 
 namespace eclectica.co.uk.Web.Models
 {
-    public class LinksViewModel
+    public class LinksViewModel : BaseViewModel
     {
         public List<LinkModel> Links { get; set; }
     }

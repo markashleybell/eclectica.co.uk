@@ -6,7 +6,7 @@ using eclectica.co.uk.Service.Entities;
 
 namespace eclectica.co.uk.Web.Models
 {
-    public class ArchiveViewModel
+    public class ArchiveViewModel : BaseViewModel
     {
         public DateTime Date { get; set; }
         public IDictionary<DateTime, int> Months { get; set; }

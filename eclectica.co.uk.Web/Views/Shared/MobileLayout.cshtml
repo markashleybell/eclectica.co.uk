@@ -1,0 +1,106 @@
+﻿@using System.Configuration;
+@using MvcMiniProfiler;
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>@ViewBag.Title</title>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+		<meta http-equiv="content-language" content="en-gb" />
+		<link rel="shortcut icon" href="/content/img/site/favicon.ico" />
+
+		<meta name="description" content="@ViewBag.Description" />
+        <meta name="keywords" content="@ViewBag.Keywords" />
+		
+		<!-- BlogCatalog Meta Tag -->
+		<meta name="blogcatalog" content="9BC9221040" />
+		<!-- BlogLines Claim Code -->
+		<!-- ukey="2556BE5B" -->
+		
+        <!--[if gt IE 6]><!-->
+        <link rel="stylesheet" type="text/css" href="@ConfigurationManager.AppSettings["CDN1"]/content/css/mobile.css" />
+        <!--<![endif]-->
+
+		<link rel="alternate" type="application/rss+xml" title="Latest 10 Items" href="http://eclectica.co.uk/feed/main" />
+
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+        @MiniProfiler.RenderIncludes(position: RenderPosition.Right, showTrivial: true, showTimeWithChildren: false)
+
+        <script type="text/javascript" src="/scripts/search.js"></script>
+
+        @RenderSection("head", false)
+	</head>
+	<body id="index">
+		<div id="header">
+	        <a id="logo" href="/" title="Eclectica Home Page" ><img src="@ConfigurationManager.AppSettings["CDN1"]/content/img/site/logo.gif" alt="Eclectica Home Page" width="74" height="74" /></a>
+        </div>
+		<div id="content">
+
+		    @RenderSection("content", false)
+
+		</div>
+		<div id="navigation">
+		<h3>Navigate MOBILE</h3>
+		<div>
+		<ul id="mainnav">
+		<li><a href="/random">View A Random Post</a></li>
+        <li><a href="/2011/@DateTime.Now.ToString("MM")">Posts from 2011</a></li>
+		<li><a href="/2010/12">Posts from 2010</a></li>
+		<li><a href="/2009/12">Posts from 2009</a></li>
+		<li><a href="/tags">Categories</a></li>
+        <li><a href="/links">Art &amp; Design Links</a></li>
+        <li><a href="/about">About Eclectica</a></li>
+        
+	</ul>
+	
+	<form id="search" action="/search">
+	    <p><input type="text" name="query" id="query" value="Search the site..." /></p>
+	</form></div>
+	
+	
+	@{ Html.RenderAction("RecentEntries", "Entry"); }
+	
+	
+	<div class="nclr">&nbsp;</div>
+		</div>
+		<div class="clr">&nbsp;</div>
+		<div id="footer">
+	        <p id="copyright">&copy; 2009 <a href="http://markashleybell.com/">Mark Ashley Bell</a></p>
+        </div>
+		<script type="text/javascript" src="@ConfigurationManager.AppSettings["CDN1"]/scripts/load.js"></script>
+		<script type="text/javascript" src="@ConfigurationManager.AppSettings["CDN1"]/scripts/search.js"></script>
+		@if (!Convert.ToBoolean(ConfigurationManager.AppSettings["LocalTestMode"]))
+        {
+      
+        <script type="text/javascript">
+
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', '@ConfigurationManager.AppSettings["AnalyticsID"]']);
+            _gaq.push(['_setDomainName', 'eclectica.co.uk']);
+            _gaq.push(['_trackPageview']);
+
+            (function () {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+
+        </script>
+      
+        <!-- Start of Woopra Code -->
+        <script type="text/javascript">
+            var woo_settings = { idle_timeout: '60000', domain: 'eclectica.co.uk' };
+            (function () {
+                var wsc = document.createElement('script');
+                wsc.src = document.location.protocol + '//static.woopra.com/js/woopra.js';
+                wsc.type = 'text/javascript';
+                wsc.async = true;
+                var ssc = document.getElementsByTagName('script')[0];
+                ssc.parentNode.insertBefore(wsc, ssc);
+            })();
+        </script>
+        <!-- End of Woopra Code -->
+        
+  }
+	</body>
+</html>

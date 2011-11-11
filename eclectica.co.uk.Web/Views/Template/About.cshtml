@@ -1,6 +1,8 @@
-﻿@{
+﻿@model System.Boolean
+
+@{
     ViewBag.Title = "About - Eclectica";
-    Layout = "~/Views/Shared/MainLayout.cshtml";
+    Layout = "~/Views/Shared/" + ((Model) ? "Mobile" : "Main") + "Layout.cshtml";
 }
 
 @section head {
@@ -25,7 +27,7 @@
 			<p>You can also <a href="http://twitter.com/eclecticablog">follow Eclectica on Twitter</a>, where I post quite a few things that I don't have time to do a full post about; there is an <a href="http://www.facebook.com/eclecticablog">Eclectica fan page on Facebook</a> too.</p>
 
 			    <div id="fbfanbox">
-			    <iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Feclecticablog&amp;width=638&amp;colorscheme=light&amp;show_faces=true&amp;border_color=%23e0e0e0&amp;stream=false&amp;header=true&amp;height=362" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:638px; height:362px;" allowTransparency="true"></iframe>
+			    <iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Feclecticablog&amp;width=@((Model) ? "auto" : "638")&amp;colorscheme=light&amp;show_faces=true&amp;border_color=%23e0e0e0&amp;stream=false&amp;header=true&amp;height=362" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:@((Model) ? "100%" : "638px"); height:362px;" allowTransparency="true"></iframe>
                 </div>
 			             
 			             

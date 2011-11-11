@@ -6,7 +6,7 @@ using eclectica.co.uk.Service.Entities;
 
 namespace eclectica.co.uk.Web.Models
 {
-    public class TagIndexViewModel
+    public class TagIndexViewModel : BaseViewModel
     {
         public Dictionary<string, List<TagModel>> TagDictionary { get; set; }
     }
