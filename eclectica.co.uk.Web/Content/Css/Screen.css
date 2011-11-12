@@ -168,6 +168,12 @@ p.note { font-size: 11px; }
 #linkblock h2 { font-size: 14px; font-weight: bold; }
 #linkblock ul { list-style: none; padding: 20px 20px 0 0; }
 
+#mobile-site-banner { background-color: #fbff97; position: absolute; top: 0; left: 0; width: 100%; }
+#mobile-site-banner p { padding: 0; margin: 0; border: none; }
+#mobile-site-banner a { padding: 0; margin: 0; border: none; color: #000; font-weight: bold; }
+#mobile-site-banner a:hover { padding: 0; margin: 0; border: none; color: #000; font-weight: bold; }
+
+#mobile-site-banner span { display: block; padding: 5px 35px; }
 
 /* Begin Admin Styles */
 
