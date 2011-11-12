@@ -1,0 +1,58 @@
+﻿@model eclectica.co.uk.Web.Models.SearchResultsViewModel
+
+@{
+    ViewBag.Title = "Search Results";
+    Layout = "~/Views/Shared/" + ((Model.Mobile) ? "Mobile" : "Main") + "Layout.cshtml";
+}
+
+@section head {
+
+}
+
+@section content {
+
+    <h1 class="postdate">Search Results</h1>
+    <div class="post">
+
+        @using(Html.BeginForm()){
+            
+            <p>
+                @Html.TextBoxFor(x => x.Query) 
+                <input type="submit" value="Search" /> 
+                <input type="hidden" value="false" name="Ajax" />
+                <input type="hidden" value="false" name="CreateIndex" />
+
+            </p>
+            
+        }
+
+        <p>Results for <b>@Model.Query</b></p>
+
+        <div id="searchresults">
+
+        @foreach(var result in Model.SearchResults) {
+            
+            <div class="post">
+                <div class="postcontent">
+
+                    @if(result.Thumbnail != "") {
+                        <img alt="@((result.Title == "") ? result.Published.ToString("dddd dd MMMM yyyy, HH:mm") : result.Title)" src="/content/img/lib/crop/@(result.Thumbnail)" class="link-img" />
+                    }
+
+                    <h3><a href="/@result.Url">@((result.Title == "") ? result.Published.ToString("dddd dd MMMM yyyy, HH:mm") : result.Title)</a></h3>
+                    <p>@Html.Raw(result.Body)</p>
+                    
+                </div>
+                <div class="postcontrols">
+                    <p>By Mark</p>
+                    <p class="cl">@((result.CommentCount == 1) ? "1 comment" : result.CommentCount + " comments")</p>
+                </div>
+                <div class="pclr">&nbsp;</div>
+            </div>
+
+        }
+
+        </div>
+
+    </div>
+}

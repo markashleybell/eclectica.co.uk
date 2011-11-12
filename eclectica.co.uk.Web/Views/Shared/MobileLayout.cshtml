@@ -26,7 +26,8 @@
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
         @MiniProfiler.RenderIncludes(position: RenderPosition.Right, showTrivial: true, showTimeWithChildren: false)
 
-        <script type="text/javascript" src="/scripts/search.js"></script>
+        <script type="text/javascript">
+        </script>
 
         @RenderSection("head", false)
 	</head>
@@ -53,8 +54,8 @@
         
 	</ul>
 	
-	<form id="search" action="/search">
-	    <p><input type="text" name="query" id="query" value="Search the site..." /></p>
+	<form id="search" action="/search" method="post">
+	    <p><input type="text" name="query" id="query" value="Search the site..." /> <input type="submit" value="Search" /> </p>
 	</form></div>
 	
 	
@@ -68,7 +69,6 @@
 	        <p id="copyright">&copy; 2009 <a href="http://markashleybell.com/">Mark Ashley Bell</a></p>
         </div>
 		<script type="text/javascript" src="@ConfigurationManager.AppSettings["CDN1"]/scripts/load.js"></script>
-		<script type="text/javascript" src="@ConfigurationManager.AppSettings["CDN1"]/scripts/search.js"></script>
 		@if (!Convert.ToBoolean(ConfigurationManager.AppSettings["LocalTestMode"]))
         {
       

@@ -29,23 +29,6 @@ namespace eclectica.co.uk.Web.Controllers
             return View(mobile);
         }
 
-        public ActionResult Search(SearchResultsViewModel model, bool? ajax)
-        {
-            var indexPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Index");
-
-            if (!Directory.Exists(indexPath) || model.CreateIndex)
-                _entryServices.CreateSearchIndex();
-
-            var results = _entryServices.SearchEntries(model.Query);
-
-            model.SearchResults = results.ToList();
-
-            if (ajax.HasValue && ajax.Value == true)
-                return Json(model, JsonRequestBehavior.AllowGet);
-            else
-                return View("SearchResults", model);
-        }
-
         public ActionResult Links(bool mobile = false)
         {
             return View(new LinksViewModel { 

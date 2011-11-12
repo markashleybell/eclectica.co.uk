@@ -330,5 +330,23 @@ namespace eclectica.co.uk.Web.Controllers
 
             return Json(statuses);
         }
+
+        public ActionResult Search(SearchResultsViewModel model, bool? ajax, bool mobile = false)
+        {
+            var indexPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Index");
+
+            if (!Directory.Exists(indexPath) || model.CreateIndex)
+                _entryServices.CreateSearchIndex();
+
+            var results = _entryServices.SearchEntries(model.Query);
+
+            model.Mobile = mobile;
+            model.SearchResults = results.ToList();
+
+            if (ajax.HasValue && ajax.Value == true)
+                return Json(model, JsonRequestBehavior.AllowGet);
+            else
+                return View("SearchResults", model);
+        }
     }
 }

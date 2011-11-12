@@ -186,7 +186,7 @@
     <Content Include="Views\Template\About.cshtml" />
     <Content Include="Views\Template\TagIndex.cshtml" />
     <Content Include="Views\Template\TagEntries.cshtml" />
-    <Content Include="Views\Template\SearchResults.cshtml" />
+    <Content Include="Views\Entry\SearchResults.cshtml" />
     <Content Include="Views\Entry\Detail.cshtml" />
     <Content Include="Views\Template\Links.cshtml" />
     <Content Include="Views\Entry\Archive.cshtml" />

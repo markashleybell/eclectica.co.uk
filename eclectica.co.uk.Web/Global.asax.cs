@@ -83,7 +83,7 @@ namespace eclectica.co.uk.Web
             routes.MapRoute(
                 "Search Results", // Route name
                 "search", // URL with parameters
-                new { controller = "Template", action = "Search" } // Parameter defaults
+                new { controller = "Entry", action = "Search" } // Parameter defaults
             );
 
             routes.MapRoute(
