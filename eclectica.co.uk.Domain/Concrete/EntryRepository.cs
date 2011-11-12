@@ -199,6 +199,7 @@ namespace eclectica.co.uk.Domain.Concrete
                            "LEFT OUTER JOIN (SELECT Entry_EntryID, COUNT(*) as CommentCount " +
                            "FROM Comments GROUP BY Entry_EntryID) AS c " +
                            "ON e.EntryID = c.Entry_EntryID " +
+                           "WHERE e.Publish = 1 " + 
                            "ORDER BY e.Published DESC OFFSET @Offset ROWS FETCH NEXT @Count ROWS ONLY";
 
             var legacySql = "SELECT  * FROM ( " +
