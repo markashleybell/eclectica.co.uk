@@ -129,6 +129,7 @@
   <ItemGroup>
     <Content Include="Content\Css\Mobile.css" />
     <Content Include="Content\Css\Screen.css" />
+    <Content Include="cookie.html" />
     <Content Include="Global.asax" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\comment-admin.js" />
@@ -168,6 +169,7 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="httpd.ini" />
     <None Include="Settings.config" />
     <None Include="Settings.config.example" />
     <None Include="Db.config.example">
@@ -214,6 +216,7 @@
     <Content Include="Views\Redirect\Manage.cshtml" />
     <Content Include="Views\Entry\ClearErrorLogs.cshtml" />
     <Content Include="Views\Shared\MobileLayout.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

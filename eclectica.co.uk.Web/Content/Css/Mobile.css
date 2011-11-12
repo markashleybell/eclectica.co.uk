@@ -61,7 +61,7 @@ img { border: solid 1px #999999; margin: 20px 0 0 0; }
 img, object { max-width: 100%; }
 .l-img { float: left; margin: 20px 20px 17px 0; }
 .r-img { float: right; margin: 17px 0 17px 20px; }
-.link-img { float: left; margin: 20px 20px 50px 0; }
+.link-img { float: left; margin: 20px 20px 0 0; }
 
 .l-img-double { float: left; margin: 17px 0 17px 0; }
 .r-img-double { float: right; margin: 17px 0 17px 0; }
@@ -72,8 +72,8 @@ img, object { max-width: 100%; }
 
 #navigation div.nclr { background: none; overflow: hidden; height: 20px; clear: both; }
 
-.postcontent { float: left; }
-.postcontrols { float: left; }
+.postcontent { clear:left; overflow: auto; }
+.postcontrols { clear:left; overflow: auto; }
 
 .postcontrols .cl { padding: 0; }
 .postcontrols ul { padding: 0; }
@@ -164,44 +164,3 @@ p.note { font-size: 11px; }
 #linkblock div { width: 168px; margin-right: 20px; float: left; }
 #linkblock h2 { font-size: 14px; font-weight: bold; }
 #linkblock ul { list-style: none; padding: 20px 20px 0 0; }
-
-
-/* Begin Admin Styles */
-
-#UploadContainer {  padding: 20px 0 0 0; }
-
-#UploadButton { width: 200px; height: 20px; }
-
-#imagepicker { width: 260px; height: 300px; border: solid 1px #bcbcbc; overflow: auto; z-index: 0; margin: 20px 0 0 0; padding-bottom: 10px; }
-#imagepicker .clr { height: 10px; }
-
-#imagepickerthumbs { margin: 0 0 0 0; padding: 0; }
-#imagepickerthumbs li { margin: 10px 0 0 10px; float: left; display: block; width: 100px; height: 130px; border: solid 1px #e0e0e0; font-family: Arial, Helvetica, Sans-Serif; }
-#imagepickerthumbs span { display: block; height: 20px; font-size: 9px; padding: 5px; background-color: #ffffff; }
-#imagepickerthumbs span.i { text-indent: -1000em; padding: 0; background-color: #999999; background-position: center center; background-repeat: no-repeat; height: 100px; width: 100px; }
-
-table { border: solid 1px #999999; border-collapse: collapse; width: 628px; margin: 10px 0 0 0;}
-th { border: solid 1px #999999; padding: 5px 8px; text-align: left; vertical-align: top; }
-td { border: solid 1px #999999; padding: 5px 8px; vertical-align: top; }
-
-td a { border: none; }
-
-.redirectmanager { font-size: 11px; }
-
-.unpublished { background-color: #e0e0e0; }
-.unpublished td { color: #999999; }
-.unpublished td a { color: #222222; }
-
-input, select, textarea { font-family: "Courier New", Courier, monospace; font-size: 12px; }
-
-#Entry_Body { width: 600px; }
-
-p span#insertlinks { width: 640px; padding-left: 155px; font-family: Arial, Helvetica, Sans-Serif; font-size: 9px; }
-
-#tweetpageurl { display: none; }
-
-#RelatedSearch { width: 240px;  }
-
-#Title { width: 330px; }
-
-/* End Admin Styles */

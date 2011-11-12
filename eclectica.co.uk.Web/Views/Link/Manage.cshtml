@@ -6,6 +6,21 @@
 }
 
 @section head {
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            $('.delete-link').bind('click', function () {
+
+                return confirm('Are you sure?');
+
+            });
+
+        });
+
+    </script>
+
 }
 
 @section content {
@@ -27,7 +42,7 @@
             {
                 <tr>
                     <td>@link.Title</td>
-                    <td>@Html.ActionLink("Edit", "Edit", new { id = link.LinkID }, null) | @Html.ActionLink("Delete", "Delete", new { id = link.LinkID }, null)</td>
+                    <td>@Html.ActionLink("Edit", "Edit", new { id = link.LinkID }, null) | @Html.ActionLink("Delete", "Delete", new { id = link.LinkID }, new { @class = "delete-link" })</td>
                 </tr>
             
             }

@@ -71,7 +71,9 @@ namespace eclectica.co.uk.Web.Controllers
         {
             _entryServices.ClearErrorLogs(model.Limit);
 
-            return RedirectToAction("ClearErrorLogs");
+            model.Status = "Logs cleared up to " + model.Limit.ToString("dd/MM/yyyy hh:mm");
+
+            return View(model);
         }
 
         [Authorize]

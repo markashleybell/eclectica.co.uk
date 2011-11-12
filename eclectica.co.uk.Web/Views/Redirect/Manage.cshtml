@@ -7,6 +7,20 @@
 
 @section head {
 
+    <script type="text/javascript">
+
+        $(function () {
+
+            $('.delete-link').bind('click', function () {
+
+                return confirm('Are you sure?');
+
+            });
+
+        });
+
+    </script>
+
 }
 
 @section content {
@@ -38,7 +52,7 @@
                     <td>@redirect.RedirectID.ToString("D5")</td>
                     <td>@redirect.RedirectUrl.Truncate(70)</td>
                     <td>@redirect.Clicks</td>
-                    <td>@Html.ActionLink("Edit", "Edit", new { id = redirect.RedirectID }, null) | @Html.ActionLink("Delete", "Delete", new { id = redirect.RedirectID }, null)</td>
+                    <td>@Html.ActionLink("Edit", "Edit", new { id = redirect.RedirectID }, null) | @Html.ActionLink("Delete", "Delete", new { id = redirect.RedirectID }, new { @class = "delete-link" })</td>
                 </tr>
             
             }
