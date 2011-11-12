@@ -221,7 +221,6 @@ namespace eclectica.co.uk.Web.Controllers
             return RedirectToAction("Manage");
         }
 
-        [Authorize]
         [HttpPost]
         public ActionResult UploadImage(HttpPostedFileBase upload)
         {
