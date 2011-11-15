@@ -178,6 +178,22 @@ namespace eclectica.co.uk.Web.Controllers
             return RedirectToAction("Edit", new { id = model.Entry.EntryID });
         }
 
+        public ActionResult Preview(int id, bool mobile = false)
+        {
+            var entry = _entryServices.GetEntry(id);
+
+            if (entry == null)
+                throw new HttpException((int)HttpStatusCode.NotFound, "Page not found");
+
+            return View("Detail", new EntryViewModel {
+                Mobile = mobile,
+                Entry = entry,
+                Comment = new CommentModel {
+                    Entry = entry
+                }
+            });
+        }
+
         public ActionResult Detail(string url, bool mobile = false)
         {
             var entry = _entryServices.GetEntryByUrl(url);

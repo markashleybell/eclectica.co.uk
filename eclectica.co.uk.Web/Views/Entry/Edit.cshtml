@@ -27,7 +27,7 @@
     
         <p>@Html.LabelFor(x => x.Entry.Title)<br />
         @Html.TextBoxFor(x => x.Entry.Title, new { size = 49 }) @Html.CheckBoxFor(x => x.Entry.Publish) @Html.LabelFor(x => x.Entry.Publish) | 
-        <a onclick="window.open(this.href); return false;" href="/@Model.Entry.Url/">Preview</a> &nbsp; 
+        <a onclick="window.open(this.href); return false;" href="/Entry/Preview/@Model.Entry.EntryID">Preview</a> &nbsp; 
         <input type="submit" value="Save" /> <input class="action" type="button" id="DeleteButton" value="Delete" />
         @Html.HiddenFor(x => x.Entry.EntryID)
         @Html.Hidden("related", Model.Related)</p>

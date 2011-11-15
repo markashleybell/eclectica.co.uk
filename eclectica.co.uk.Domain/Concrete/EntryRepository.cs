@@ -262,7 +262,7 @@ namespace eclectica.co.uk.Domain.Concrete
         {
             var sql = "SELECT e.* " +
                       "FROM Entries AS e " +
-                      "WHERE DATEPART(month, e.Published) = @Month AND DATEPART(year, e.Published) = @Year " + 
+                      "WHERE e.Publish = 1 AND DATEPART(month, e.Published) = @Month AND DATEPART(year, e.Published) = @Year " + 
                       "ORDER BY e.Published";
 
             IEnumerable<Entry> entries;
@@ -287,6 +287,7 @@ namespace eclectica.co.uk.Domain.Concrete
         {
             var sql = "SELECT TOP(@Count) e.Title, e.Url, e.Published " +
                       "FROM Entries AS e " +
+                      "WHERE e.Publish = 1 " + 
                       "ORDER BY e.Published DESC";
 
             IEnumerable<Entry> entries;
@@ -313,7 +314,7 @@ namespace eclectica.co.uk.Domain.Concrete
                       "FROM Entries AS e " +
                       "INNER JOIN EntryTags AS et ON et.Entry_EntryID = e.EntryID " +
                       "INNER JOIN Tags AS t ON t.TagID = et.Tag_TagID " +
-                      "WHERE t.TagName = @Tag";
+                      "WHERE e.Publish = 1 AND t.TagName = @Tag";
 
             IEnumerable<Entry> entries;
 
@@ -353,6 +354,7 @@ namespace eclectica.co.uk.Domain.Concrete
 
         public override Entry Get(long id)
         {
+            // This is the ONLY method which shouldn't care about Publish status!
             var sql = "SELECT e.*, c.CommentCount, a.* " +
                       "FROM Entries AS e " +
                       "LEFT OUTER JOIN Authors AS a ON a.AuthorID = e.Author_AuthorID " +
@@ -365,6 +367,10 @@ namespace eclectica.co.uk.Domain.Concrete
                          "FROM Tags AS t " +
                          "INNER JOIN EntryTags AS et ON et.Tag_TagID = t.TagID " +
                          "WHERE et.Entry_EntryID = @EntryID";
+
+            var commentSql = "SELECT c.* " +
+                             "FROM Comments AS c " +
+                             "WHERE c.Entry_EntryID = @EntryID AND c.Approved = 1";
 
             var relatedSql = "SELECT e.EntryID, e.Title, e.Url, e.Body, e.Published " +
                              "FROM Entries AS e " +
@@ -388,6 +394,7 @@ namespace eclectica.co.uk.Domain.Concrete
 
                 // Perform queries for the tags, comments and related entries
                 using (_profiler.Step("Get tags for entry")) { entry.Tags = conn.Query<Tag>(tagSql, new { EntryID = entry.EntryID }).ToList(); }
+                using (_profiler.Step("Get comments for entry")) { entry.Comments = conn.Query<Comment>(commentSql, new { EntryID = entry.EntryID }).ToList(); }
                 using (_profiler.Step("Get related entries for entry"))
                 {
                     entry.Related = conn.Query<Entry>(relatedSql, new { EntryID = entry.EntryID })
@@ -532,7 +539,7 @@ namespace eclectica.co.uk.Domain.Concrete
         {
             var sql = "SELECT e.EntryID, e.Title, e.Published, e.Body, e.Url " +
                       "FROM Entries AS e " +
-                      "WHERE e.Title LIKE @Query OR e.Body LIKE @Query";
+                      "WHERE e.Publish = 1 AND (e.Title LIKE @Query OR e.Body LIKE @Query)";
 
             IEnumerable<Entry> entries;
 
