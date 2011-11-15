@@ -215,7 +215,7 @@ namespace eclectica.co.uk.Web.Controllers
 
             _commentServices.AddComment(model.Comment);
 
-            return Redirect("/" + model.Entry.Url + "#comment-form" + model.Comment.CommentID);
+            return Redirect("/" + model.Entry.Url + "#comment-form");
         }
 
         // TODO: Rework delete buttons into POSTs
