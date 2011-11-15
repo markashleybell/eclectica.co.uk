@@ -17,10 +17,16 @@
 
 @section content {
     
+    @{ var d = DateTime.MinValue; }
+
     @foreach (var entry in Model.Entries)
     {
-     
-        <p class="postdate">@entry.Published.ToString("dddd dd MMMM yyyy")</p>
+        // We group entries by day on the home page, so only write out the date if it has changed for this entry
+        if(entry.Published.Day != d.Day || entry.Published.Month != d.Month || entry.Published.Year != d.Year)
+        {
+            d = entry.Published;
+            <p class="postdate">@entry.Published.ToString("dddd dd MMMM yyyy")</p>
+        }
 				        
 	    <div class="post" id="post@(entry.EntryID)">
 					        
