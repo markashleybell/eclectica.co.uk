@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace eclectica.co.uk.Web.Extensions
 {
-    public static class Collection
+    public static class CollectionExtensions
     {
         public static bool HasNoItems<T>(this IEnumerable<T> c)
         {

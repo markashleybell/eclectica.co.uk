@@ -10,6 +10,7 @@
 
 @section head {
 
+<script type="text/javascript" src="/scripts/validation.js"></script>
 <script type="text/javascript" src="/scripts/entry.js"></script>
 <script type="text/javascript" src="/scripts/thumbtips.js"></script>
 
@@ -108,7 +109,7 @@
             
             <h2 class="postdate">Add your comment:</h2>
 
-            @using(Html.BeginForm("Detail", "Entry", FormMethod.Post, new { id = "comment-form" })) {
+            @using(Html.BeginForm("Detail", "Entry", FormMethod.Post, new { id = "comment-form", @class = "validate" })) {
 				           
                 <p>@Html.LabelFor(x => x.Comment.Name)
                 @Html.TextBoxFor(x => x.Comment.Name)

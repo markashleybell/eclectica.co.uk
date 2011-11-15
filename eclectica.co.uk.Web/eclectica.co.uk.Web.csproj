@@ -93,12 +93,13 @@
     <Compile Include="Controllers\LinkController.cs" />
     <Compile Include="Controllers\EntryController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
-    <Compile Include="Extensions\Collection.cs" />
-    <Compile Include="Extensions\Text.cs" />
+    <Compile Include="Extensions\CollectionExtensions.cs" />
+    <Compile Include="Extensions\ModelStateExtensions.cs" />
+    <Compile Include="Extensions\TextExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\Twitter.cs" />
+    <Compile Include="Extensions\TwitterExtensions.cs" />
     <Compile Include="Helpers\EntryHelpers.cs" />
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
     <Compile Include="Infrastructure\ValidationAttributes.cs" />
@@ -144,6 +145,7 @@
     <Content Include="Scripts\tagsuggest.js" />
     <Content Include="Scripts\thumbtips.js" />
     <Content Include="Scripts\uploader.js" />
+    <Content Include="Scripts\validation.js" />
     <Content Include="Views\Shared\MainLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

@@ -197,18 +197,25 @@ namespace eclectica.co.uk.Web.Controllers
         [HttpPost]
         public ActionResult Detail(EntryViewModel model, bool mobile = false)
         {
-            if (!ModelState.IsValid)
+            if (model.IsAjaxRequest)
             {
-                model.Entry = _entryServices.GetEntryByUrl(model.Entry.Url);
+                return Json(ModelState.GetErrorsForJSON());
+            }
+            else
+            {
+                if (!ModelState.IsValid)
+                {
+                    model.Entry = _entryServices.GetEntryByUrl(model.Entry.Url);
 
-                return View(model);
+                    return View(model);
+                }
             }
 
             model.Comment.Entry = model.Entry;
 
             _commentServices.AddComment(model.Comment);
 
-            return Redirect("/" + model.Entry.Url + "#comment" + model.Comment.CommentID);
+            return Redirect("/" + model.Entry.Url + "#comment-form" + model.Comment.CommentID);
         }
 
         // TODO: Rework delete buttons into POSTs

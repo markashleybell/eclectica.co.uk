@@ -19,5 +19,7 @@ namespace eclectica.co.uk.Web.Models
         [DisplayName("How many monkeys in a bag of five monkeys?")]
         public string X7fw91Do { get; set; }
 
+        public bool IsAjaxRequest { get; set; }
+
     }
 }
