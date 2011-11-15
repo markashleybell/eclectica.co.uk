@@ -44,7 +44,7 @@
 });
 
 function insertImage(id) {
-    $('#Entry_Body').replaceSelection('<img alt="CAPTION" src="/img/lib/std/' + id + '.jpg" />', true);
+    $('#Entry_Body').replaceSelection('<img alt="CAPTION" src="/content/img/lib/std/' + id + '.jpg" />', true);
 }
 
 function insertClass(cls) {
