@@ -27,7 +27,16 @@ namespace eclectica.co.uk.Caching.Concrete
 
         public IEnumerable<EntryModel> All()
         {
-            throw new NotImplementedException();
+            var key = "all-entries";
+            var models = _cache.Get<IEnumerable<EntryModel>>(key);
+
+            if(models == null)
+            {
+                models = _entryServices.All();
+                _cache.Add(key, models);
+            }
+
+            return models;
         }
 
         public EntryModel GetEntry(int id)
@@ -61,7 +70,16 @@ namespace eclectica.co.uk.Caching.Concrete
 
         public IEnumerable<EntryModel> GetRecentEntries(int count)
         {
-            return _entryServices.GetRecentEntries(count);
+            var key = "recent-entries-" + count;
+            var models = _cache.Get<IEnumerable<EntryModel>>(key);
+
+            if(models == null)
+            {
+                models = _entryServices.GetRecentEntries(count);
+                _cache.Add(key, models);
+            }
+
+            return models;
         }
 
         public IEnumerable<EntryModel> GetArchivedEntries(int year, int month)

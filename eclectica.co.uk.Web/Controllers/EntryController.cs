@@ -377,7 +377,7 @@ namespace eclectica.co.uk.Web.Controllers
         [Authorize]
         public ActionResult ShowCacheContents()
         {
-            return View(_cache.BaseCache);
+            return View(_cache.BaseCache.OrderByDescending(x => x.Hits).ToList());
         }
 
         [Authorize]

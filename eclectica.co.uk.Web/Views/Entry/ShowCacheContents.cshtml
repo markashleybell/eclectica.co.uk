@@ -1,4 +1,4 @@
-﻿@model List<KeyValuePair<string, object>>
+﻿@model List<eclectica.co.uk.Caching.Entities.CacheItemInfo>
 
 @{
     ViewBag.Title = "Show Cache Contents";
@@ -22,17 +22,21 @@
 
         <p>@Html.ActionLink("Clear Cache Contents", "ClearCacheContents", "Entry")</p>
 
-        <table id="postmanager">
+        <table id="postmanager" class="redirectmanager">
             <tr>
                 <th>Key</th>
                 <th style="width: 90px;">Value</th>
+                <th style="width: 30px;">Hit</th>
+                <th style="width: 30px;">Miss</th>
             </tr>
 
             @foreach (var entry in Model)
             {
                 <tr>
                     <td>@entry.Key</td>
-                    <td>@entry.Value.ToString()</td>
+                    <td>@entry.Type</td>
+                    <td>@entry.Hits</td>
+                    <td>@entry.Misses</td>
                 </tr>
             
             }
