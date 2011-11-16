@@ -1,0 +1,44 @@
+﻿@model List<KeyValuePair<string, object>>
+
+@{
+    ViewBag.Title = "Show Cache Contents";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@section head {
+
+    <script type="text/javascript">
+
+    
+
+    </script>
+
+}
+
+@section content {
+
+	<div class="post">
+	    <h1>Cache Entries</h1>
+
+        <p>@Html.ActionLink("Clear Cache Contents", "ClearCacheContents", "Entry")</p>
+
+        <table id="postmanager">
+            <tr>
+                <th>Key</th>
+                <th style="width: 90px;">Value</th>
+            </tr>
+
+            @foreach (var entry in Model)
+            {
+                <tr>
+                    <td>@entry.Key</td>
+                    <td>@entry.Value.ToString()</td>
+                </tr>
+            
+            }
+            
+        </table>
+
+    </div>
+
+}

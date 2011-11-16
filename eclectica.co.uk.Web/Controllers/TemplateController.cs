@@ -10,6 +10,7 @@ using eclectica.co.uk.Web.Extensions;
 using System.IO;
 using eclectica.co.uk.Web.Abstract;
 using System.Net;
+using eclectica.co.uk.Caching.Abstract;
 
 namespace eclectica.co.uk.Web.Controllers
 {
@@ -68,6 +69,5 @@ namespace eclectica.co.uk.Web.Controllers
 
             }
         }
-
     }
 }
