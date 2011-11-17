@@ -15,16 +15,19 @@ using System.IO;
 using eclectica.co.uk.Web.Abstract;
 using mab.lib.ImageSizer;
 using Elmah.Contrib.Mvc;
+using eclectica.co.uk.Caching.Abstract;
 
 namespace eclectica.co.uk.Web.Controllers
 {
     public class EntryController : BaseController
     {
-        ITagServices _tagServices;
+        private ITagServices _tagServices;
+        private IModelCache _cache;
 
-        public EntryController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, IConfigurationInfo config) : base(entryServices, commentServices, config) 
+        public EntryController(IEntryServices entryServices, ICommentServices commentServices, ITagServices tagServices, IConfigurationInfo config, IModelCache cache) : base(entryServices, commentServices, config) 
         {
             _tagServices = tagServices;
+            _cache = cache;
         }
 
         public ActionResult Index(int? page, string view, bool mobile = false)
@@ -321,7 +324,12 @@ namespace eclectica.co.uk.Web.Controllers
 
         public ActionResult Random()
         {
-            var url = _entryServices.GetRandomEntryUrl();
+            var urls = _entryServices.GetEntryUrls();
+
+            var rnd = new Random();
+
+            var url = urls[rnd.Next(0, urls.Length - 1)];
+
             return Redirect("/" + url);
         }
 
@@ -369,6 +377,20 @@ namespace eclectica.co.uk.Web.Controllers
                 return Json(model, JsonRequestBehavior.AllowGet);
             else
                 return View("SearchResults", model);
+        }
+
+        [Authorize]
+        public ActionResult ShowCacheContents()
+        {
+            return View(_cache.BaseCache.OrderByDescending(x => x.Hits).ToList());
+        }
+
+        [Authorize]
+        public ActionResult ClearCacheContents()
+        {
+            _cache.Clear();
+
+            return RedirectToAction("ShowCacheContents");
         }
     }
 }

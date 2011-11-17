@@ -85,24 +85,21 @@ namespace eclectica.co.uk.Domain.Concrete
             return entry;
         }
 
-        public string GetRandomEntryUrl()
+        public string[] GetEntryUrls()
         {
-            string url = null;
+            string[] allUrls = null;
 
             using(var conn = base.GetOpenConnection())
             {
                 using(_profiler.Step("Get random entry ID"))
                 {
-                    // Pull out all the entry urls in the database and grab one at random
-                    var allUrls = conn.Query<string>("SELECT e.Url from Entries AS e WHERE e.Publish = 1 ORDER BY e.EntryID").ToArray();
-                    var rnd = new Random();
-
-                    url = allUrls[rnd.Next(0, allUrls.Length - 1)];
+                    // Pull out all the entry urls in the database
+                    allUrls = conn.Query<string>("SELECT e.Url from Entries AS e WHERE e.Publish = 1 ORDER BY e.EntryID").ToArray();
                 }
 
             }
 
-            return url;
+            return allUrls;
         }
 
         private string GetThumbnail(string title, string body)

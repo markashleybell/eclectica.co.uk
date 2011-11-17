@@ -1,0 +1,48 @@
+﻿@model List<eclectica.co.uk.Caching.Entities.CacheItemInfo>
+
+@{
+    ViewBag.Title = "Show Cache Contents";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@section head {
+
+    <script type="text/javascript">
+
+    
+
+    </script>
+
+}
+
+@section content {
+
+	<div class="post">
+	    <h1>Cache Entries</h1>
+
+        <p>@Html.ActionLink("Clear Cache Contents", "ClearCacheContents", "Entry")</p>
+
+        <table id="postmanager" class="redirectmanager">
+            <tr>
+                <th>Key</th>
+                <th style="width: 90px;">Value</th>
+                <th style="width: 30px;">Hit</th>
+                <th style="width: 30px;">Miss</th>
+            </tr>
+
+            @foreach (var entry in Model)
+            {
+                <tr>
+                    <td>@entry.Key</td>
+                    <td>@entry.Type.Truncate(80)</td>
+                    <td>@entry.Hits</td>
+                    <td>@entry.Misses</td>
+                </tr>
+            
+            }
+            
+        </table>
+
+    </div>
+
+}

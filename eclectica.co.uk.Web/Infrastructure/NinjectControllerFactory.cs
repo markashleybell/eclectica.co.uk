@@ -15,6 +15,9 @@ using System.Data.SqlServerCe;
 using eclectica.co.uk.Domain.Entities;
 using eclectica.co.uk.Web.Abstract;
 using eclectica.co.uk.Web.Concrete;
+using eclectica.co.uk.Caching;
+using eclectica.co.uk.Caching.Concrete;
+using eclectica.co.uk.Caching.Abstract;
 
 namespace eclectica.co.uk.Web.Infrastructure
 {
@@ -68,6 +71,17 @@ namespace eclectica.co.uk.Web.Infrastructure
                         .WithConstructorArgument("imageLibraryFolder", ConfigurationManager.AppSettings["ImageLibraryFolder"])
                         .WithConstructorArgument("indexPageSize", Convert.ToInt32(ConfigurationManager.AppSettings["IndexPageSize"]));
 
+                Bind<IModelCache>().To<ModelCache>().InRequestScope();
+
+                Bind<ICacheConfigurationInfo>()
+                        .To<CacheConfigurationInfo>()
+                        .InRequestScope()
+                        .WithConstructorArgument("cacheIntervalMin", Convert.ToInt32(ConfigurationManager.AppSettings["CacheIntervalMin"]))
+                        .WithConstructorArgument("cacheIntervalShort", Convert.ToInt32(ConfigurationManager.AppSettings["CacheIntervalShort"]))
+                        .WithConstructorArgument("cacheIntervalMedium", Convert.ToInt32(ConfigurationManager.AppSettings["CacheIntervalMedium"]))
+                        .WithConstructorArgument("cacheIntervalLong", Convert.ToInt32(ConfigurationManager.AppSettings["CacheIntervalLong"]))
+                        .WithConstructorArgument("cacheIntervalMax", Convert.ToInt32(ConfigurationManager.AppSettings["CacheIntervalMax"]));
+
                 Bind<IEntryRepository>().To<EntryRepository>().InRequestScope();
                 Bind<IAuthorRepository>().To<AuthorRepository>().InRequestScope();
                 Bind<ITagRepository>().To<TagRepository>().InRequestScope();
@@ -75,9 +89,15 @@ namespace eclectica.co.uk.Web.Infrastructure
                 Bind<ICommentRepository>().To<CommentRepository>().InRequestScope();
                 Bind<IImageRepository>().To<ImageRepository>().InRequestScope();
                 Bind<IRedirectRepository>().To<RedirectRepository>().InRequestScope();
-                Bind<IEntryServices>().To<EntryServices>().InRequestScope();
+                
+                Bind<IEntryServices>().To<CachingEntryServices>().InRequestScope();
+                Bind<IEntryServices>().To<EntryServices>().When(r => r.Target.Name == "nonCachingEntryServices").InRequestScope();
+
                 Bind<ICommentServices>().To<CommentServices>().InRequestScope();
-                Bind<ITagServices>().To<TagServices>().InRequestScope();
+                
+                Bind<ITagServices>().To<CachingTagServices>().InRequestScope();
+                Bind<ITagServices>().To<TagServices>().When(r => r.Target.Name == "nonCachingTagServices").InRequestScope();
+
                 Bind<ILinkServices>().To<LinkServices>().InRequestScope();
                 Bind<IRedirectServices>().To<RedirectServices>().InRequestScope();
             }
