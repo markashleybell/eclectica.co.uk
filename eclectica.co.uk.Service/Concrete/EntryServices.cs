@@ -56,9 +56,9 @@ namespace eclectica.co.uk.Service.Concrete
             return model;
         }
 
-        public string GetRandomEntryUrl()
+        public string[] GetEntryUrls()
         {
-            return _entryRepository.GetRandomEntryUrl();
+            return _entryRepository.GetEntryUrls();
         }
 
         public IEnumerable<string> GetUrlList()

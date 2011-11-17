@@ -13,16 +13,13 @@ namespace eclectica.co.uk.Caching.Concrete
     {
         private IEntryServices _entryServices;
         private IModelCache _cache;
+        private ICacheConfigurationInfo _config;
 
-        public CachingEntryServices(IEntryServices nonCachingEntryServices, IModelCache cache)
+        public CachingEntryServices(IEntryServices nonCachingEntryServices, IModelCache cache, ICacheConfigurationInfo config)
         {
             _entryServices = nonCachingEntryServices;
             _cache = cache;
-        }
-
-        public IModelCache Cache
-        {
-            get { return _cache; }
+            _config = config;
         }
 
         public IEnumerable<EntryModel> All()
@@ -33,7 +30,7 @@ namespace eclectica.co.uk.Caching.Concrete
             if(models == null)
             {
                 models = _entryServices.All();
-                _cache.Add(key, models);
+                _cache.Add(key, models, _config.CacheIntervalMin);
             }
 
             return models;
@@ -41,17 +38,36 @@ namespace eclectica.co.uk.Caching.Concrete
 
         public EntryModel GetEntry(int id)
         {
-            throw new NotImplementedException();
+            // Return this uncached, as it's what we use for the CMS and previewing
+            return _entryServices.GetEntry(id);
         }
 
         public EntryModel GetEntryByUrl(string folder)
         {
-            throw new NotImplementedException();
+            var key = "entry-" + folder;
+            var entry = _cache.Get<EntryModel>(key);
+
+            if(entry == null)
+            {
+                entry = _entryServices.GetEntryByUrl(folder);
+                _cache.Add(key, entry, _config.CacheIntervalMedium);
+            }
+
+            return entry;
         }
 
-        public string GetRandomEntryUrl()
+        public string[] GetEntryUrls()
         {
-            throw new NotImplementedException();
+            var key = "all-urls";
+            var urls = _cache.Get<string[]>(key);
+
+            if(urls == null)
+            {
+                urls = _entryServices.GetEntryUrls();
+                _cache.Add(key, urls, _config.CacheIntervalMax);
+            }
+
+            return urls;
         }
 
         public IEnumerable<EntryModel> Page(int start, int count)
@@ -62,7 +78,7 @@ namespace eclectica.co.uk.Caching.Concrete
             if (page == null)
             {
                 page = _entryServices.Page(start, count);
-                _cache.Add(key, page);
+                _cache.Add(key, page, _config.CacheIntervalLong);
             }
 
             return page;
@@ -76,7 +92,7 @@ namespace eclectica.co.uk.Caching.Concrete
             if(models == null)
             {
                 models = _entryServices.GetRecentEntries(count);
-                _cache.Add(key, models);
+                _cache.Add(key, models, _config.CacheIntervalMax);
             }
 
             return models;
@@ -84,42 +100,71 @@ namespace eclectica.co.uk.Caching.Concrete
 
         public IEnumerable<EntryModel> GetArchivedEntries(int year, int month)
         {
-            throw new NotImplementedException();
+            var key = "archive-" + year + "-" + month;
+            var models = _cache.Get<IEnumerable<EntryModel>>(key);
+
+            if(models == null)
+            {
+                models = _entryServices.GetArchivedEntries(year, month);
+                _cache.Add(key, models, _config.CacheIntervalLong);
+            }
+
+            return models;
         }
 
         public IEnumerable<string> GetUrlList()
         {
-            throw new NotImplementedException();
+            // Don't bother caching this as it's only ever called by the sitemap and 
+            // we want that to be fresh anyway
+            return _entryServices.GetUrlList();
         }
 
         public IEnumerable<ImageModel> GetImages()
         {
-            throw new NotImplementedException();
+            return _entryServices.GetImages();
         }
 
         public void AddImage(ImageModel image)
         {
-            throw new NotImplementedException();
+            _entryServices.AddImage(image);
         }
 
         public IDictionary<DateTime, int> GetPostCountsPerMonth(int year)
         {
-            throw new NotImplementedException();
+            var key = "postcounts-" + year;
+            var models = _cache.Get<IDictionary<DateTime, int>>(key);
+
+            if(models == null)
+            {
+                models = _entryServices.GetPostCountsPerMonth(year);
+                _cache.Add(key, models, _config.CacheIntervalLong);
+            }
+
+            return models;
         }
 
         public IDictionary<string, List<EntryModel>> GetEntriesForTag(string tag)
         {
-            throw new NotImplementedException();
+            var key = "tagentries-" + tag;
+            var models = _cache.Get<IDictionary<string, List<EntryModel>>>(key);
+
+            if(models == null)
+            {
+                models = _entryServices.GetEntriesForTag(tag);
+                _cache.Add(key, models, _config.CacheIntervalLong);
+            }
+
+            return models;
         }
 
         public void ClearErrorLogs(DateTime limit)
         {
-            throw new NotImplementedException();
+            _entryServices.ClearErrorLogs(limit);   
         }
 
         public void CreateSearchIndex()
         {
-            throw new NotImplementedException();
+            _entryServices.CreateSearchIndex();
         }
 
         public IEnumerable<EntryModel> SearchEntries(string query)
@@ -134,17 +179,17 @@ namespace eclectica.co.uk.Caching.Concrete
 
         public void AddEntry(EntryModel entry, int[] relatedIds, string[] tags)
         {
-            throw new NotImplementedException();
+            _entryServices.AddEntry(entry, relatedIds, tags);
         }
 
         public void UpdateEntry(EntryModel entry, int[] relatedIds, string[] tags)
         {
-            throw new NotImplementedException();
+            _entryServices.UpdateEntry(entry, relatedIds, tags);
         }
 
         public void DeleteEntry(int id)
         {
-            throw new NotImplementedException();
+            _entryServices.DeleteEntry(id);
         }
     }
 }

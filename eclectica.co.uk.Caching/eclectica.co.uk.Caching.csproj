@@ -41,8 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\ICacheConfigurationInfo.cs" />
     <Compile Include="Abstract\IModelCache.cs" />
+    <Compile Include="Concrete\CacheConfigurationInfo.cs" />
     <Compile Include="Concrete\CachingEntryServices.cs" />
+    <Compile Include="Concrete\CachingTagServices.cs" />
     <Compile Include="Concrete\ModelCache.cs" />
     <Compile Include="Entities\CacheItemInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

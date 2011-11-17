@@ -73,6 +73,15 @@ namespace eclectica.co.uk.Web.Infrastructure
 
                 Bind<IModelCache>().To<ModelCache>().InRequestScope();
 
+                Bind<ICacheConfigurationInfo>()
+                        .To<CacheConfigurationInfo>()
+                        .InRequestScope()
+                        .WithConstructorArgument("cacheIntervalMin", Convert.ToInt32(ConfigurationManager.AppSettings["CacheIntervalMin"]))
+                        .WithConstructorArgument("cacheIntervalShort", Convert.ToInt32(ConfigurationManager.AppSettings["CacheIntervalShort"]))
+                        .WithConstructorArgument("cacheIntervalMedium", Convert.ToInt32(ConfigurationManager.AppSettings["CacheIntervalMedium"]))
+                        .WithConstructorArgument("cacheIntervalLong", Convert.ToInt32(ConfigurationManager.AppSettings["CacheIntervalLong"]))
+                        .WithConstructorArgument("cacheIntervalMax", Convert.ToInt32(ConfigurationManager.AppSettings["CacheIntervalMax"]));
+
                 Bind<IEntryRepository>().To<EntryRepository>().InRequestScope();
                 Bind<IAuthorRepository>().To<AuthorRepository>().InRequestScope();
                 Bind<ITagRepository>().To<TagRepository>().InRequestScope();
@@ -85,7 +94,10 @@ namespace eclectica.co.uk.Web.Infrastructure
                 Bind<IEntryServices>().To<EntryServices>().When(r => r.Target.Name == "nonCachingEntryServices").InRequestScope();
 
                 Bind<ICommentServices>().To<CommentServices>().InRequestScope();
-                Bind<ITagServices>().To<TagServices>().InRequestScope();
+                
+                Bind<ITagServices>().To<CachingTagServices>().InRequestScope();
+                Bind<ITagServices>().To<TagServices>().When(r => r.Target.Name == "nonCachingTagServices").InRequestScope();
+
                 Bind<ILinkServices>().To<LinkServices>().InRequestScope();
                 Bind<IRedirectServices>().To<RedirectServices>().InRequestScope();
             }

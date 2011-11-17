@@ -10,8 +10,9 @@ namespace eclectica.co.uk.Caching.Abstract
     {
         List<CacheItemInfo> BaseCache { get; }
         object this[string key] { get; }
-        void Add(string key, object value);
+        void Add(string key, object value, int expirationSeconds);
         T Get<T>(string key);
+        void Remove(string key);
         void Clear();
     }
 }

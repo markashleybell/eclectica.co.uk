@@ -28,12 +28,12 @@ namespace eclectica.co.uk.Caching.Concrete
             get { return _cache[key]; }
         }
 
-        void IModelCache.Add(string key, object value)
+        void IModelCache.Add(string key, object value, int expirationSeconds)
         {
             _cache.Add(key, 
                 value, 
-            new CacheItemPolicy { 
-                AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(60) 
+            new CacheItemPolicy {
+                AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(expirationSeconds) 
             });
 
             if(!_cacheInfo.ContainsKey(key))
@@ -46,23 +46,11 @@ namespace eclectica.co.uk.Caching.Concrete
                 };
             }
 
-            // TODO: Do this more elegantly...
-            _cacheInfo[key].Hits--; 
             _cacheInfo[key].Misses++;
         }
 
         T IModelCache.Get<T>(string key)
         {
-            if(!_cacheInfo.ContainsKey(key))
-            {
-                _cacheInfo[key] = new CacheItemInfo {
-                    Key = key,
-                    Type = typeof(T).ToString(),
-                    Hits = 0,
-                    Misses = 0
-                };
-            }   
-
             try
             {
                 _cacheInfo[key].Hits++;
@@ -72,6 +60,12 @@ namespace eclectica.co.uk.Caching.Concrete
             {
                 return default(T);
             }
+        }
+
+        void IModelCache.Remove(string key)
+        {
+            _cache.Remove(key);
+            _cacheInfo.Remove(key);
         }
 
         void IModelCache.Clear()

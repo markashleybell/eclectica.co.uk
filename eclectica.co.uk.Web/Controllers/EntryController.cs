@@ -324,7 +324,12 @@ namespace eclectica.co.uk.Web.Controllers
 
         public ActionResult Random()
         {
-            var url = _entryServices.GetRandomEntryUrl();
+            var urls = _entryServices.GetEntryUrls();
+
+            var rnd = new Random();
+
+            var url = urls[rnd.Next(0, urls.Length - 1)];
+
             return Redirect("/" + url);
         }
 

@@ -66,7 +66,7 @@ namespace eclectica.co.uk.Test.Data
             throw new NotImplementedException();
         }
 
-        public string GetRandomEntryUrl()
+        public string[] GetEntryUrls()
         {
             throw new NotImplementedException();
         }

@@ -1,15 +1,21 @@
 ﻿<appSettings>
-  <add key="LocalTestMode" value="true"/>
-  <add key="IndexPageSize" value="5"/>
-  <add key="InstallationUrl" value="HOSTNAME"/>
-  <add key="ImageLibraryFolder" value="LIBRARYFOLDER" />
-  <add key="AnalyticsID" value="ANALYTICSID" />
-  <add key="CDN1" value="" />
-  <add key="CDN2" value="" />
-  <add key="TwitterConsumerKey" value="CONSUMERKEY"/>
-  <add key="TwitterConsumerSecret" value="CONSUMERKEY"/>
-  <add key="TwitterAccessToken" value="ACCESSTOKEN"/>
-  <add key="TwitterAccessTokenSecret" value="ACCESSTOKENSECRET"/>
-  <add key="TwitterAnywhereAPIKey" value="ANYWHEREAPIKEY"/>
-  <add key="ServerType" value="SQLCE4" />
+    <add key="LocalTestMode" value="true"/>
+    <add key="IndexPageSize" value="5"/>
+    <add key="InstallationUrl" value="HOSTNAME"/>
+    <add key="ImageLibraryFolder" value="LIBRARYFOLDER" />
+    <add key="AnalyticsID" value="ANALYTICSID" />
+    <add key="CDN1" value="" />
+    <add key="CDN2" value="" />
+    <add key="TwitterConsumerKey" value="CONSUMERKEY"/>
+    <add key="TwitterConsumerSecret" value="CONSUMERKEY"/>
+    <add key="TwitterAccessToken" value="ACCESSTOKEN"/>
+    <add key="TwitterAccessTokenSecret" value="ACCESSTOKENSECRET"/>
+    <add key="TwitterAnywhereAPIKey" value="ANYWHEREAPIKEY"/>
+    <add key="ServerType" value="SQLCE4" />
+    <!-- Caching configuration (intervals in seconds) -->
+    <add key="CacheIntervalMin" value="300" /> <!-- 5 mins -->
+    <add key="CacheIntervalShort" value="600" /> <!-- 10 mins -->
+    <add key="CacheIntervalMedium" value="1800" /> <!-- 30 mins -->
+    <add key="CacheIntervalLong" value="3600" /> <!-- 1 hr -->
+    <add key="CacheIntervalMax" value="10800" /> <!-- 3 hrs -->
 </appSettings>
