@@ -30,7 +30,7 @@ namespace eclectica.co.uk.Caching.Concrete
             if(models == null)
             {
                 models = _entryServices.All();
-                _cache.Add(key, models, _config.CacheIntervalMin);
+                _cache.Add(key, models, _config.CacheIntervalMedium);
             }
 
             return models;
@@ -50,7 +50,7 @@ namespace eclectica.co.uk.Caching.Concrete
             if(entry == null)
             {
                 entry = _entryServices.GetEntryByUrl(folder);
-                _cache.Add(key, entry, _config.CacheIntervalMedium);
+                _cache.Add(key, entry, _config.CacheIntervalMax);
             }
 
             return entry;
@@ -190,6 +190,7 @@ namespace eclectica.co.uk.Caching.Concrete
         public void DeleteEntry(int id)
         {
             _entryServices.DeleteEntry(id);
+            _cache.Remove("all-entries");
         }
     }
 }
