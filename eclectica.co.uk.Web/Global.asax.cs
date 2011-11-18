@@ -121,7 +121,7 @@ namespace eclectica.co.uk.Web
             routes.MapRoute(
                 "Short Link", // Route name
                 "{id}", // URL with parameters
-                new { controller = "Redirect", action = "Redirect", id = "0" },
+                new { controller = "Redirect", action = "RedirectToUrl", id = "0" },
                 new { id = @"\d{5}" } 
             );
 

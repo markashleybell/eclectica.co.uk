@@ -111,7 +111,7 @@ namespace eclectica.co.uk.Web.Controllers
             return RedirectToAction("Manage");
         }
 
-        public RedirectResult Redirect(string id)
+        public RedirectResult RedirectToUrl(string id)
         {
             var redirect = _redirectServices.GetRedirect(Int32.Parse(id));
             
