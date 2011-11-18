@@ -180,6 +180,7 @@ namespace eclectica.co.uk.Caching.Concrete
         public void AddEntry(EntryModel entry, int[] relatedIds, string[] tags)
         {
             _entryServices.AddEntry(entry, relatedIds, tags);
+            _cache.Remove("all-entries");
         }
 
         public void UpdateEntry(EntryModel entry, int[] relatedIds, string[] tags)
