@@ -341,7 +341,7 @@ namespace eclectica.co.uk.Web.Controllers
         }
 
         [HttpPost]
-        [OutputCache(Duration=300)]
+        [OutputCache(Duration=1800)]
         public ActionResult RecentTwitterStatuses(int count)
         {
             var url = "https://api.twitter.com/1/statuses/user_timeline.json?screen_name=eclecticablog&count=" + count;
