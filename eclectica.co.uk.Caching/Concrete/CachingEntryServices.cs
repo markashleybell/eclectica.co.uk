@@ -50,7 +50,10 @@ namespace eclectica.co.uk.Caching.Concrete
             if(entry == null)
             {
                 entry = _entryServices.GetEntryByUrl(folder);
-                _cache.Add(key, entry, _config.CacheIntervalMax);
+
+                // If it's still null, this should be a 404 so don't add it to the cache
+                if(entry != null)
+                    _cache.Add(key, entry, _config.CacheIntervalMax);
             }
 
             return entry;
