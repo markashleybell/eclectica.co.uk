@@ -179,7 +179,7 @@ namespace eclectica.co.uk.Domain.Concrete
                 using (_profiler.Step("Get all archive urls"))
                 {
                     urls2 = conn.Query(sql2)
-                                .Select(x => x.Year + "/" + x.Month)
+                                .Select(x => x.Year + "/" + x.Month.ToString("D2"))
                                 .Cast<string>()
                                 .ToList();                    
                 }
