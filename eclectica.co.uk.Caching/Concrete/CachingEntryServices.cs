@@ -172,12 +172,22 @@ namespace eclectica.co.uk.Caching.Concrete
 
         public IEnumerable<EntryModel> SearchEntries(string query)
         {
-            throw new NotImplementedException();
+            var key = "search-" + string.Join("-", query.Trim().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
+
+            var models = _cache.Get<IEnumerable<EntryModel>>(key);
+
+            if (models == null)
+            {
+                models = _entryServices.SearchEntries(query);
+                _cache.Add(key, models, _config.CacheIntervalLong);
+            }
+
+            return models;
         }
 
         public IEnumerable<EntryModel> SimpleSearch(string query)
         {
-            throw new NotImplementedException();
+            return _entryServices.SimpleSearch(query);
         }
 
         public void AddEntry(EntryModel entry, int[] relatedIds, string[] tags)
