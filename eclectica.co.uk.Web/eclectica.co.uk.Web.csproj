@@ -135,6 +135,7 @@
     <Content Include="robots.txt" />
     <Content Include="Scripts\comment-admin.js" />
     <Content Include="Scripts\mobile-load.js" />
+    <Content Include="Scripts\mustache.js" />
     <Content Include="Scripts\redirect-admin.js" />
     <Content Include="Scripts\link-admin.js" />
     <Content Include="Scripts\entry-admin.js" />
@@ -177,6 +178,7 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="httpd.ini" />
+    <None Include="Scripts\searchresult.tmpl" />
     <None Include="Settings.config" />
     <None Include="Settings.config.example" />
     <None Include="Db.config.example">

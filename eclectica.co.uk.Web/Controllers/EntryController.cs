@@ -272,6 +272,11 @@ namespace eclectica.co.uk.Web.Controllers
             return Content(fileName + ":" + image.ImageID);
         }
 
+        /// <summary>
+        /// A quick search for entries used in the CMS when finding related entries
+        /// </summary>
+        /// <param name="query">Search query</param>
+        /// <returns>String of search results</returns>
         [Authorize]
         public ActionResult RelatedSearch(string query)
         {
@@ -363,6 +368,7 @@ namespace eclectica.co.uk.Web.Controllers
 
         public ActionResult Search(SearchResultsViewModel model, bool? ajax, bool mobile = false)
         {
+            // Check that the Lucene index exists, and if not create it
             var indexPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Index");
 
             if (!Directory.Exists(indexPath) || model.CreateIndex)
@@ -373,8 +379,10 @@ namespace eclectica.co.uk.Web.Controllers
             model.Mobile = mobile;
             model.SearchResults = results.ToList();
 
+            // If this is an AJAX search just return the result data directly 
+            // as JSON, otherwise show the results view
             if (ajax.HasValue && ajax.Value == true)
-                return Json(model, JsonRequestBehavior.AllowGet);
+                return Json(model.SearchResults, JsonRequestBehavior.AllowGet);
             else
                 return View("SearchResults", model);
         }
