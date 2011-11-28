@@ -11,7 +11,8 @@ namespace eclectica.co.uk.Web.Helpers
         public static string GetCaption(string title, string body)
         {
             var options = RegexOptions.Singleline | RegexOptions.IgnoreCase;
-            return ((title == "") ? Regex.Replace(Regex.Matches(body, "<p>(.*?)</p>", options)[0].Groups[1].Value, @"<(.|\n)+?>", @"") : title);
+
+            return ((string.IsNullOrEmpty(title)) ? Regex.Replace(Regex.Matches(body, "<p>(.*?)</p>", options)[0].Groups[1].Value, @"<(.|\n)+?>", @"") : title);
         }
     }
 }
