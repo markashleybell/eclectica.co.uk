@@ -117,7 +117,24 @@ namespace eclectica.co.uk.Service.Concrete
 
         public IDictionary<DateTime, int> GetPostCountsPerMonth(int year)
         {
-            return _entryRepository.GetPostCounts(year);
+            var postCounts = _entryRepository.GetPostCounts(year);
+
+            var months = new Dictionary<DateTime, int>();
+
+            // Some months might not be represented in the repository results,
+            // but we want them all present, even if there were no posts for a particular month
+            for(var i = 1; i <= 12; i++)
+            {
+                var month = postCounts.Where(m => m.Key.Month == i).FirstOrDefault();
+
+                if(month.Value != 0)
+                    months.Add(month.Key, month.Value);
+                else
+                    months.Add(new DateTime(year, i, 1), 0);
+
+            }
+
+            return months;
         }
 
         public IEnumerable<EntryModel> GetArchivedEntries(int year, int month)
