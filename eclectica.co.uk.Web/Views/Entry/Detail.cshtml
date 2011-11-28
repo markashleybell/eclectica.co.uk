@@ -23,7 +23,7 @@
 	    <div class="post" id="post@(Model.Entry.EntryID)">
 					        
 		    <div class="postcontent">
-			    @if (Model.Entry.Title != "")
+			    @if (Model.Entry.Title != null)
        {
                     <h1><a href="/@Model.Entry.Url">@Model.Entry.Title</a></h1>
        }
