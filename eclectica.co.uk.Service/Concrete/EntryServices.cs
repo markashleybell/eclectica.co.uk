@@ -17,6 +17,7 @@ using eclectica.co.uk.Service.Extensions;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.QueryParsers;
 using System.Text.RegularExpressions;
+using eclectica.co.uk.Domain.Helpers;
 
 namespace eclectica.co.uk.Service.Concrete
 {
@@ -235,34 +236,16 @@ namespace eclectica.co.uk.Service.Concrete
             {
                 indexService.IndexEntities(entries, e => {
 
-                    string body = e.Body;
-                    RegexOptions options = RegexOptions.Singleline | RegexOptions.IgnoreCase;
+                    var thumb = EntryHelpers.GetThumbnail(e.Title, e.Body, true);
 
-                    string summary = Regex.Replace(Regex.Matches(body, "<p>(.*?)</p>", options)[0].Groups[1].Value, @"<(.|\n)*?>", string.Empty, options);
+                    var options = RegexOptions.Singleline | RegexOptions.IgnoreCase;
 
-                    MatchCollection imgElements = Regex.Matches(body, "<img (?:.*?)?src=\"/content/img/lib/(.*?)/(.*?)\\.(jpg|gif)\" (?:.*?)?/>", options);
-
-                    string thumb = "";
-
-                    if (imgElements.Count > 0)
-                    {
-                        Match img = imgElements[0];
-
-                        // If it's a drop image it won't have a small image
-                        if (img.Groups[1].Value == "drop")
-                        {
-                            // Create one on the fly?
-                        }
-                        else
-                        {
-                            thumb = img.Groups[2].Value + "." + img.Groups[3].Value;
-                        }
-                    }
+                    var summary = Regex.Replace(Regex.Matches(e.Body, "<p>(.*?)</p>", options)[0].Groups[1].Value, @"<(.|\n)*?>", string.Empty, options);
 
                     var document = new Document();
                     document.Add(new Field("url", e.Url, Field.Store.YES, Field.Index.NOT_ANALYZED));
                     document.Add(new Field("published", e.Published.Ticks.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
-                    document.Add(new Field("title", e.Title, Field.Store.YES, Field.Index.ANALYZED));
+                    document.Add(new Field("title", (string.IsNullOrEmpty(e.Title) ? "" : e.Title), Field.Store.YES, Field.Index.ANALYZED));
                     document.Add(new Field("author", e.Author.Name, Field.Store.YES, Field.Index.NOT_ANALYZED));
                     document.Add(new Field("body", e.Body.StripHtml(), Field.Store.YES, Field.Index.ANALYZED));
                     document.Add(new Field("thumbnail", thumb, Field.Store.YES, Field.Index.NOT_ANALYZED));

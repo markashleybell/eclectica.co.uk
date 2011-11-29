@@ -76,6 +76,7 @@
     <Compile Include="Entities\Redirect.cs" />
     <Compile Include="Extensions\Disposable.cs" />
     <Compile Include="Extensions\Text.cs" />
+    <Compile Include="Helpers\EntryHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Tag.cs" />
   </ItemGroup>

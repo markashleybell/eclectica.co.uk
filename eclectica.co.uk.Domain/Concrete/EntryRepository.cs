@@ -14,6 +14,7 @@ using System.Text.RegularExpressions;
 using System.Collections;
 using MvcMiniProfiler.Data;
 using System.Transactions;
+using eclectica.co.uk.Domain.Helpers;
 
 namespace eclectica.co.uk.Domain.Concrete
 {
@@ -75,7 +76,7 @@ namespace eclectica.co.uk.Domain.Concrete
                     {
                         entry.Related = conn.Query<Entry>(relatedSql, new { EntryID = entry.EntryID })
                                             .Select(x => {
-                                                x.Thumbnail = GetThumbnail(x.Title, x.Body);
+                                                x.Thumbnail = EntryHelpers.GetThumbnail(x.Title, x.Body);
                                                 return x;
                                             }).ToList();
                     }
@@ -102,27 +103,6 @@ namespace eclectica.co.uk.Domain.Concrete
             return allUrls;
         }
 
-        private string GetThumbnail(string title, string body)
-        {
-            if (body == null)
-                return "";
-
-            MatchCollection matches = Regex.Matches(body, @"\/img/lib/(.*?)/(.*?)\.(jpg|gif)", RegexOptions.Singleline | RegexOptions.IgnoreCase);
-
-            string thumb = (matches.Count > 0) ? matches[0].Groups[2].Value : "";
-            bool drop = (matches.Count > 0 && matches[0].Groups[1].Value == "drop") ? true : false;
-            string ext = (matches.Count > 0) ? matches[0].Groups[3].Value : "";
-            string bg = (matches.Count > 0) ? "lib/" + ((drop) ? "drop" : "crop") + "/" + thumb + "." + ext : "";
-
-            if(bg == "" && body.Contains("<object"))
-                bg = "site/thumb-video.gif";
-
-            if(bg == "")
-                bg = "site/" + ((title == "") ? "thumb-quote" : "thumb-article") + ".gif";
-
-            return bg;
-        }
-
         public override IEnumerable<Entry> All()
         {
             var sql = "SELECT e.*, c.CommentCount, a.* " +
@@ -145,9 +125,9 @@ namespace eclectica.co.uk.Domain.Concrete
                         e.Author = a;
                         return e;
                     }, null, splitOn: "AuthorID").Select(x => {
-                                      x.Thumbnail = GetThumbnail(x.Title, x.Body);
-                                      return x;
-                                  }).ToList();
+                        x.Thumbnail = EntryHelpers.GetThumbnail(x.Title, x.Body);
+                        return x;
+                    }).ToList();
                 }
             }
 
@@ -271,7 +251,7 @@ namespace eclectica.co.uk.Domain.Concrete
                     // Get the entries for this page
                     entries = conn.Query<Entry>(sql, new { Month = month, Year = year })
                                   .Select(x => {
-                                      x.Thumbnail = GetThumbnail(x.Title, x.Body);
+                                      x.Thumbnail = EntryHelpers.GetThumbnail(x.Title, x.Body);
                                       return x;
                                   }).ToList();
                 }
@@ -396,7 +376,7 @@ namespace eclectica.co.uk.Domain.Concrete
                 {
                     entry.Related = conn.Query<Entry>(relatedSql, new { EntryID = entry.EntryID })
                                         .Select(x => {
-                                            x.Thumbnail = GetThumbnail(x.Title, x.Body);
+                                            x.Thumbnail = EntryHelpers.GetThumbnail(x.Title, x.Body);
                                             return x;
                                         }).ToList();
                 }
