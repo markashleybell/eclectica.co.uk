@@ -31,7 +31,7 @@
 	    <div class="post" id="post@(entry.EntryID)">
 					        
 		    <div class="postcontent">
-			    @if (entry.Title != null)
+			    @if(!string.IsNullOrEmpty(entry.Title))
        {
                     <h2><a href="/@entry.Url">@entry.Title</a></h2>
        }
@@ -43,7 +43,7 @@
 			    <p>By @entry.Author.Name @@ @entry.Published.ToString("HH:mm")</p>
 			    <p class="cl"><a title="Comment on this" href="/@entry.Url#comment-form">Comment on this</a> <span>(@entry.CommentCount)</span></p>
 						     
-                @if (entry.Title != "")
+                @if (!string.IsNullOrEmpty(entry.Title))
                 {   
                                  
                 <div class="sharing">
