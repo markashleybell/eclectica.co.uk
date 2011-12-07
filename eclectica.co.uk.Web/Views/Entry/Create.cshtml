@@ -21,7 +21,7 @@
     <h2>Update Entry</h2>
 
     <p>@Html.LabelFor(x => x.Entries)<br />
-    @Html.DropDownList("EntryID", Model.Entries, "Please select...") <input class="action" type="button" id="AddButton" value="Add New" /></p>
+    @Html.DropDownListFor(x => x.Entry.EntryID, Model.Entries, "Please select...") <input class="action" type="button" id="AddButton" value="Add New" /></p>
 
     @using (Html.BeginForm()) {
     
