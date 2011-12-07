@@ -66,6 +66,8 @@ namespace eclectica.co.uk.Domain.Concrete
                     }, splitOn: "AuthorID").FirstOrDefault();
                 }
 
+                entry.Thumbnail = EntryHelpers.GetThumbnail(entry.Title, entry.Body);
+
                 // If the entry exists
                 if (entry != null)
                 {

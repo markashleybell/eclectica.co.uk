@@ -10,6 +10,11 @@
 
 @section head {
 
+<!-- Facebook share meta tags -->
+<meta property="og:title" content="@((Model.Entry.Title != null && Model.Entry.Title != "") ? Model.Entry.Title : Model.Entry.Published.ToString("dddd dd MMMM yyyy hh:mm"))" />
+<meta property="og:description" content="@ViewBag.Description" />
+<meta property="og:image" content="@ConfigurationManager.AppSettings["CDN1"]/content/img/@Model.Entry.Thumbnail" />
+
 <script type="text/javascript" src="/scripts/validation.js"></script>
 <script type="text/javascript" src="/scripts/entry.js"></script>
 <script type="text/javascript" src="/scripts/thumbtips.js"></script>
