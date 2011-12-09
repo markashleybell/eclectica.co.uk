@@ -150,6 +150,8 @@ namespace eclectica.co.uk.Web.Controllers
                 Images = _entryServices.GetImages(),
                 Tags = string.Join(" ", entry.Tags.Select(x => x.TagName).ToArray()),
                 Related = string.Join("|", entry.Related.Select(x => x.EntryID).ToArray()),
+                FacebookApplicationID = _config.FacebookApplicationID,
+                FacebookPageID = _config.FacebookPageID,
                 Entries = _entryServices.All()
                                         .Select(x => new SelectListItem { 
                                             Text = x.Published.ToString("dd/MM/yyyy hh:mm") + " " + x.Title.Truncate(50), 
@@ -165,6 +167,9 @@ namespace eclectica.co.uk.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
+                model.FacebookApplicationID = _config.FacebookApplicationID;
+                model.FacebookPageID = _config.FacebookPageID;
+
                 model.Images = _entryServices.GetImages();
                 model.Entries = _entryServices.All()
                                               .Select(x => new SelectListItem {

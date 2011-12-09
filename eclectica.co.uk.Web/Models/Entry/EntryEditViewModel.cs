@@ -15,5 +15,8 @@ namespace eclectica.co.uk.Web.Models
         public string Related { get; set; }
 
         public IQueryable<SelectListItem> Entries { get; set; }
+
+        public string FacebookApplicationID { get; set; }
+        public string FacebookPageID { get; set; }
     }
 }

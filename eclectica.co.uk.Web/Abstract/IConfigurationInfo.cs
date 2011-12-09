@@ -11,5 +11,7 @@ namespace eclectica.co.uk.Web.Abstract
         string CDN2 { get; }
         string ImageLibraryFolder { get; }
         int IndexPageSize { get; }
+        string FacebookApplicationID { get; }
+        string FacebookPageID { get; }
     }
 }

@@ -69,7 +69,9 @@ namespace eclectica.co.uk.Web.Infrastructure
                         .WithConstructorArgument("cdn1", ConfigurationManager.AppSettings["CDN1"])
                         .WithConstructorArgument("cdn2", ConfigurationManager.AppSettings["CDN2"])
                         .WithConstructorArgument("imageLibraryFolder", ConfigurationManager.AppSettings["ImageLibraryFolder"])
-                        .WithConstructorArgument("indexPageSize", Convert.ToInt32(ConfigurationManager.AppSettings["IndexPageSize"]));
+                        .WithConstructorArgument("indexPageSize", Convert.ToInt32(ConfigurationManager.AppSettings["IndexPageSize"]))
+                        .WithConstructorArgument("facebookApplicationID", ConfigurationManager.AppSettings["FacebookApplicationID"])
+                        .WithConstructorArgument("facebookPageID", ConfigurationManager.AppSettings["FacebookPageID"]);
 
                 Bind<IModelCache>().To<ModelCache>().InRequestScope();
 

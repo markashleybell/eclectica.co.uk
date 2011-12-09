@@ -14,6 +14,56 @@
 <script type="text/javascript" src="/scripts/relatedsuggest.js"></script>
 <script type="text/javascript" src="/scripts/entry-admin.js"></script>
 
+<script type="text/javascript">
+
+    var appId = '@Model.FacebookApplicationID';
+    var pageId = '@Model.FacebookPageID';
+
+    var channel = '//eclectica.co.uk/channel.html';
+
+    function postLinkToPageWall(url, text) {
+
+        FB.login(function (response) {
+
+            FB.api('/' + pageId, { fields: 'access_token' }, function (apiresponse) {
+
+                FB.api('/' + pageId + '/feed', 'post', { message: text, link: url, access_token: apiresponse.access_token }, function (rs) {
+                    if (!rs || rs.error) {
+                        alert('Error occured');
+                    } else {
+                        alert('Post ID: ' + rs.id);
+                    }
+                });
+
+
+            });
+
+        }, { scope: 'manage_pages,publish_stream' });
+
+    }
+
+
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: appId, // App ID
+            channelUrl: channel, // Channel File
+            status: true, // check login status
+            cookie: true, // enable cookies to allow the server to access the session
+            oauth: true, // enable OAuth 2.0
+            xfbml: true  // parse XFBML
+        });
+    };
+
+    // Load the SDK Asynchronously
+    (function (d) {
+        var js, id = 'facebook-jssdk'; if (d.getElementById(id)) { return; }
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        d.getElementsByTagName('head')[0].appendChild(js);
+    } (document));
+
+</script>
+
 }
 
 @section content {
@@ -56,10 +106,15 @@
         <p>@Html.LabelFor(x => x.Entry.Url)<br />
         @Html.TextBoxFor(x => x.Entry.Url, new { size = 50 })</p>
         
-        <p>@Html.HiddenFor(x => x.Entry.Tweet, new { rows = 2, cols = 60 })
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://google.com" data-text="THIS IS THE TEXXXT" data-lang="en" data-size="large">Tweet</a>
-<script>    !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } } (document, "script", "twitter-wjs");</script>
-</p>
+        <p>@Html.LabelFor(x => x.Entry.Tweet)<br />
+        @Html.TextAreaFor(x => x.Entry.Tweet, new { rows = 2, cols = 60 })</p>
+
+        <p>
+        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://eclectica.co.uk/@Model.Entry.Url" data-text="XXXXXXXXXXXXXX" data-lang="en" data-size="large">Tweet</a>
+        <script>    !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } } (document, "script", "twitter-wjs");</script>
+
+        <a href="#" onclick="postLinkToPageWall('http://eclectica.co.uk/@Model.Entry.Url', $('#Entry_Tweet').val()); return false;">Post to Facebook Page</a>
+        </p>
         
     }
     
