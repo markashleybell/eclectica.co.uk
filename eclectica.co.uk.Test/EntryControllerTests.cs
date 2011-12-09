@@ -14,7 +14,7 @@ namespace eclectica.co.uk.Test
     [TestFixture]
     public class EntryControllerTests
     {
-        private ConfigurationInfo _config = new ConfigurationInfo("", "", "", 5, "", "");
+        private ConfigurationInfo _config = new ConfigurationInfo("", "", "", 5, "", "", "", "", "", "", "");
 
         [Test]
         public void Get_Entry_Details_By_Id()

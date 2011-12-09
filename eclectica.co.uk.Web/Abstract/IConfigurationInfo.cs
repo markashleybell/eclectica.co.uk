@@ -13,5 +13,10 @@ namespace eclectica.co.uk.Web.Abstract
         int IndexPageSize { get; }
         string FacebookApplicationID { get; }
         string FacebookPageID { get; }
+        string TwitterConsumerKey { get; }
+        string TwitterConsumerSecret { get; }
+        string TwitterAccessToken { get; }
+        string TwitterAccessTokenSecret { get; }
+        string TwitterAnywhereAPIKey { get; }
     }
 }

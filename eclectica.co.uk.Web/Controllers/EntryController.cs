@@ -16,6 +16,7 @@ using eclectica.co.uk.Web.Abstract;
 using mab.lib.ImageSizer;
 using Elmah.Contrib.Mvc;
 using eclectica.co.uk.Caching.Abstract;
+using LinqToTwitter;
 
 namespace eclectica.co.uk.Web.Controllers
 {
@@ -50,6 +51,31 @@ namespace eclectica.co.uk.Web.Controllers
         public ActionResult XmlSiteMap()
         {
             return View(_entryServices.GetUrlList());
+        }
+
+        public ActionResult PostToTwitter(string url, string text)
+        {
+            IOAuthCredentials credentials = new SessionStateCredentials();
+
+            credentials.ConsumerKey = _config.TwitterConsumerKey;
+            credentials.ConsumerSecret = _config.TwitterConsumerSecret;
+            credentials.AccessToken = _config.TwitterAccessTokenSecret;
+            credentials.OAuthToken = _config.TwitterAccessToken;
+
+            MvcAuthorizer auth = new MvcAuthorizer { Credentials = credentials };
+
+            TwitterContext twitter = new TwitterContext(auth);
+
+            try
+            {
+                twitter.UpdateStatus(text);
+
+                return Json(new { Success = true });
+            }
+            catch (Exception e)
+            {
+                return Json(new { Success = false, Message = e.Message });
+            }
         }
 
         [Authorize]

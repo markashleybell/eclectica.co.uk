@@ -40,6 +40,9 @@
     <Reference Include="Elmah.Contrib.Mvc">
       <HintPath>..\packages\Elmah.Contrib.Mvc.1.0\lib\net40\Elmah.Contrib.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="LinqToTwitter">
+      <HintPath>..\packages\linqtotwitter.2.0.22\lib\net40\LinqToTwitter.dll</HintPath>
+    </Reference>
     <Reference Include="mab.lib.ImageSizer, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\mab.lib.ImageSizer.1.2\lib\mab.lib.ImageSizer.dll</HintPath>
     </Reference>
@@ -180,8 +183,12 @@
     </Content>
     <None Include="httpd.ini" />
     <None Include="Scripts\searchresult.tmpl" />
-    <None Include="Settings.config" />
-    <None Include="Settings.config.example" />
+    <None Include="Settings.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Settings.config.example">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Db.config.example">
       <SubType>Designer</SubType>
     </None>

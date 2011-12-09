@@ -16,22 +16,40 @@
 
 <script type="text/javascript">
 
+    function postLinkToTwitter(url, text) {
+
+        $.post('/entry/posttotwitter', { url: url, text: text }, function (data) {
+
+            var ui = $('#social-post-status');
+
+            if(data.Success)
+                ui.html('Tweet successful');
+            else
+                ui.html('Tweet failed: ' + data.Message);
+
+        });
+
+    }
+
     var appId = '@Model.FacebookApplicationID';
     var pageId = '@Model.FacebookPageID';
 
     var channel = '//eclectica.co.uk/channel.html';
 
-    function postLinkToPageWall(url, text) {
+    function postLinkToFacebook(url, text) {
 
         FB.login(function (response) {
 
             FB.api('/' + pageId, { fields: 'access_token' }, function (apiresponse) {
 
                 FB.api('/' + pageId + '/feed', 'post', { message: text, link: url, access_token: apiresponse.access_token }, function (rs) {
+
+                    var ui = $('#social-post-status');
+
                     if (!rs || rs.error) {
-                        alert('Error occured');
+                        ui.html('Post failed' + ((rs && rs.error) ? ': ' + rs.error.message : ''));
                     } else {
-                        alert('Post ID: ' + rs.id);
+                        ui.html('Post successful');
                     }
                 });
 
@@ -107,14 +125,12 @@
         @Html.TextBoxFor(x => x.Entry.Url, new { size = 50 })</p>
         
         <p>@Html.LabelFor(x => x.Entry.Tweet)<br />
-        @Html.TextAreaFor(x => x.Entry.Tweet, new { rows = 2, cols = 60 })</p>
-
-        <p>
-        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://eclectica.co.uk/@Model.Entry.Url" data-text="XXXXXXXXXXXXXX" data-lang="en" data-size="large">Tweet</a>
-        <script>    !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } } (document, "script", "twitter-wjs");</script>
-
-        <a href="#" onclick="postLinkToPageWall('http://eclectica.co.uk/@Model.Entry.Url', $('#Entry_Tweet').val()); return false;">Post to Facebook Page</a>
+        @Html.TextAreaFor(x => x.Entry.Tweet, new { rows = 2, cols = 60 }) <br />
+        <input type="button" onclick="postLinkToTwitter('http://eclectica.co.uk/@Model.Entry.Url', $('#Entry_Tweet').val()); return false;" value="Post to Twitter" /> 
+        <input type="button" onclick="postLinkToFacebook('http://eclectica.co.uk/@Model.Entry.Url', $('#Entry_Tweet').val()); return false;" value="Post to Facebook Page" />
         </p>
+        
+        <p id="social-post-status">&nbsp;</p>
         
     }
     

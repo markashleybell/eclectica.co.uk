@@ -71,7 +71,12 @@ namespace eclectica.co.uk.Web.Infrastructure
                         .WithConstructorArgument("imageLibraryFolder", ConfigurationManager.AppSettings["ImageLibraryFolder"])
                         .WithConstructorArgument("indexPageSize", Convert.ToInt32(ConfigurationManager.AppSettings["IndexPageSize"]))
                         .WithConstructorArgument("facebookApplicationID", ConfigurationManager.AppSettings["FacebookApplicationID"])
-                        .WithConstructorArgument("facebookPageID", ConfigurationManager.AppSettings["FacebookPageID"]);
+                        .WithConstructorArgument("facebookPageID", ConfigurationManager.AppSettings["FacebookPageID"])
+                        .WithConstructorArgument("twitterConsumerKey", ConfigurationManager.AppSettings["TwitterConsumerKey"])
+                        .WithConstructorArgument("twitterConsumerSecret", ConfigurationManager.AppSettings["TwitterConsumerSecret"])
+                        .WithConstructorArgument("twitterAccessToken", ConfigurationManager.AppSettings["TwitterAccessToken"])
+                        .WithConstructorArgument("twitterAccessTokenSecret", ConfigurationManager.AppSettings["TwitterAccessTokenSecret"])
+                        .WithConstructorArgument("twitterAnywhereAPIKey", ConfigurationManager.AppSettings["TwitterAnywhereAPIKey"]);
 
                 Bind<IModelCache>().To<ModelCache>().InRequestScope();
 
