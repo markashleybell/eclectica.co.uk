@@ -53,8 +53,18 @@ namespace eclectica.co.uk.Web.Controllers
             return View(_entryServices.GetUrlList());
         }
 
+        public ActionResult PostToTwitter()
+        {
+            throw new HttpException((int)HttpStatusCode.NotFound, "Page not found");
+        }
+
+        [Authorize]
+        [HttpPost]
         public ActionResult PostToTwitter(string url, string text)
         {
+            if(string.IsNullOrEmpty(text))
+                return Json(new { Success = false, Message = "You must enter some text to tweet" });
+
             IOAuthCredentials credentials = new SessionStateCredentials();
 
             credentials.ConsumerKey = _config.TwitterConsumerKey;
@@ -376,11 +386,19 @@ namespace eclectica.co.uk.Web.Controllers
             });
         }
 
+        public ActionResult RecentTwitterStatuses()
+        {
+            throw new HttpException((int)HttpStatusCode.NotFound, "Page not found");
+        }
+
         [HttpPost]
         [OutputCache(Duration=1800)]
-        public ActionResult RecentTwitterStatuses(int count)
+        public ActionResult RecentTwitterStatuses(int? count)
         {
-            var url = "https://api.twitter.com/1/statuses/user_timeline.json?screen_name=eclecticablog&count=" + count;
+            if(!count.HasValue)
+                throw new HttpException((int)HttpStatusCode.NotFound, "Page not found");
+
+            var url = "https://api.twitter.com/1/statuses/user_timeline.json?screen_name=eclecticablog&count=" + count.Value;
 
             WebClient w = new WebClient();
             var json = w.DownloadString(url);
