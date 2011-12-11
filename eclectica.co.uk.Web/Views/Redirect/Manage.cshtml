@@ -8,7 +8,7 @@
 @section head {
 
     <script type="text/javascript">
-
+    
         $(function () {
 
             $('.delete-link').bind('click', function () {
@@ -43,7 +43,7 @@
                 <th>ID</th>
                 <th>Redirect</th>
                 <th>Clicks</th>
-                <th style="width: 90px;">Edit</th>
+                <th style="width: 100px;">Edit</th>
             </tr>
 
             @foreach (var redirect in Model.Redirects)
@@ -52,7 +52,7 @@
                     <td>@redirect.RedirectID.ToString("D5")</td>
                     <td>@redirect.RedirectUrl.Truncate(70)</td>
                     <td>@redirect.Clicks</td>
-                    <td>@Html.ActionLink("Edit", "Edit", new { id = redirect.RedirectID }, null) | @Html.ActionLink("Delete", "Delete", new { id = redirect.RedirectID }, new { @class = "delete-link" })</td>
+                    <td>@Html.ActionLink("Edit", "Edit", new { id = redirect.RedirectID }, null) | @Html.ActionLink("Delete", "Delete", new { id = redirect.RedirectID }, new { @class = "delete-link" }) | <a href="http://eclectica.co.uk/@redirect.RedirectID.ToString("D5")">Url</a></td>
                 </tr>
             
             }
