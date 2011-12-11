@@ -188,6 +188,7 @@ namespace eclectica.co.uk.Domain.Concrete
                                 "LEFT OUTER JOIN (SELECT Entry_EntryID, COUNT(*) as CommentCount " +
                                 "FROM Comments GROUP BY Entry_EntryID) AS c " +
                                 "ON e.EntryID = c.Entry_EntryID " +
+                                "WHERE e.Publish = 1 " + 
                             ") AS RowConstrainedResult " +
                             "WHERE RowNum >= @Offset AND RowNum < (@Offset + @Count) " +
                             "ORDER BY RowNum";
