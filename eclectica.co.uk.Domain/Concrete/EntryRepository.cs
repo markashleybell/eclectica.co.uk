@@ -121,8 +121,37 @@ namespace eclectica.co.uk.Domain.Concrete
             {
                 using (_profiler.Step("Get all entries"))
                 {
+                    // Get the entries for this page
+                    entries = conn.Query<Entry, Author, Entry>(sql, (e, a) => {
+                        e.Author = a;
+                        return e;
+                    }, null, splitOn: "AuthorID").Select(x => {
+                        x.Thumbnail = EntryHelpers.GetThumbnail(x.Title, x.Body);
+                        return x;
+                    }).ToList();
+                }
+            }
 
-                        // Get the entries for this page
+            return entries;
+        }
+
+        public IEnumerable<Entry> Manage(bool? latest)
+        {
+            var sql = "SELECT " + ((latest.HasValue && latest.Value == true) ? "TOP 10 " : "") + "e.*, c.CommentCount, a.* " +
+                      "FROM Entries AS e " +
+                      "LEFT OUTER JOIN Authors AS a ON a.AuthorID = e.Author_AuthorID " +
+                      "LEFT OUTER JOIN (SELECT Entry_EntryID, COUNT(*) as CommentCount " +
+                      "FROM Comments GROUP BY Entry_EntryID) AS c " +
+                      "ON e.EntryID = c.Entry_EntryID " +
+                      "ORDER BY e.Published DESC";
+
+            IEnumerable<Entry> entries;
+
+            using (var conn = base.GetOpenConnection())
+            {
+                using (_profiler.Step("Get all entries"))
+                {
+                    // Get the entries for this page
                     entries = conn.Query<Entry, Author, Entry>(sql, (e, a) => {
                         e.Author = a;
                         return e;

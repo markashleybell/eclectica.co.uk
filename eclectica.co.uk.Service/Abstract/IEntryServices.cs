@@ -16,6 +16,7 @@ namespace eclectica.co.uk.Service.Abstract
         IEnumerable<EntryModel> Page(int start, int count);
         IEnumerable<EntryModel> GetRecentEntries(int count);
         IEnumerable<EntryModel> GetArchivedEntries(int year, int month);
+        IEnumerable<EntryModel> Manage(bool? latest);
 
         IEnumerable<string> GetUrlList();
 

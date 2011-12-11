@@ -28,7 +28,7 @@
 	<div class="post">
 	    <h1>Manage Posts</h1>
 
-        <p>@Html.ActionLink("Create new Entry", "Create") &raquo;</p>
+        <p>@Html.ActionLink("Show All", "Manage", new { latest = false }) | @Html.ActionLink("Create new Entry", "Create") &raquo;</p>
 
         @if(Model.Entries.Count() > 0) 
         {

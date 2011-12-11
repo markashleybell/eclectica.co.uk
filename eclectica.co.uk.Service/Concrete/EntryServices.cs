@@ -41,6 +41,11 @@ namespace eclectica.co.uk.Service.Concrete
             return Mapper.MapList<Entry, EntryModel>(_entryRepository.All().ToList());
         }
 
+        public IEnumerable<EntryModel> Manage(bool? latest)
+        {
+            return Mapper.MapList<Entry, EntryModel>(_entryRepository.Manage(latest).ToList());
+        }
+
         public EntryModel GetEntry(int id)
         {
             var entry = _entryRepository.Get(id);

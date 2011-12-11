@@ -116,6 +116,11 @@ namespace eclectica.co.uk.Test.Data
             return _entries;
         }
 
+        public IEnumerable<Entry> Manage(bool? latest)
+        {
+            return (latest.HasValue && latest.Value == true) ? _entries.Take(10) : _entries;
+        }
+
         public Entry Get(long id)
         {
             return _entries.Where(x => x.EntryID == id).First();

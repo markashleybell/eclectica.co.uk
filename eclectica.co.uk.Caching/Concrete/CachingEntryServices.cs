@@ -36,6 +36,20 @@ namespace eclectica.co.uk.Caching.Concrete
             return models;
         }
 
+        public IEnumerable<EntryModel> Manage(bool? latest)
+        {
+            var key = "manage-entries" + ((latest.HasValue && latest.Value == true) ? "-latest" : "");
+            var models = _cache.Get<IEnumerable<EntryModel>>(key);
+
+            if (models == null)
+            {
+                models = _entryServices.Manage(latest);
+                _cache.Add(key, models, _config.CacheIntervalMedium);
+            }
+
+            return models;
+        }
+
         public EntryModel GetEntry(int id)
         {
             // Return this uncached, as it's what we use for the CMS and previewing

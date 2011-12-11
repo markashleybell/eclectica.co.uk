@@ -116,10 +116,10 @@ namespace eclectica.co.uk.Web.Controllers
         }
 
         [Authorize]
-        public ActionResult Manage(int? page)
+        public ActionResult Manage(bool? latest = true)
         {
             return View(new EntryManageViewModel {
-                Entries = _entryServices.All().ToList()
+                Entries = _entryServices.Manage(latest).ToList()
             });
         }
 
