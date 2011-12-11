@@ -62,7 +62,7 @@ namespace eclectica.co.uk.Web.Controllers
         [HttpPost]
         public ActionResult PostToTwitter(string url, string text)
         {
-            if(string.IsNullOrEmpty(text))
+            if (string.IsNullOrEmpty(url) || string.IsNullOrEmpty(text))
                 return Json(new { Success = false, Message = "You must enter some text to tweet" });
 
             IOAuthCredentials credentials = new SessionStateCredentials();
@@ -78,7 +78,7 @@ namespace eclectica.co.uk.Web.Controllers
 
             try
             {
-                twitter.UpdateStatus(text);
+                twitter.UpdateStatus(text + " " + url);
 
                 return Json(new { Success = true });
             }
