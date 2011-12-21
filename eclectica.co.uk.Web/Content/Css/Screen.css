@@ -213,4 +213,6 @@ p span#insertlinks { width: 640px; padding-left: 155px; font-family: Arial, Helv
 
 #Title { width: 330px; }
 
+.comment-entry-url { display: block; font-size: 11px; }
+
 /* End Admin Styles */

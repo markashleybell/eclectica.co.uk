@@ -41,7 +41,7 @@
             @foreach (var comment in Model.Comments)
             {
                 <tr>
-                    <td>@comment.Body.StripHtml()</td>
+                    <td><span class="comment-entry-url">On <a href="http://eclectica.co.uk/@comment.EntryUrl">@comment.EntryUrl</a>: </span>@comment.Body.StripHtml()</td>
                     <td>@Html.ActionLink("Edit", "Edit", new { id = comment.CommentID }, null) | @Html.ActionLink("Delete", "Delete", new { id = comment.CommentID }, new { @class = "delete-link" })</td>
                 </tr>
             

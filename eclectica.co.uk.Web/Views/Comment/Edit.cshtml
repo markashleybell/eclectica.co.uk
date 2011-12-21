@@ -20,6 +20,8 @@
 
     @using (Html.BeginForm()) {
     
+        <p>Comment on <a href="http://eclectica.co.uk/@Model.Comment.EntryUrl">@Model.Comment.EntryUrl</a>:</p>
+        
         <p>@Html.LabelFor(x => x.Comment.Name)<br />
         @Html.TextBoxFor(x => x.Comment.Name, new { size = 49 })
         

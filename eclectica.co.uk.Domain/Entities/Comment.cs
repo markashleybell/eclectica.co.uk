@@ -18,5 +18,6 @@ namespace eclectica.co.uk.Domain.Entities
         public bool Approved { get; set; }
 
         public int EntryID { get; set; }
+        public string EntryUrl { get; set; }
     }
 }

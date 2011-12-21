@@ -16,13 +16,17 @@ namespace eclectica.co.uk.Domain.Concrete
 
         public override IEnumerable<Comment> All()
         {
+            var sql = "SELECT c.*, e.Url AS EntryUrl FROM Comments AS c " +
+                      "INNER JOIN Entries AS e ON e.EntryID = c.Entry_EntryID " + 
+                      "ORDER BY c.CommentID DESC";
+
             IEnumerable<Comment> comments;
 
             using (var conn = base.GetOpenConnection())
             {
                 using (_profiler.Step("Get all comments"))
                 {
-                    comments = conn.Query<Comment>("SELECT c.* FROM Comments AS c ORDER BY c.CommentID DESC").ToList();
+                    comments = conn.Query<Comment>(sql);
                 }
             }
 
@@ -31,8 +35,8 @@ namespace eclectica.co.uk.Domain.Concrete
 
         public override Comment Get(long id)
         {
-            var sql = "SELECT c.* " +
-                      "FROM Comments AS c " +
+            var sql = "SELECT c.*, e.Url AS EntryUrl FROM Comments AS c " +
+                      "INNER JOIN Entries AS e ON e.EntryID = c.Entry_EntryID " +
                       "WHERE c.CommentID = @CommentID";
 
             Comment comment;

@@ -32,6 +32,8 @@ namespace eclectica.co.uk.Service.Entities
         public string Body { get; set; }
         public bool Approved { get; set; }
 
+        public string EntryUrl { get; set; }
+
         public DateTime Date { get; set; }
  
     }
