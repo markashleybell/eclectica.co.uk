@@ -18,9 +18,11 @@
         <entry>
                 <title type="text">@((entry.Title == null || entry.Title == "") ? entry.Published.ToString("dddd dd MMMM yyyy, HH:mm") : entry.Title)</title>
                 <link href="http://eclectica.co.uk/@entry.Url" rel="alternate" type="text/html" />
-                <content type="text/html">@Html.Raw(body)</content>
+                <content type="html">
+                    <![CDATA[ @Html.Raw(body) ]]>
+                </content>
                 <id>http://eclectica.co.uk/@entry.Url</id>
-                <published>@entry.Updated.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")</published>
+                <published>@entry.Published.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")</published>
                 <updated>@entry.Updated.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")</updated>
         </entry>
             
