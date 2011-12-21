@@ -166,7 +166,7 @@ namespace eclectica.co.uk.Service.Concrete
                                   Url = e.Url,
                                   Published = e.Published,
                                   Title = e.Title,
-                                  Body = (e.Title == "") ? e.Body : ""
+                                  Body = ((string.IsNullOrEmpty(e.Title)) ? e.Body : "")
                               };
 
             foreach (var e in entryModels)

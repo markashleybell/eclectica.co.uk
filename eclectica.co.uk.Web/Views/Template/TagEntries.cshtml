@@ -22,7 +22,7 @@
 
         @foreach(var e in entry.Value) {
 
-            if(e.Title == "") {
+            if(string.IsNullOrEmpty(e.Title)) {
                 
                 <li><a href="/@e.Url">@e.Published.ToString("dddd dd, HH:mm")</a>: @e.Body.StripHtml()</li>
             

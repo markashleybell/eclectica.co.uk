@@ -45,8 +45,6 @@ namespace eclectica.co.uk.Web.Controllers
                 IDictionary<string, List<EntryModel>> entryDictionary;
 
                 entryDictionary = _entryServices.GetEntriesForTag(tagName);
-                // This is approx 100x slower - why?
-                // entryDictionary = _entryServices.GetEntriesForTag(tagName);
 
                 return View("TagEntries", new TagEntriesViewModel {
                     Mobile = mobile,
