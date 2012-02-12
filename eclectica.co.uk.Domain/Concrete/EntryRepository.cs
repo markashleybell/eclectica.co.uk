@@ -66,11 +66,11 @@ namespace eclectica.co.uk.Domain.Concrete
                     }, splitOn: "AuthorID").FirstOrDefault();
                 }
 
-                entry.Thumbnail = EntryHelpers.GetThumbnail(entry.Title, entry.Body);
-
                 // If the entry exists
                 if (entry != null)
                 {
+                    entry.Thumbnail = EntryHelpers.GetThumbnail(entry.Title, entry.Body);
+
                     // Perform queries for the tags, comments and related entries
                     using (_profiler.Step("Get tags for entry")) { entry.Tags = conn.Query<Tag>(tagSql, new { EntryID = entry.EntryID }).ToList(); }
                     using (_profiler.Step("Get comments for entry")) { entry.Comments = conn.Query<Comment>(commentSql, new { EntryID = entry.EntryID }).ToList(); }
