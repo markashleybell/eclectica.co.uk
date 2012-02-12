@@ -1,6 +1,6 @@
 ﻿<rules>
   <clear/>
-  <rule name="Canonical Host Names" enabled="true" stopProcessing="true">
+  <rule name="Canonical Host Name" enabled="true" stopProcessing="true">
     <match url="(.*)"/>
     <conditions logicalGrouping="MatchAll" trackAllCaptures="false">
       <add input="{HTTP_HOST}" pattern="^eclectica\.co\.uk$" negate="true"/>
@@ -178,18 +178,18 @@
     <action type="Redirect" url="http://eclectica.co.uk/{R:1}/0{R:2}" redirectType="Permanent"/>
   </rule>
   <rule name="Kill Request For Old Post URL Scheme 1" stopProcessing="true">
-    <match url="^(\d{4})/(\d{2})/(\d{1,2})/?$"/>
-    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
-    <action type="Rewrite" url="http://eclectica.co.uk/notfound"/>
-  </rule>
-  <rule name="Kill Request For Old Post URL Scheme 2" stopProcessing="true">
     <match url="^(\d{4})/(\d{2})/(\d{1,2})/(\d{4})/?$"/>
     <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
     <action type="Rewrite" url="http://eclectica.co.uk/notfound"/>
   </rule>
-  <rule name="Kill Request For Old Post URL Scheme 3">
+  <rule name="Kill Request For Old Post URL Scheme 2" stopProcessing="true">
     <match url="^(\d{4})/(\d{2})/(\d{2})/([^?/]+)/?$"/>
     <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
-    <action type="Rewrite" url="http://eclectica.co.uk/{R:4}"/>
+    <action type="Redirect" url="http://eclectica.co.uk/{R:4}" redirectType="Permanent"/>
+  </rule>
+  <rule name="Kill Request For Old Post URL Scheme 3" stopProcessing="true">
+    <match url="^(\d{4})/(\d{2})/(\d{1,2})/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Rewrite" url="http://eclectica.co.uk/notfound"/>
   </rule>
 </rules>

@@ -185,8 +185,12 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Rewrite.config" />
-    <None Include="Rewrite.config.example" />
+    <Content Include="Rewrite.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Rewrite.config.example">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\searchresult.tmpl" />
     <None Include="Settings.config">
       <SubType>Designer</SubType>
