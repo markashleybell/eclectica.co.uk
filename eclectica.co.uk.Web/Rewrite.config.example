@@ -1,0 +1,195 @@
+﻿<rules>
+  <clear/>
+  <rule name="Canonical Host Names" enabled="true" stopProcessing="true">
+    <match url="(.*)"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false">
+      <add input="{HTTP_HOST}" pattern="^eclectica\.co\.uk$" negate="true"/>
+      <add input="{HTTP_HOST}" pattern="^m.eclectica\.co\.uk$" negate="true"/>
+    </conditions>
+    <action type="Redirect" url="http://eclectica.co.uk/{R:1}"/>
+  </rule>
+  <rule name="Remove Trailing Slash" stopProcessing="true">
+    <match url="^(.*)/$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false">
+      <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true"/>
+      <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true"/>
+    </conditions>
+    <action type="Redirect" url="http://{HTTP_HOST}/{R:1}"/>
+  </rule>
+  <rule name="Lower Case URLs" stopProcessing="true">
+    <match url="[A-Z]" ignoreCase="false"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="{ToLower:{URL}}"/>
+  </rule>
+  <rule name="Redirect Favicon Requests" enabled="true" stopProcessing="true">
+    <match url="^favicon.ico$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Rewrite" url="/content/img/site/favicon.ico"/>
+  </rule>
+  <rule name="Rewrite Search Template" enabled="true" stopProcessing="true">
+    <match url="^scripts/searchresult.tmpl$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Rewrite" url="/scripts/searchresult.tmpl"/>
+  </rule>
+  <rule name="Mobile Robots.txt" enabled="true" stopProcessing="true">
+    <match url="^robots.txt$"/>
+    <conditions logicalGrouping="MatchAny" trackAllCaptures="false">
+      <add input="{HTTP_HOST}" pattern="^m\.eclectica\.co\.uk$"/>
+    </conditions>
+    <action type="Rewrite" url="/robots-mobile.txt"/>
+  </rule>
+  <rule name="Append Mobile Flag When Under Mobile Host" enabled="true" stopProcessing="true">
+    <match url="(.*)"/>
+    <conditions logicalGrouping="MatchAny" trackAllCaptures="false">
+      <add input="{HTTP_HOST}" pattern="^m\.eclectica\.co\.uk$" />
+    </conditions>
+    <action type="Rewrite" url="{R:1}?mobile=true" appendQueryString="false" logRewrittenUrl="true"/>
+  </rule>
+  <rule name="Old Snap To Flickr 1" stopProcessing="true">
+    <match url="^snap/05-02-2011-1712/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="http://www.flickr.com/photos/markashleybell/6387795939/in/set-72157628107693771/lightbox/" redirectType="Permanent"/>
+  </rule>
+  <rule name="Old Snap To Flickr 2">
+    <match url="^snap/06-03-2011-1727/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="http://www.flickr.com/photos/markashleybell/6387795631/in/set-72157628107693771/lightbox/" redirectType="Permanent"/>
+  </rule>
+  <rule name="Old Snap To Flickr 3">
+    <match url="^snap/10-04-2010-1535/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="http://www.flickr.com/photos/markashleybell/6387795337/in/set-72157628107693771/lightbox/" redirectType="Permanent"/>
+  </rule>
+  <rule name="Old Snap To Flickr 4">
+    <match url="^snap/10-04-2010-1652/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="http://www.flickr.com/photos/markashleybell/6387795011/in/set-72157628107693771/lightbox/" redirectType="Permanent"/>
+  </rule>
+  <rule name="Old Snap To Flickr 5">
+    <match url="^snap/12-12-2010-1407/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="http://www.flickr.com/photos/markashleybell/6387794677/in/set-72157628107693771/lightbox/" redirectType="Permanent"/>
+  </rule>
+  <rule name="Old Snap To Flickr 6">
+    <match url="^snap/12-12-2010-1412/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="http://www.flickr.com/photos/markashleybell/6387794377/in/set-72157628107693771/lightbox/" redirectType="Permanent"/>
+  </rule>
+  <rule name="Old Snap To Flickr 7">
+    <match url="^snap/13-03-2011-2057/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="http://www.flickr.com/photos/markashleybell/6387794105/in/set-72157628107693771/lightbox/" redirectType="Permanent"/>
+  </rule>
+  <rule name="Old Snap To Flickr 8">
+    <match url="^snap/15-04-2010-1834/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="http://www.flickr.com/photos/markashleybell/6387793925/in/set-72157628107693771/lightbox/" redirectType="Permanent"/>
+  </rule>
+  <rule name="Old Snap To Flickr 9">
+    <match url="^snap/16-04-2010-1648/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="http://www.flickr.com/photos/markashleybell/6387793579/in/set-72157628107693771/lightbox/" redirectType="Permanent"/>
+  </rule>
+  <rule name="Old Snap To Flickr 10">
+    <match url="^snap/16-04-2010-1656/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="http://www.flickr.com/photos/markashleybell/6387793275/in/set-72157628107693771/lightbox/" redirectType="Permanent"/>
+  </rule>
+  <rule name="Old Snap To Flickr 11">
+    <match url="^snap/19-02-2011-1534/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="http://www.flickr.com/photos/markashleybell/6387792971/in/set-72157628107693771/lightbox/" redirectType="Permanent"/>
+  </rule>
+  <rule name="Old Snap To Flickr 12">
+    <match url="^snap/19-06-2010-1807/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="http://www.flickr.com/photos/markashleybell/6387792541/in/set-72157628107693771/lightbox/" redirectType="Permanent"/>
+  </rule>
+  <rule name="Old Snap To Flickr 13">
+    <match url="^snap/2010-04-18-1919/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="http://www.flickr.com/photos/markashleybell/6387792303/in/set-72157628107693771/lightbox/" redirectType="Permanent"/>
+  </rule>
+  <rule name="Old Snap To Flickr 14">
+    <match url="^snap/2011-04-22-1224/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="http://www.flickr.com/photos/markashleybell/6387791917/in/set-72157628107693771/lightbox/" redirectType="Permanent"/>
+  </rule>
+  <rule name="Old Snap To Flickr 15">
+    <match url="^snap/2011-05-26-2037/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="http://www.flickr.com/photos/markashleybell/6387791599/in/set-72157628107693771/lightbox/" redirectType="Permanent"/>
+  </rule>
+  <rule name="Old Snap To Flickr 16">
+    <match url="^snap/2011-05-26-2053/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="http://www.flickr.com/photos/markashleybell/6387790983/in/set-72157628107693771/lightbox/" redirectType="Permanent"/>
+  </rule>
+  <rule name="Old Snap To Flickr17">
+    <match url="^snap/2011-08-21-1435/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="http://www.flickr.com/photos/markashleybell/6387790679/in/set-72157628107693771/lightbox/" redirectType="Permanent"/>
+  </rule>
+  <rule name="Old Snap To Flickr 18">
+    <match url="^snap/2011-08-21-1436/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="http://www.flickr.com/photos/markashleybell/6387790317/in/set-72157628107693771/lightbox/" redirectType="Permanent"/>
+  </rule>
+  <rule name="Old Snap To Flickr 19">
+    <match url="^snap/2011-08-21-1500/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="http://www.flickr.com/photos/markashleybell/6387789971/in/set-72157628107693771/lightbox/" redirectType="Permanent"/>
+  </rule>
+  <rule name="Old Snap To Flickr">
+    <match url="^snap/21-06-2010-1313/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="http://www.flickr.com/photos/markashleybell/6387789663/in/set-72157628107693771/lightbox/" redirectType="Permanent"/>
+  </rule>
+  <rule name="Old Snap To Flickr 20">
+    <match url="^snap/27-03-2010-1707/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="http://www.flickr.com/photos/markashleybell/6387789465/in/set-72157628107693771/lightbox/" redirectType="Permanent"/>
+  </rule>
+  <rule name="Old Snap To Flickr 21">
+    <match url="^snap/29-01-2011-1225/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="http://www.flickr.com/photos/markashleybell/6387789133/in/set-72157628107693771/lightbox/" redirectType="Permanent"/>
+  </rule>
+  <rule name="Old Snap To Flickr 22">
+    <match url="^snap/30-08-2010-1925/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="http://www.flickr.com/photos/markashleybell/6387788991/in/set-72157628107693771/lightbox/" redirectType="Permanent"/>
+  </rule>
+  <rule name="Redirect Old RSS URL" stopProcessing="true">
+    <match url="$rss/main/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="http://eclectica.co.uk/feed/main" redirectType="Permanent"/>
+  </rule>
+  <rule name="Feedburner Redirect If Request Not From Feedburner Bot" enabled="true">
+    <match url="^feed/main$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false">
+      <add input="{HTTP_USER_AGENT}" pattern="(?!feedburner).*" ignoreCase="false"/>
+    </conditions>
+    <action type="Redirect" url="http://feeds.feedburner.com/eclecticablog" redirectType="Permanent"/>
+  </rule>
+  <rule name="Redirect Old Single-Digit Archive Url" enabled="true" stopProcessing="true">
+    <match url="^(\d{4})/(\d{1})/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Redirect" url="http://eclectica.co.uk/{R:1}/0{R:2}" redirectType="Permanent"/>
+  </rule>
+  <rule name="Kill Request For Old Post URL Scheme 1" stopProcessing="true">
+    <match url="^(\d{4})/(\d{2})/(\d{1,2})/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Rewrite" url="http://eclectica.co.uk/notfound"/>
+  </rule>
+  <rule name="Kill Request For Old Post URL Scheme 2" stopProcessing="true">
+    <match url="^(\d{4})/(\d{2})/(\d{1,2})/(\d{4})/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Rewrite" url="http://eclectica.co.uk/notfound"/>
+  </rule>
+  <rule name="Kill Request For Old Post URL Scheme 3">
+    <match url="^(\d{4})/(\d{2})/(\d{2})/([^?/]+)/?$"/>
+    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
+    <action type="Rewrite" url="http://eclectica.co.uk/{R:4}"/>
+  </rule>
+</rules>

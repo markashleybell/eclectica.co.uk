@@ -8,6 +8,7 @@ using eclectica.co.uk.Web.Infrastructure;
 using MvcMiniProfiler;
 using MvcMiniProfiler.MVCHelpers;
 using eclectica.co.uk.Web.Controllers;
+using LowercaseRoutesMVC;
 
 namespace eclectica.co.uk.Web
 {
@@ -26,105 +27,105 @@ namespace eclectica.co.uk.Web
             routes.IgnoreRoute("elmah.axd");
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
+            routes.MapRouteLowercase(
                 "Home Page", // Route name
                 "", // URL with parameters
                 new { controller = "Entry", action = "Index" } // Parameter defaults
             );
 
-            routes.MapRoute(
+            routes.MapRouteLowercase(
                 "Main RSS Feed", // Route name
                 "feed/main", // URL with parameters
                 new { controller = "Entry", action = "Index", view = "RssFull" } // Parameter defaults
             );
 
-            routes.MapRoute(
+            routes.MapRouteLowercase(
                 "Headlines RSS Feed", // Route name
                 "feed/summary", // URL with parameters
                 new { controller = "Entry", action = "Index", view = "RssHeadlines" } // Parameter defaults
             );
 
-            routes.MapRoute(
+            routes.MapRouteLowercase(
                 "Facebook RSS Feed", // Route name
                 "feed/facebook", // URL with parameters
                 new { controller = "Entry", action = "Index", view = "RssFacebook" } // Parameter defaults
             );
 
-            routes.MapRoute(
+            routes.MapRouteLowercase(
                 "About Page", // Route name
                 "about", // URL with parameters
                 new { controller = "Template", action = "About" } // Parameter defaults
             );
 
-            routes.MapRoute(
+            routes.MapRouteLowercase(
                 "404 Page", // Route name
                 "notfound", // URL with parameters
                 new { controller = "Error", action = "NotFound" } // Parameter defaults
             );
 
-            routes.MapRoute(
+            routes.MapRouteLowercase(
                 "Xml SiteMap", // Route name
                 "sitemap", // URL with parameters
                 new { controller = "Entry", action = "XmlSiteMap" } // Parameter defaults
             );
 
-            routes.MapRoute(
+            routes.MapRouteLowercase(
                 "Links Page", // Route name
                 "links", // URL with parameters
                 new { controller = "Template", action = "Links" } // Parameter defaults
             );
 
-            routes.MapRoute(
+            routes.MapRouteLowercase(
                 "Random Entry", // Route name
                 "random", // URL with parameters
                 new { controller = "Entry", action = "Random" } // Parameter defaults
             );
 
-            routes.MapRoute(
+            routes.MapRouteLowercase(
                 "Search Results", // Route name
                 "search", // URL with parameters
                 new { controller = "Entry", action = "Search" } // Parameter defaults
             );
 
-            routes.MapRoute(
+            routes.MapRouteLowercase(
                 "Tags", // Route name
                 "tags/{tagName}", // URL with parameters
                 new { controller = "Template", action = "Tags", tagName = UrlParameter.Optional } // Parameter defaults
             );
 
-            routes.MapRoute(
+            routes.MapRouteLowercase(
                 "Archives", // Route name
                 "{year}/{month}", // URL with parameters
                 new { controller = "Entry", action = "Archive", year = 1970, month = 1 }, // Parameter defaults
                 new { year = @"\d{4}", month = @"\d{2}" }
             );
 
-            routes.MapRoute(
+            routes.MapRouteLowercase(
                 "Home Page Paging", // Route name
                 "p/{page}", // URL with parameters
                 new { controller = "Entry", action = "Index", page = UrlParameter.Optional } // Parameter defaults
             );
 
-            routes.MapRoute(
+            routes.MapRouteLowercase(
                 "Authentication", // Route name
                 "auth/{action}", // URL with parameters
                 new { controller = "Auth", action = "Logon" } // Parameter defaults
             );
 
-            routes.MapRoute(
+            routes.MapRouteLowercase(
                 "Short Link", // Route name
                 "{id}", // URL with parameters
                 new { controller = "Redirect", action = "RedirectToUrl", id = "0" },
                 new { id = @"\d{5}" } 
             );
 
-            routes.MapRoute(
+            routes.MapRouteLowercase(
                 "Entry", // Route name
                 "{url}", // URL with parameters
                 new { controller = "Entry", action = "Detail", url = UrlParameter.Optional } // Parameter defaults
             );
 
-            routes.MapRoute(
+            routes.MapRouteLowercase(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
                 new { controller = "Entry", action = "Index", id = UrlParameter.Optional } // Parameter defaults

@@ -53,6 +53,7 @@ stylecop.*
 Auth.config
 Db.config
 Settings.config
+Rewrite.config
 Auth.config.live
 Db.config.live
 Settings.config.live

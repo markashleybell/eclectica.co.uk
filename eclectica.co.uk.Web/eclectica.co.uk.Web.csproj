@@ -43,6 +43,9 @@
     <Reference Include="LinqToTwitter">
       <HintPath>..\packages\linqtotwitter.2.0.22\lib\net40\LinqToTwitter.dll</HintPath>
     </Reference>
+    <Reference Include="LowercaseRoutesMVC">
+      <HintPath>..\packages\LowercaseRoutesMVC.1.0.3\lib\LowercaseRoutesMVC.dll</HintPath>
+    </Reference>
     <Reference Include="mab.lib.ImageSizer, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\mab.lib.ImageSizer.1.2\lib\mab.lib.ImageSizer.dll</HintPath>
     </Reference>
@@ -136,6 +139,7 @@
     <Content Include="Content\Css\Screen.css" />
     <Content Include="cookie.html" />
     <Content Include="Global.asax" />
+    <Content Include="robots-mobile.txt" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\comment-admin.js" />
     <Content Include="Scripts\mobile-load.js" />
@@ -181,7 +185,8 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="httpd.ini" />
+    <Content Include="Rewrite.config" />
+    <None Include="Rewrite.config.example" />
     <None Include="Scripts\searchresult.tmpl" />
     <None Include="Settings.config">
       <SubType>Designer</SubType>
