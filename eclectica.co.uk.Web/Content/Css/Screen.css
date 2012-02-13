@@ -144,10 +144,12 @@ h2.archiveyear { width: 74px; height: 60px; margin: 2px 20px 0 0; float: left; l
 
 #relatedposts { background: url(http://s2.eclectica.co.uk/content/img/site/item_border.gif) 0 0 repeat-x; margin-top: 10px; }
 
-#monththumbnails { padding-top: 20px; }
+#monththumbnails{ padding-top: 20px; }
 #relatedposts div, #monththumbnails div { width: 74px; height: 74px; float: left; background-color: #e0e0e0; margin: 0 20px 20px 0; }
 #relatedposts div { margin: 20px 20px 0 0;  }
 #monththumbnails div.r { margin: 0 0 20px 0; }
+#monththumbnails div.month-header { background-color: #000; color: #fff; font-weight: bold;  }
+#monththumbnails div.month-header span { display: block; padding: 8px 10px; }
 #relatedposts div.r { margin: 20px 0 0 0; }
 #relatedposts div#relatedinfo { font-size: 14px; width: 168px; background: none; border: none; margin-right: 0; }
 #relatedposts div.clr { margin: 0; border: none; width: auto; height: 1px; float: none; clear: both; background: none; }

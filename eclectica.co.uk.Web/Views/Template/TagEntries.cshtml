@@ -15,29 +15,51 @@
 
     <h1 class="postdate">Articles filed under @Model.TagName</h1>
 
+    
+
     <div class="post">
 
-    @foreach (var entry in Model.EntryDictionary)
-    {    
-        <h2>@entry.Key</h2>
+    
         
-        if(!Model.Mobile) {
+        
+        @if(!Model.Mobile) {
+            
+            <p>Roll over an image below to see a brief description.</p>
+            
+            var count = 0;
             
         <div id="monththumbnails">
             
-            @{ var count = 0; }
+            
 
-            @foreach (var e in entry.Value)
+            @foreach (var entry in Model.EntryDictionary)
             {
-                count++;
+
+
+                foreach (var e in entry.Value)
+                {
+
+
+                    count++;
+                
+                
                 
                 <div@Html.Raw(((count % 7) == 0) ? " class=\"r\"" : "") style="background-image: url(@ConfigurationManager.AppSettings["CDN1"]/content/img/@e.Thumbnail);"><a href="/@e.Url">@EntryHelpers.GetCaption(e.Title, e.Body)</a></div>
+                
+
+                }
+
             }
             
         </div>
         <div class="clr">&nbsp;</div>
         
-            } else {
+        }
+        else
+        {
+            foreach (var entry in Model.EntryDictionary)
+            { 
+            <h2>@entry.Key</h2>
         <ul>
 
         @foreach (var e in entry.Value)
@@ -58,9 +80,10 @@
         }
 
         </ul>
-        }
-    }
+            }
+            }
+   
 
     </div>
 
-}
+        }
