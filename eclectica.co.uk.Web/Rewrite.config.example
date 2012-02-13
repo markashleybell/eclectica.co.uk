@@ -26,11 +26,6 @@
     <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
     <action type="Rewrite" url="/content/img/site/favicon.ico"/>
   </rule>
-  <rule name="Rewrite Search Template" enabled="true" stopProcessing="true">
-    <match url="^scripts/searchresult.tmpl$"/>
-    <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
-    <action type="Rewrite" url="/scripts/searchresult.tmpl"/>
-  </rule>
   <rule name="Mobile Robots.txt" enabled="true" stopProcessing="true">
     <match url="^robots.txt$"/>
     <conditions logicalGrouping="MatchAny" trackAllCaptures="false">
@@ -161,7 +156,7 @@
     <action type="Redirect" url="http://www.flickr.com/photos/markashleybell/6387788991/in/set-72157628107693771/lightbox/" redirectType="Permanent"/>
   </rule>
   <rule name="Redirect Old RSS URL" stopProcessing="true">
-    <match url="$rss/main/?$"/>
+    <match url="^rss/main/?$"/>
     <conditions logicalGrouping="MatchAll" trackAllCaptures="false"/>
     <action type="Redirect" url="http://eclectica.co.uk/feed/main" redirectType="Permanent"/>
   </rule>
