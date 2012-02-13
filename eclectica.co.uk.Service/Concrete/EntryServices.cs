@@ -159,15 +159,9 @@ namespace eclectica.co.uk.Service.Concrete
         {
             var entryDictionary = new Dictionary<string, List<EntryModel>>();
 
-            var entryModels = from e in _entryRepository.GetByTag(tag)
-                              orderby e.Published descending
-                              select new EntryModel
-                              {
-                                  Url = e.Url,
-                                  Published = e.Published,
-                                  Title = e.Title,
-                                  Body = ((string.IsNullOrEmpty(e.Title)) ? e.Body : "")
-                              };
+            var entries = _entryRepository.GetByTag(tag).OrderByDescending(x => x.Published);
+
+            var entryModels = Mapper.MapList<Entry, EntryModel>(entries.ToList());
 
             foreach (var e in entryModels)
             {

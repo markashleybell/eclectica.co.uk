@@ -332,7 +332,11 @@ namespace eclectica.co.uk.Domain.Concrete
                 using (_profiler.Step("Get entries for tag '" + tag + "'"))
                 {
                     // Get the entries for this tag
-                    entries = conn.Query<Entry>(sql, new { Tag = tag });
+                    entries = conn.Query<Entry>(sql, new { Tag = tag })
+                                  .Select(x => {
+                                      x.Thumbnail = EntryHelpers.GetThumbnail(x.Title, x.Body);
+                                      return x;
+                                  }).ToList();
                 }
             }
 

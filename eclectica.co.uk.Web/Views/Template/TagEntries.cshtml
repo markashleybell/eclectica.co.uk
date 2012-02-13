@@ -6,6 +6,9 @@
 }
 
 @section head {
+
+    <script type="text/javascript" src="/scripts/thumbtips.js"></script>
+    
 }
 
 @section content {
@@ -18,15 +21,36 @@
     {    
         <h2>@entry.Key</h2>
         
+        if(!Model.Mobile) {
+            
+        <div id="monththumbnails">
+            
+            @{ var count = 0; }
+
+            @foreach (var e in entry.Value)
+            {
+                count++;
+                
+                <div@Html.Raw(((count % 7) == 0) ? " class=\"r\"" : "") style="background-image: url(@ConfigurationManager.AppSettings["CDN1"]/content/img/@e.Thumbnail);"><a href="/@e.Url">@EntryHelpers.GetCaption(e.Title, e.Body)</a></div>
+            }
+            
+        </div>
+        <div class="clr">&nbsp;</div>
+        
+            } else {
         <ul>
 
-        @foreach(var e in entry.Value) {
+        @foreach (var e in entry.Value)
+        {
 
-            if(string.IsNullOrEmpty(e.Title)) {
+            if (string.IsNullOrEmpty(e.Title))
+            {
                 
                 <li><a href="/@e.Url">@e.Published.ToString("dddd dd, HH:mm")</a>: @e.Body.StripHtml()</li>
             
-            } else {
+            }
+            else
+            {
                 
                 <li>@e.Published.ToString("dddd dd, HH:mm"): <a href="/@e.Url"><b>@e.Title</b></a></li>
             
@@ -34,6 +58,7 @@
         }
 
         </ul>
+        }
     }
 
     </div>

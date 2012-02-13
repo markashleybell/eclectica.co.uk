@@ -14,47 +14,75 @@
 @section content {
 
     <h1 class="postdate">Archived Items</h1>
+
     <div class="post">
 
-    <h2 class="archiveyear">@Model.Date.Year</h2>
+        <h2 class="archiveyear">@Model.Date.Year</h2>
 
-    <div id="monthpicker">
+        <div id="monthpicker">
                                         
-    @for(var i = 1; i <= 12; i++)
-    {
-        var month = Model.Months.Where(m => m.Key.Month == i).FirstOrDefault();
+        @for(var i = 1; i <= 12; i++)
+        {
+            var month = Model.Months.Where(m => m.Key.Month == i).FirstOrDefault();
         
-        if(month.Value > 0)
-        {
-            <div@Html.Raw(((i % 6) == 0) ? " class=\"r\"" : "")@Html.Raw((month.Key.Month == Model.Date.Month) ? " id=\"currentmonth\"" : "")><a href="/@month.Key.Year/@((i < 10) ? "0" + i : i.ToString())">@month.Key.ToString("MMM")</a></div>
+            if(month.Value > 0)
+            {
+                <div@Html.Raw(((i % 6) == 0) ? " class=\"r\"" : "")@Html.Raw((month.Key.Month == Model.Date.Month) ? " id=\"currentmonth\"" : "")><a href="/@month.Key.Year/@((i < 10) ? "0" + i : i.ToString())">@month.Key.ToString("MMM")</a></div>
+            }
+            else
+            {
+                <div@Html.Raw(((i % 6) == 0) ? " class=\"r\"" : "")@Html.Raw((month.Key.Month == Model.Date.Month) ? " id=\"currentmonth\"" : "")><span>@month.Key.ToString("MMM")</span></div>                                       
+            }
         }
-        else
+                                 
+        </div>
+
+        <div class="clr">&nbsp;</div>
+
+    @if(!Model.Mobile)
+    {
+
+        if (Model.Entries.Count > 0)
         {
-            <div@Html.Raw(((i % 6) == 0) ? " class=\"r\"" : "")@Html.Raw((month.Key.Month == Model.Date.Month) ? " id=\"currentmonth\"" : "")><span>@month.Key.ToString("MMM")</span></div>                                       
+            
+		    <div id="monththumbnails">
+            
+                @{ var count = 0; }
+
+                @foreach (var entry in Model.Entries)
+                {
+                    count++;
+                
+                    <div@Html.Raw(((count % 7) == 0) ? " class=\"r\"" : "") style="background-image: url(@ConfigurationManager.AppSettings["CDN1"]/content/img/@entry.Thumbnail);"><a href="/@entry.Url">@EntryHelpers.GetCaption(entry.Title, entry.Body)</a></div>
+                }
+            
+            </div>
+            <div class="clr">&nbsp;</div>
         }
     }
+    else
+    {
+    
+        <ul>
 
-                                        
-                                        
-    </div>
-
-    <div class="clr">&nbsp;</div>
-
-    @if(Model.Entries.Count > 0) {
-            
-		<div id="monththumbnails">
-            
-            @{ var count = 0; }
-
-            @foreach (var entry in Model.Entries)
+            @foreach (var e in Model.Entries)
             {
-                count++;
+
+                if (string.IsNullOrEmpty(e.Title))
+                {
                 
-                <div@Html.Raw(((count % 7) == 0) ? " class=\"r\"" : "") style="background-image: url(@ConfigurationManager.AppSettings["CDN1"]/content/img/@entry.Thumbnail);"><a href="/@entry.Url">@EntryHelpers.GetCaption(entry.Title, entry.Body)</a></div>
-            }
+                    <li><a href="/@e.Url">@e.Published.ToString("dddd dd, HH:mm")</a>: @e.Body.StripHtml()</li>
             
-        </div>
-        <div class="clr">&nbsp;</div>
+                }
+                else
+                {
+                
+                    <li>@e.Published.ToString("dddd dd, HH:mm"): <a href="/@e.Url"><b>@e.Title</b></a></li>
+            
+                }
+            }
+
+        </ul>
     }
 
     </div>
