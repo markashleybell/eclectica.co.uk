@@ -116,7 +116,7 @@ namespace eclectica.co.uk.Web.Controllers
             var redirect = _redirectServices.GetRedirect(Int32.Parse(id));
             
             if(redirect == null)
-                throw new HttpException((int)HttpStatusCode.NotFound, "Page not found");
+                throw new HttpException((int)HttpStatusCode.NotFound, _config.Error404Message);
 
             redirect.Clicks++;
 

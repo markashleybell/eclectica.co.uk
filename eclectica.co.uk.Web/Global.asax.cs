@@ -9,6 +9,7 @@ using MvcMiniProfiler;
 using MvcMiniProfiler.MVCHelpers;
 using eclectica.co.uk.Web.Controllers;
 using LowercaseRoutesMVC;
+using System.Configuration;
 
 namespace eclectica.co.uk.Web
 {
@@ -177,11 +178,14 @@ namespace eclectica.co.uk.Web
         private void ShowCustomErrorPage(Exception exception)
         {
             HttpException httpException = exception as HttpException;
+
+            // Access config property directly to avoid Ninject dependency
             if (httpException == null)
-                httpException = new HttpException(500, "Internal Server Error", exception);
+                httpException = new HttpException(500, ConfigurationManager.AppSettings["Error500Text"], exception);
 
             Response.Clear();
             Response.TrySkipIisCustomErrors = true;
+
             RouteData routeData = new RouteData();
             routeData.Values.Add("controller", "Error");
             routeData.Values.Add("fromAppErrorEvent", true);

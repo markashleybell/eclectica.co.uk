@@ -55,7 +55,7 @@ namespace eclectica.co.uk.Web.Controllers
 
         public ActionResult PostToTwitter()
         {
-            throw new HttpException((int)HttpStatusCode.NotFound, "Page not found");
+            throw new HttpException((int)HttpStatusCode.NotFound, _config.Error404Message);
         }
 
         [Authorize]
@@ -227,7 +227,7 @@ namespace eclectica.co.uk.Web.Controllers
             var entry = _entryServices.GetEntry(id);
 
             if (entry == null)
-                throw new HttpException((int)HttpStatusCode.NotFound, "Page not found");
+                throw new HttpException((int)HttpStatusCode.NotFound, _config.Error404Message);
 
             return View("Detail", new EntryViewModel {
                 Mobile = mobile,
@@ -243,7 +243,7 @@ namespace eclectica.co.uk.Web.Controllers
             var entry = _entryServices.GetEntryByUrl(url);
 
             if (entry == null)
-                throw new HttpException((int)HttpStatusCode.NotFound, "Page not found");
+                throw new HttpException((int)HttpStatusCode.NotFound, _config.Error404Message);
 
             return View(new EntryViewModel { 
                 Mobile = mobile,
@@ -388,7 +388,7 @@ namespace eclectica.co.uk.Web.Controllers
 
         public ActionResult RecentTwitterStatuses()
         {
-            throw new HttpException((int)HttpStatusCode.NotFound, "Page not found");
+            throw new HttpException((int)HttpStatusCode.NotFound, _config.Error404Message);
         }
 
         [HttpPost]
@@ -396,7 +396,7 @@ namespace eclectica.co.uk.Web.Controllers
         public ActionResult RecentTwitterStatuses(int? count)
         {
             if(!count.HasValue)
-                throw new HttpException((int)HttpStatusCode.NotFound, "Page not found");
+                throw new HttpException((int)HttpStatusCode.NotFound, _config.Error404Message);
 
             var url = "https://api.twitter.com/1/statuses/user_timeline.json?screen_name=eclecticablog&count=" + count.Value;
 

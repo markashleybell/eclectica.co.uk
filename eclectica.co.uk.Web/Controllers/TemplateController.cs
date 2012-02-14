@@ -46,6 +46,9 @@ namespace eclectica.co.uk.Web.Controllers
 
                 entryDictionary = _entryServices.GetEntriesForTag(tagName);
 
+                if (entryDictionary.Count == 0)
+                    throw new HttpException((int)HttpStatusCode.NotFound, _config.Error404Message);
+
                 return View("TagEntries", new TagEntriesViewModel {
                     Mobile = mobile,
                     TagName = tagName.Capitalise(),
@@ -55,7 +58,6 @@ namespace eclectica.co.uk.Web.Controllers
             }
             else // Show weighted tag cloud
             {
-
                 Dictionary<string, List<TagModel>> tagDictionary;
 
                 tagDictionary = _tagServices.GetSortedTags();

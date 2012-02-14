@@ -8,29 +8,22 @@ namespace eclectica.co.uk.Web.Concrete
 {
     public class ConfigurationInfo : IConfigurationInfo
     {
-        private string _cdn1;
-        private string _cdn2;
-        private string _imageLibraryFolder;
-        private int _indexPageSize;
-        private string _facebookApplicationID;
-        private string _facebookPageID;
-        private string _twitterConsumerKey;
-        private string _twitterConsumerSecret;
-        private string _twitterAccessToken;
-        private string _twitterAccessTokenSecret;
-        private string _twitterAnywhereAPIKey;
+        public string CDN1 { get; private set; }
+        public string CDN2 { get; private set; }
+        public string ImageLibraryFolder { get; private set; }
+        public int IndexPageSize { get; private set; }
+        public string FacebookApplicationID { get; private set; }
+        public string FacebookPageID { get; private set; }
+        public string TwitterConsumerKey { get; private set; }
+        public string TwitterConsumerSecret { get; private set; }
+        public string TwitterAccessToken { get; private set; }
+        public string TwitterAccessTokenSecret { get; private set; }
+        public string TwitterAnywhereAPIKey { get; private set; }
 
-        public string CDN1 { get { return _cdn1; } }
-        public string CDN2 { get { return _cdn2; } }
-        public string ImageLibraryFolder { get { return _imageLibraryFolder; } }
-        public int IndexPageSize { get { return _indexPageSize; } }
-        public string FacebookApplicationID { get { return _facebookApplicationID; } }
-        public string FacebookPageID { get { return _facebookPageID; } }
-        public string TwitterConsumerKey { get { return _twitterConsumerKey; } }
-        public string TwitterConsumerSecret { get { return _twitterConsumerSecret; } }
-        public string TwitterAccessToken { get { return _twitterAccessToken; } }
-        public string TwitterAccessTokenSecret { get { return _twitterAccessTokenSecret; } }
-        public string TwitterAnywhereAPIKey { get { return _twitterAnywhereAPIKey; } }
+        // HttpException message strings
+        public string Error403Message { get; private set; }
+        public string Error404Message { get; private set; }
+        public string Error500Message { get; private set; }
 
         public ConfigurationInfo(string cdn1, 
                                  string cdn2, 
@@ -42,19 +35,25 @@ namespace eclectica.co.uk.Web.Concrete
                                  string twitterConsumerSecret,
                                  string twitterAccessToken,
                                  string twitterAccessTokenSecret,
-                                 string twitterAnywhereAPIKey)
+                                 string twitterAnywhereAPIKey,
+                                 string error403Message,
+                                 string error404Message,
+                                 string error500Message)
         {
-            _cdn1 = cdn1;
-            _cdn2 = cdn2;
-            _imageLibraryFolder = imageLibraryFolder;
-            _indexPageSize = indexPageSize;
-            _facebookApplicationID = facebookApplicationID;
-            _facebookPageID = facebookPageID;
-            _twitterConsumerKey = twitterConsumerKey;
-            _twitterConsumerSecret = twitterConsumerSecret;
-            _twitterAccessToken = twitterAccessToken;
-            _twitterAccessTokenSecret = twitterAccessTokenSecret;
-            _twitterAnywhereAPIKey = twitterAnywhereAPIKey;
+            CDN1 = cdn1;
+            CDN2 = cdn2;
+            ImageLibraryFolder = imageLibraryFolder;
+            IndexPageSize = indexPageSize;
+            FacebookApplicationID = facebookApplicationID;
+            FacebookPageID = facebookPageID;
+            TwitterConsumerKey = twitterConsumerKey;
+            TwitterConsumerSecret = twitterConsumerSecret;
+            TwitterAccessToken = twitterAccessToken;
+            TwitterAccessTokenSecret = twitterAccessTokenSecret;
+            TwitterAnywhereAPIKey = twitterAnywhereAPIKey;
+            Error403Message = error403Message;
+            Error404Message = error404Message;
+            Error500Message = error500Message;
         }
     }
 }

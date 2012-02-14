@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using eclectica.co.uk.Service.Abstract;
 using eclectica.co.uk.Web.Abstract;
 using System.Net;
+using System.Configuration;
 
 namespace eclectica.co.uk.Web.Controllers
 {
@@ -34,12 +35,15 @@ namespace eclectica.co.uk.Web.Controllers
         // This action allows us to test custom error handling and logging
         public ActionResult ErrorTest(int code)
         {
+            // Access config properties directly here, to avoid error controller depending on Ninject DI
             switch (code)
             {
+                case 403:
+                    throw new HttpException((int)HttpStatusCode.Forbidden, ConfigurationManager.AppSettings["Error403Message"]);
                 case 404:
-                    throw new HttpException((int)HttpStatusCode.NotFound, "Page not found");
+                    throw new HttpException((int)HttpStatusCode.NotFound, ConfigurationManager.AppSettings["Error404Message"]);
                 case 500:
-                    throw new HttpException((int)HttpStatusCode.InternalServerError, "Internal server error");
+                    throw new HttpException((int)HttpStatusCode.InternalServerError, ConfigurationManager.AppSettings["Error500Message"]);
             }
 
             return Content("");

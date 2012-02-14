@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper">
+      <HintPath>..\packages\Dapper.1.8\lib\net40\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="MvcMiniProfiler">
       <HintPath>..\packages\MiniProfiler.1.9\lib\net40\MvcMiniProfiler.dll</HintPath>
     </Reference>
@@ -66,7 +69,6 @@
     <Compile Include="Concrete\LinkRepository.cs" />
     <Compile Include="Concrete\AuthorRepository.cs" />
     <Compile Include="Concrete\EntryRepository.cs" />
-    <Compile Include="Dapper\SqlMapper.cs" />
     <Compile Include="Entities\Author.cs" />
     <Compile Include="Entities\Comment.cs" />
     <Compile Include="Entities\DbServerType.cs" />

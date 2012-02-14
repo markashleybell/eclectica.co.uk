@@ -76,7 +76,10 @@ namespace eclectica.co.uk.Web.Infrastructure
                         .WithConstructorArgument("twitterConsumerSecret", ConfigurationManager.AppSettings["TwitterConsumerSecret"])
                         .WithConstructorArgument("twitterAccessToken", ConfigurationManager.AppSettings["TwitterAccessToken"])
                         .WithConstructorArgument("twitterAccessTokenSecret", ConfigurationManager.AppSettings["TwitterAccessTokenSecret"])
-                        .WithConstructorArgument("twitterAnywhereAPIKey", ConfigurationManager.AppSettings["TwitterAnywhereAPIKey"]);
+                        .WithConstructorArgument("twitterAnywhereAPIKey", ConfigurationManager.AppSettings["TwitterAnywhereAPIKey"])
+                        .WithConstructorArgument("error403Message", ConfigurationManager.AppSettings["Error403Message"])
+                        .WithConstructorArgument("error404Message", ConfigurationManager.AppSettings["Error404Message"])
+                        .WithConstructorArgument("error500Message", ConfigurationManager.AppSettings["Error500Message"]);
 
                 Bind<IModelCache>().To<ModelCache>().InRequestScope();
 
