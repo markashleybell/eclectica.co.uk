@@ -181,7 +181,7 @@ namespace eclectica.co.uk.Web
 
             // Access config property directly to avoid Ninject dependency
             if (httpException == null)
-                httpException = new HttpException(500, ConfigurationManager.AppSettings["Error500Text"], exception);
+                httpException = new HttpException(500, ConfigurationManager.AppSettings["Error500Message"], exception);
 
             Response.Clear();
             Response.TrySkipIisCustomErrors = true;
