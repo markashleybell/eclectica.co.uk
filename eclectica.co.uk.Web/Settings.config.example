@@ -14,6 +14,7 @@
     <add key="ServerType" value="SQLCE4" />
     <add key="FacebookApplicationID" value="FACEBOOKAPPLICATIONID" />
     <add key="FacebookPageID" value="FACEBOOKPAGEID" />
+    <add key="ErrorDigestKey" value="ERRORDIGESTKEY" />
     <!-- Error Page Exception Text -->
     <add key="Error403Message" value="Forbidden" />
     <add key="Error404Message" value="Page Not Found" />
