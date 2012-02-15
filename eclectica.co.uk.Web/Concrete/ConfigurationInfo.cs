@@ -20,6 +20,8 @@ namespace eclectica.co.uk.Web.Concrete
         public string TwitterAccessTokenSecret { get; private set; }
         public string TwitterAnywhereAPIKey { get; private set; }
 
+        public string ErrorDigestKey { get; private set; }
+
         // HttpException message strings
         public string Error403Message { get; private set; }
         public string Error404Message { get; private set; }
@@ -36,6 +38,7 @@ namespace eclectica.co.uk.Web.Concrete
                                  string twitterAccessToken,
                                  string twitterAccessTokenSecret,
                                  string twitterAnywhereAPIKey,
+                                 string errorDigestKey,
                                  string error403Message,
                                  string error404Message,
                                  string error500Message)
@@ -51,6 +54,7 @@ namespace eclectica.co.uk.Web.Concrete
             TwitterAccessToken = twitterAccessToken;
             TwitterAccessTokenSecret = twitterAccessTokenSecret;
             TwitterAnywhereAPIKey = twitterAnywhereAPIKey;
+            ErrorDigestKey = errorDigestKey;
             Error403Message = error403Message;
             Error404Message = error404Message;
             Error500Message = error500Message;

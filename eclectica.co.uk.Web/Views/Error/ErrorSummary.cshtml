@@ -1,0 +1,64 @@
+﻿@model List<Elmah.ErrorLogEntry>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>DisplayErrors</title>
+
+    <style type="text/css">
+        
+        body, h1, h2, h3, p, ul, ol, li, form, blockquote { margin: 0; padding: 0; }
+        body { font-family: Arial, Helvetica, sans-serif; color: #000000; font-size: 11px; }
+        
+        table { border: solid 1px #e0e0e0; border-collapse: collapse; margin: 20px; }
+        th { border: solid 1px #e0e0e0; text-align: left; padding: 3px 6px; vertical-align: top; }
+        td { border: solid 1px #e0e0e0; text-align: left; padding: 3px 6px; vertical-align: top; }
+        
+        #time { width: 90px; }
+        #code { width: 45px; }
+        
+        .request { font-weight: bold; }
+        
+    </style>
+
+</head>
+<body>
+    <table>
+        <colgroup>
+            <col id="time" />
+            <col id="code" />
+            <col id="url" />
+            <col id="referrer" />
+            <col id="message" />
+        </colgroup>
+        <tr>
+            <th>Time</th>
+            <th>Code</th>
+            <th>Url</th>
+            <th>Referrer</th>
+            <th>Message</th>
+        </tr>
+        @foreach (var error in Model)
+        {
+            var time = error.Error.Time.ToString("dd/MM/yy hh:mm");
+            var message = error.Error.Message;
+            var url = error.Error.ServerVariables["SCRIPT_NAME"];
+            var referrer = error.Error.ServerVariables["HTTP_REFERER"];
+            var queryString = (!string.IsNullOrEmpty(error.Error.ServerVariables["QUERY_STRING"])) ? "?" + error.Error.ServerVariables["QUERY_STRING"] : "";
+            
+            <tr>
+                <td>@time</td>
+                <td>@error.Error.StatusCode</td>
+                <td class="request">@url@queryString</td>
+                <td>@referrer.Truncate(100)</td>
+                <td>@message.StripHtml().Truncate(100)</td>
+            </tr>
+        }
+    </table>
+</body>
+</html>

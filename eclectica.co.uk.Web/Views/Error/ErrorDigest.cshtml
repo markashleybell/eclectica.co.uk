@@ -1,0 +1,62 @@
+﻿@model List<Elmah.ErrorLogEntry>
+<?xml version="1.0" encoding="utf-8"?>
+@{
+    Response.ContentType = "application/xml";
+}
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>Eclectica Error Log Digest</title>
+    <subtitle>The latest HTTP errors on Eclectica.co.uk</subtitle>
+    <link href="http://eclectica.co.uk/error/errordigest?key=cx46fG10QR6l96R" rel="self" type="application/atom+xml" />
+    <link href="http://eclectica.co.uk/error/errorsummary" rel="alternate" type="text/html" />
+    <id>http://eclectica.co.uk/errordigest</id>
+    <updated>@Model.Max(x => x.Error.Time).ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")</updated>
+    <author>
+            <name>Mark Bell</name>
+            <uri>http://eclectica.co.uk/</uri>
+            <email>design@eclectica.co.uk</email>
+    </author>
+    @foreach (var group in Model.GroupBy(x => x.Error.Time.Day))
+    {
+        var day = group.First().Error.Time;
+        
+        <entry>
+                <title type="text">@day.ToString("dd/MM/yyyy")</title>
+                <content type="html">
+                    
+                    <![CDATA[ 
+
+                    <table width="100%">
+                        <tr>
+                            <th width="60" align="left">Code</th>
+                            <th align="left">Url</th>
+                            <th width="100" >&nbsp;</th>
+                        </tr>
+
+                    @foreach (var error in group)
+                    {
+                        var time = error.Error.Time;
+                        var message = error.Error.Message;
+                        var url = error.Error.ServerVariables["SCRIPT_NAME"];
+                        var referrer = error.Error.ServerVariables["HTTP_REFERER"];
+                        var queryString = (!string.IsNullOrEmpty(error.Error.ServerVariables["QUERY_STRING"])) ? "?" + error.Error.ServerVariables["QUERY_STRING"] : "";
+
+                        <tr>
+                            <td>@error.Error.StatusCode</td>
+                            <td>@url@queryString</td>
+                            <td align="right"><a href="http://eclectica.co.uk/elmah.axd/detail?id=@error.Id">Detail</a></td>
+                        </tr>
+                        
+                    }
+
+                    </table>
+
+                    ]]>
+
+                </content>
+                <id>d-@day.ToString("dd/MM/yyyy")</id>
+                <published>@day.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")</published>
+                <updated>@day.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")</updated>
+        </entry>
+            
+    }
+</feed>

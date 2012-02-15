@@ -19,6 +19,8 @@ namespace eclectica.co.uk.Web.Abstract
         string TwitterAccessTokenSecret { get; }
         string TwitterAnywhereAPIKey { get; }
 
+        string ErrorDigestKey { get; }
+
         // HttpException message strings
         string Error403Message { get; }
         string Error404Message { get; }

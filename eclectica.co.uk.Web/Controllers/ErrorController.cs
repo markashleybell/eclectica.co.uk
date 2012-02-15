@@ -7,11 +7,55 @@ using eclectica.co.uk.Service.Abstract;
 using eclectica.co.uk.Web.Abstract;
 using System.Net;
 using System.Configuration;
+using Elmah;
+using System.Security.Cryptography;
+using bcrypt = BCrypt.Net.BCrypt;
 
 namespace eclectica.co.uk.Web.Controllers
 {
     public class ErrorController : Controller
     {
+        [Authorize]
+        public ActionResult ErrorSummary()
+        {
+            var errorList = new List<ErrorLogEntry>();
+            var log = ErrorLog.GetDefault(System.Web.HttpContext.Current);
+
+            log.GetErrors(0, 1000, errorList);
+
+            var errors = new List<ErrorLogEntry>();
+
+            foreach (var entry in errorList)
+                errors.Add(log.GetError(entry.Id));
+
+            return View(errors);
+        }
+
+        public ActionResult ErrorDigest(string key)
+        {
+            var hash = ConfigurationManager.AppSettings["ErrorDigestKey"];
+
+            if (!bcrypt.Verify(key, hash))
+            {
+                throw new HttpException((int)HttpStatusCode.NotFound, ConfigurationManager.AppSettings["Error404Message"]);
+            }
+            else
+            {
+                var errorList = new List<ErrorLogEntry>();
+                var log = ErrorLog.GetDefault(System.Web.HttpContext.Current);
+
+                log.GetErrors(0, 1000, errorList);
+
+                var errors = new List<ErrorLogEntry>();
+
+                foreach (var entry in errorList)
+                    errors.Add(log.GetError(entry.Id));
+
+                //return Content(errors.Count.ToString());
+                return View(errors);
+            }
+        }
+
         public ActionResult NotFound()
         {
             return View();
