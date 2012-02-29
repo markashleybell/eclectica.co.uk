@@ -81,7 +81,7 @@ function upload() {
 
     if (fileList != null) {
         //uploader.setSimUploadLimit(((fileCount > simultaneousUploads) ? simultaneousUploads : fileCount));
-        uploader.uploadAll("/Entry/UploadImage", "POST", {  }, "upload");
+        uploader.uploadAll("/entry/uploadimage", "POST", {  }, "upload");
     }
 }
 
