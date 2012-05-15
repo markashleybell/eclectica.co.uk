@@ -19,6 +19,7 @@ namespace eclectica.co.uk.Service.Entities
         public bool Publish { get; set; }
 
         public string Thumbnail { get; set; }
+        public string LargeThumbnail { get; set; }
 
         public int CommentCount { get; set; }
 

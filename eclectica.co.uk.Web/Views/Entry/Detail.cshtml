@@ -13,7 +13,10 @@
 <!-- Facebook share meta tags -->
 <meta property="og:title" content="@((Model.Entry.Title != null && Model.Entry.Title != "") ? Model.Entry.Title : Model.Entry.Published.ToString("dddd dd MMMM yyyy hh:mm"))" />
 <meta property="og:description" content="@ViewBag.Description" />
-<meta property="og:image" content="@ConfigurationManager.AppSettings["CDN1"]/content/img/@Model.Entry.Thumbnail" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://eclectica.co.uk/@Model.Entry.Url" />
+<meta property="og:image" content="@ConfigurationManager.AppSettings["CDN1"]/content/img/@Model.Entry.LargeThumbnail" />
+<meta property="fb:app_id" content="242096249189840" />
 
 <script type="text/javascript" src="/scripts/validation.js"></script>
 <script type="text/javascript" src="/scripts/entry.js"></script>

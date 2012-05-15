@@ -21,6 +21,7 @@ namespace eclectica.co.uk.Domain.Entities
 
         public int CommentCount { get; set; }
         public string Thumbnail { get; set; }
+        public string LargeThumbnail { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }

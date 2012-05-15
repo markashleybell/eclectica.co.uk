@@ -70,6 +70,7 @@ namespace eclectica.co.uk.Domain.Concrete
                 if (entry != null)
                 {
                     entry.Thumbnail = EntryHelpers.GetThumbnail(entry.Title, entry.Body);
+                    entry.LargeThumbnail = EntryHelpers.GetThumbnail(entry.Title, entry.Body, false, "std");
 
                     // Perform queries for the tags, comments and related entries
                     using (_profiler.Step("Get tags for entry")) { entry.Tags = conn.Query<Tag>(tagSql, new { EntryID = entry.EntryID }).ToList(); }

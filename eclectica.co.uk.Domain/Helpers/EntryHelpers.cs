@@ -10,10 +10,15 @@ namespace eclectica.co.uk.Domain.Helpers
     {
         public static string GetThumbnail(string title, string body)
         {
-            return GetThumbnail(title, body, false);
+            return GetThumbnail(title, body, false, "crop");
         }
 
         public static string GetThumbnail(string title, string body, bool searchResults)
+        {
+            return GetThumbnail(title, body, searchResults, "crop");
+        }
+
+        public static string GetThumbnail(string title, string body, bool searchResults, string thumbFolder)
         {
             if (body == null)
                 return "";
@@ -25,7 +30,7 @@ namespace eclectica.co.uk.Domain.Helpers
             string ext = (matches.Count > 0) ? matches[0].Groups[3].Value : "";
 
             // Drop images won't have a thumbnail, so we'll have to show the default article image in search results
-            string bg = (matches.Count > 0 && !(searchResults && drop)) ? "lib/" + ((drop) ? "drop" : "crop") + "/" + thumb + "." + ext : "";
+            string bg = (matches.Count > 0 && !(searchResults && drop)) ? "lib/" + ((drop) ? "drop" : thumbFolder) + "/" + thumb + "." + ext : "";
 
             if (bg == "" && body.Contains("<object"))
                 bg = "site/thumb-video.gif";
